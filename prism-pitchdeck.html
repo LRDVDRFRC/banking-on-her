@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IFC — The Inclusive Finance Collective | Pitch Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #EAF6F1;
+  --glass: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.85);
+  --sky: #6DC0C8;
+  --rose: #F5B896;
+  --amber: #F2D080;
+  --mint: #9FD4B0;
+  --white: #0D3B2E;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--deep);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* Ambient standalone colour flares — global wash behind all slides */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55vw 45vh at 10% 14%, rgba(109,192,200,0.55) 0%, rgba(109,192,200,0.14) 30%, transparent 58%),
+    radial-gradient(ellipse 50vw 42vh at 92% 16%, rgba(245,184,150,0.48) 0%, rgba(245,184,150,0.12) 30%, transparent 58%),
+    radial-gradient(ellipse 60vw 50vh at 88% 90%, rgba(242,208,128,0.42) 0%, rgba(242,208,128,0.11) 32%, transparent 60%),
+    radial-gradient(ellipse 55vw 45vh at 10% 92%, rgba(159,212,176,0.52) 0%, rgba(159,212,176,0.13) 30%, transparent 58%);
+  z-index: -2;
+  pointer-events: none;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle 170px at 14% 16%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.28) 30%, transparent 65%),
+    radial-gradient(circle 140px at 90% 18%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%),
+    radial-gradient(circle 160px at 86% 88%, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.27) 30%, transparent 65%),
+    radial-gradient(circle 130px at 12% 90%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%);
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Slide base */
+.slide {
+  min-height: 100vh;
+  width: 100%;
+  padding: 80px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+
+/* Luminous glow backgrounds */
+.slide::before {
+  content: '';
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  border-radius: 50%;
+  filter: blur(180px);
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.slide > * { position: relative; z-index: 1; }
+
+/* Glow positions per slide */
+.slide-1::before { background: radial-gradient(circle, var(--sky), var(--rose), transparent); top: -200px; right: -200px; }
+.slide-2::before { background: radial-gradient(circle, var(--rose), var(--amber), transparent); bottom: -300px; left: -200px; }
+.slide-3::before { background: radial-gradient(circle, var(--amber), var(--mint), transparent); top: -100px; left: 50%; transform: translateX(-50%); }
+.slide-4::before { background: radial-gradient(circle, var(--sky), var(--mint), transparent); bottom: -200px; right: -100px; }
+.slide-5::before { background: radial-gradient(circle, var(--rose), var(--sky), transparent); top: -200px; left: -100px; }
+.slide-6::before { background: radial-gradient(circle, var(--amber), var(--rose), transparent); bottom: -200px; left: 30%; }
+.slide-7::before { background: radial-gradient(circle, var(--mint), var(--sky), transparent); top: 50%; right: -200px; transform: translateY(-50%); }
+.slide-8::before { background: radial-gradient(circle, var(--sky), var(--rose), var(--amber), transparent); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+/* Glass panel — layered refraction */
+.glass {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.48) 42%, rgba(255,255,255,0.38) 72%, rgba(255,255,255,0.55) 100%);
+  backdrop-filter: blur(24px) saturate(1.25);
+  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1),
+    inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7),
+    inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10),
+    inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08),
+    0 4px 8px rgba(42,80,70,0.06),
+    0 12px 24px -8px rgba(42,80,70,0.14),
+    0 24px 48px -16px rgba(42,80,70,0.16),
+    0 32px 64px -24px rgba(109,192,200,0.2);
+  overflow: hidden;
+}
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.glass-sm {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.48) 42%, rgba(255,255,255,0.38) 72%, rgba(255,255,255,0.55) 100%);
+  backdrop-filter: blur(24px) saturate(1.25);
+  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1),
+    inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7),
+    inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10),
+    inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08),
+    0 3px 6px rgba(42,80,70,0.06),
+    0 8px 18px -6px rgba(42,80,70,0.12),
+    0 18px 36px -12px rgba(42,80,70,0.14),
+    0 24px 48px -20px rgba(109,192,200,0.18);
+  overflow: hidden;
+}
+.glass-sm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 42%, rgba(255,255,255,0.22) 50%, transparent 58%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Spectrum gradient text */
+.spectrum-text {
+  background: linear-gradient(90deg, var(--sky), var(--mint));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Prism refraction line */
+.prism-line {
+  width: 100%;
+  height: 40px;
+  position: relative;
+  margin: 40px 0;
+}
+.prism-line::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 35%;
+  height: 2px;
+  background: var(--white);
+}
+.prism-line .refraction {
+  position: absolute;
+  top: 0;
+  left: 35%;
+  width: 65%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2px 0;
+}
+.prism-line .refraction span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  border-radius: 1px;
+}
+.prism-line .refraction span:nth-child(1) { background: var(--sky); }
+.prism-line .refraction span:nth-child(2) { background: var(--rose); }
+.prism-line .refraction span:nth-child(3) { background: var(--amber); }
+.prism-line .refraction span:nth-child(4) { background: var(--mint); }
+
+/* Logo */
+.logo {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.15em;
+  color: var(--white);
+  position: absolute;
+  top: 40px;
+  left: 80px;
+  z-index: 10;
+}
+
+/* Slide label */
+.slide-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(13,59,46,0.35);
+  margin-bottom: 24px;
+}
+
+/* Grids */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+
+/* Stat card */
+.stat-number {
+  font-family: 'Sora', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+
+.stat-body {
+  font-size: 0.95rem;
+  color: rgba(13,59,46,0.75);
+  line-height: 1.65;
+}
+
+/* Points with coloured borders */
+.point-card {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.48) 42%, rgba(255,255,255,0.38) 72%, rgba(255,255,255,0.55) 100%);
+  backdrop-filter: blur(24px) saturate(1.25);
+  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 24px;
+  padding: 28px 32px;
+  border-left: 3px solid;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1),
+    inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7),
+    inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10),
+    inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08),
+    0 3px 6px rgba(42,80,70,0.06),
+    0 8px 18px -6px rgba(42,80,70,0.12),
+    0 18px 36px -12px rgba(42,80,70,0.14),
+    0 24px 48px -20px rgba(109,192,200,0.18);
+  overflow: hidden;
+}
+.point-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 42%, rgba(255,255,255,0.22) 50%, transparent 58%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.point-card > * { position: relative; z-index: 1; }
+
+.point-card h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.point-card p {
+  font-size: 0.9rem;
+  color: rgba(13,59,46,0.65);
+  line-height: 1.6;
+}
+
+/* Step cards */
+.step-number {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.step-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.step-body {
+  font-size: 0.9rem;
+  color: rgba(13,59,46,0.7);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.step-output {
+  font-size: 0.8rem;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.75);
+}
+
+.step-output span {
+  font-weight: 600;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Timeline */
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-top: 32px;
+}
+
+.timeline-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+.timeline-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgba(13,59,46,0.6);
+}
+
+.timeline-bar {
+  flex: 2;
+  height: 2px;
+  background: linear-gradient(90deg, var(--sky), var(--mint));
+  margin-bottom: 28px;
+}
+
+/* Founder cards */
+.founder-card {
+  text-align: center;
+}
+
+.founder-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--deep);
+}
+
+.founder-name {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.founder-role {
+  font-size: 0.8rem;
+  color: rgba(13,59,46,0.5);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.founder-bio {
+  font-size: 0.88rem;
+  color: rgba(13,59,46,0.7);
+  line-height: 1.6;
+}
+
+/* Use case sections */
+.case-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.case-item h4 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.case-item p {
+  font-size: 0.92rem;
+  color: rgba(13,59,46,0.75);
+  line-height: 1.65;
+}
+
+/* Product cards */
+.product-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.product-title {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.product-body {
+  font-size: 0.88rem;
+  color: rgba(13,59,46,0.7);
+  line-height: 1.6;
+}
+
+/* Closing slide */
+.close-text {
+  font-family: 'Sora', sans-serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1.35;
+  max-width: 700px;
+}
+
+.close-sub {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-top: 20px;
+  color: rgba(13,59,46,0.8);
+}
+
+.close-footer {
+  font-size: 0.85rem;
+  color: rgba(13,59,46,0.35);
+  letter-spacing: 0.1em;
+  margin-top: 48px;
+}
+
+/* Nav dots */
+.nav-dots {
+  position: fixed;
+  right: 32px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+}
+
+.nav-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.65);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+
+.nav-dot.active {
+  background: var(--white);
+  box-shadow: 0 0 10px rgba(255,255,255,0.4);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .slide { padding: 60px 40px; }
+  .logo { left: 40px; top: 30px; }
+  .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .slide { padding: 60px 24px; }
+  .logo { left: 24px; top: 24px; }
+  .grid-3, .grid-4, .grid-2, .case-grid { grid-template-columns: 1fr; }
+  h1 { font-size: 2rem !important; }
+  .stat-number { font-size: 2.5rem; }
+  .close-text { font-size: 1.6rem; }
+}
+
+/* ── Capture mode (only active with ?capturemode=... &slide=N) ─────────── */
+html.single-slide-mode { width: 1920px; height: 1080px; overflow: hidden; scroll-snap-type: none !important; scroll-behavior: auto !important; }
+html.single-slide-mode body { width: 1920px; height: 1080px; margin: 0; overflow: hidden; }
+html.single-slide-mode .slide { display: none !important; }
+html.single-slide-mode .slide.capture-target {
+  display: flex !important;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 1920px !important;
+  height: 1080px !important;
+  min-height: 1080px !important;
+  padding: 80px 80px !important;
+  scroll-snap-align: none !important;
+}
+html.single-slide-mode .nav-dots { display: none !important; }
+html.capture-hide-text .spectrum-text,
+html.capture-hide-text .gradient-text { background-image: none !important; background: transparent !important; }
+</style>
+</head>
+<body>
+
+<!-- Navigation dots -->
+<nav class="nav-dots" aria-label="Slide navigation">
+  <button class="nav-dot active" data-slide="0" aria-label="Slide 1"></button>
+  <button class="nav-dot" data-slide="1" aria-label="Slide 2"></button>
+  <button class="nav-dot" data-slide="2" aria-label="Slide 3"></button>
+  <button class="nav-dot" data-slide="3" aria-label="Slide 4"></button>
+  <button class="nav-dot" data-slide="4" aria-label="Slide 5"></button>
+  <button class="nav-dot" data-slide="5" aria-label="Slide 6"></button>
+  <button class="nav-dot" data-slide="6" aria-label="Slide 7"></button>
+  <button class="nav-dot" data-slide="7" aria-label="Slide 8"></button>
+</nav>
+
+<!-- ===================== SLIDE 1: TITLE ===================== -->
+<section class="slide slide-1" id="slide-0">
+  <div class="logo">IFC</div>
+  <div style="max-width: 900px;">
+    <h1 style="font-size: 3.2rem; font-weight: 700; line-height: 1.2; margin-bottom: 28px;">
+      The Largest Wealth Transfer in History Is <span class="spectrum-text">Happening Now.</span>
+    </h1>
+    <p style="font-size: 1.15rem; color: rgba(13,59,46,0.65); max-width: 680px; line-height: 1.7;">
+      Most financial institutions are not ready. We make them ready — and we prove the business case.
+    </p>
+    <div class="prism-line">
+      <div class="refraction">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SLIDE 2: WHY WE EXIST ===================== -->
+<section class="slide slide-2" id="slide-1">
+  <div class="slide-label">Why We Exist</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 48px; max-width: 600px;">The numbers that changed<br>our trajectory.</h2>
+  <div class="grid-3">
+    <div class="glass-sm">
+      <div class="stat-number" style="color: var(--sky);">50%+</div>
+      <p class="stat-body">of European wealth is now controlled by women — a figure accelerating as boomers transfer assets to partners who outlive them.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="stat-number" style="color: var(--rose);">36%</div>
+      <p class="stat-body">higher profitability at companies with diverse executive teams. This is not a values argument — it is a revenue argument.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="stat-number" style="color: var(--amber);">60+</div>
+      <p class="stat-body">countries where our methodology is being deployed through the World Bank. This is proof of concept at global scale.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SLIDE 3: WHO WE ARE ===================== -->
+<section class="slide slide-3" id="slide-2">
+  <div class="slide-label">Who We Are</div>
+  <h2 style="font-size: 2rem; margin-bottom: 12px; max-width: 700px;">A science-based inclusion consultancy — built for the business side.</h2>
+  <p style="font-size: 1.05rem; color: rgba(13,59,46,0.65); max-width: 720px; margin-bottom: 40px; line-height: 1.7;">
+    IFC helps medium and large corporates convert underserved markets into measurable commercial growth. We are not a DEI programme. We are not an HR initiative. We are a business performance firm.
+  </p>
+  <div class="grid-2">
+    <div class="point-card" style="border-left-color: var(--sky);">
+      <h4>We make the business case, not the moral case</h4>
+      <p>We come with revenue numbers. Underserved markets are a commercial opportunity with a calculable cost of inaction.</p>
+    </div>
+    <div class="point-card" style="border-left-color: var(--rose);">
+      <h4>We go through the client door, not the HR door</h4>
+      <p>We help companies reach, serve, and grow revenue from diverse clients externally. An almost entirely unoccupied space.</p>
+    </div>
+    <div class="point-card" style="border-left-color: var(--amber);">
+      <h4>We deliver at world-class scale</h4>
+      <p>Evidence-based methodology. 60+ country delivery via the World Bank. International credibility at ministerial and C-suite level.</p>
+    </div>
+    <div class="point-card" style="border-left-color: var(--mint);">
+      <h4>DEI fatigue is our opening</h4>
+      <p>The backlash against HR-driven DEI is real. Boards want commercial results. We are the only firm positioned to deliver them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SLIDE 4: HOW WE WORK ===================== -->
+<section class="slide slide-4" id="slide-3">
+  <div class="slide-label">How We Work</div>
+  <h2 style="font-size: 2rem; margin-bottom: 48px;">The Gender Capital Lab Methodology</h2>
+  <div class="grid-4">
+    <div class="glass-sm">
+      <div class="step-number" style="color: var(--sky);">01</div>
+      <div class="step-title" style="color: var(--sky);">Diagnose</div>
+      <p class="step-body">Gender Lens Framework. Data-driven analysis of where a financial institution is leaving money on the table.</p>
+      <div class="step-output">
+        <span style="color: var(--sky);">Output</span>
+        Opportunity map with quantified business potential
+      </div>
+    </div>
+    <div class="glass-sm">
+      <div class="step-number" style="color: var(--rose);">02</div>
+      <div class="step-title" style="color: var(--rose);">Strategise</div>
+      <p class="step-body">Turn diagnosis into an executive-ready strategy. A fact-based business case that makes the commercial argument impossible to ignore.</p>
+      <div class="step-output">
+        <span style="color: var(--rose);">Output</span>
+        Investment-grade strategy &amp; business case
+      </div>
+    </div>
+    <div class="glass-sm">
+      <div class="step-number" style="color: var(--amber);">03</div>
+      <div class="step-title" style="color: var(--amber);">Build &amp; Test</div>
+      <p class="step-body">Train internal teams, build certified practitioners and pilot improved products in a safe-to-fail environment.</p>
+      <div class="step-output">
+        <span style="color: var(--amber);">Output</span>
+        Validated solutions + certified practitioners
+      </div>
+    </div>
+    <div class="glass-sm">
+      <div class="step-number" style="color: var(--mint);">04</div>
+      <div class="step-title" style="color: var(--mint);">Measure &amp; Scale</div>
+      <p class="step-body">Embed proven interventions across the organisation. Measure impact rigorously. Build the case for scaling.</p>
+      <div class="step-output">
+        <span style="color: var(--mint);">Output</span>
+        Proven impact + scaling strategy
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SLIDE 5: WHAT IT DELIVERS ===================== -->
+<section class="slide slide-5" id="slide-4">
+  <div class="slide-label">What It Delivers</div>
+  <h2 style="font-size: 2rem; margin-bottom: 48px;">Four layers of value.</h2>
+  <div class="grid-4">
+    <div class="glass-sm">
+      <div class="product-label" style="color: var(--sky);">Entry Product</div>
+      <div class="product-title">Readiness Scan</div>
+      <p class="product-body">AI-enabled diagnostic: zero measurement, bias audit, readiness rating (A-D). Fast, affordable, creates the business case for the next step.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="product-label" style="color: var(--rose);">Core Engagement</div>
+      <div class="product-title">Advisory Trajectory</div>
+      <p class="product-body">Bespoke work across employee &amp; organisation, data, marketing, ecosystems and propositions. Menu-based: clients choose their modules.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="product-label" style="color: var(--amber);">Capability Building</div>
+      <div class="product-title">Academy &amp; Certification</div>
+      <p class="product-body">Train and certify internal practitioners at Associate, Advisor and Fellow level. Builds lasting organisational capability.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="product-label" style="color: var(--mint);">Recurring Revenue</div>
+      <div class="product-title">Membership &amp; Platform</div>
+      <p class="product-body">Peer learning, tools, benchmarks. Year 2-3: digital layer with AI-assisted advisory. Scales without headcount.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SLIDE 6: USE CASE ===================== -->
+<section class="slide slide-6" id="slide-5">
+  <div class="slide-label">Use Case</div>
+  <h2 style="font-size: 2rem; margin-bottom: 36px;">Bank in NL</h2>
+  <div class="glass">
+    <div class="case-grid">
+      <div class="case-item">
+        <h4 style="color: var(--sky);">Client</h4>
+        <p>Mid-size Dutch bank with 200k+ retail clients. Wealth management arm underserving women clients who now control 52% of inherited assets.</p>
+      </div>
+      <div class="case-item">
+        <h4 style="color: var(--rose);">Problem</h4>
+        <p>Products designed for male clients. Female client attrition at 3x industry average after inheritance events. Estimated annual revenue loss: EUR 12M.</p>
+      </div>
+      <div class="case-item">
+        <h4 style="color: var(--amber);">IFC Intervention</h4>
+        <p>Readiness Scan (Day 1) revealed D-rating across propositions and marcom. Advisory trajectory redesigned 3 key products. Academy certified 24 internal practitioners.</p>
+      </div>
+      <div class="case-item">
+        <h4 style="color: var(--mint);">Result</h4>
+        <p>Female client retention improved 41%. New wealth product generated EUR 8.2M in first year. Bank became IFC Certified Gender Lab partner.</p>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-node">
+        <div class="timeline-dot" style="background: var(--sky);"></div>
+        <div class="timeline-label">Day 1</div>
+      </div>
+      <div class="timeline-bar"></div>
+      <div class="timeline-node">
+        <div class="timeline-dot" style="background: var(--rose);"></div>
+        <div class="timeline-label">Month 2</div>
+      </div>
+      <div class="timeline-bar"></div>
+      <div class="timeline-node">
+        <div class="timeline-dot" style="background: var(--amber);"></div>
+        <div class="timeline-label">Month 4</div>
+      </div>
+      <div class="timeline-bar"></div>
+      <div class="timeline-node">
+        <div class="timeline-dot" style="background: var(--mint);"></div>
+        <div class="timeline-label">Month 8</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SLIDE 7: TEAM ===================== -->
+<section class="slide slide-7" id="slide-6">
+  <div class="slide-label">Team</div>
+  <h2 style="font-size: 2rem; margin-bottom: 48px;">The founders.</h2>
+  <div class="grid-3">
+    <div class="glass-sm founder-card">
+      <div class="founder-avatar" style="background: linear-gradient(135deg, var(--sky), var(--rose));">CK</div>
+      <div class="founder-name">Chantal Korteweg</div>
+      <div class="founder-role">Chief Expert &amp; External Relations</div>
+      <p class="founder-bio">Internationally recognised expert. Network spanning ministers, royalty and C-suite executives. Leads the methodology and World Bank relationship across 60 countries.</p>
+    </div>
+    <div class="glass-sm founder-card">
+      <div class="founder-avatar" style="background: linear-gradient(135deg, var(--rose), var(--amber));">BJ</div>
+      <div class="founder-name">Britt Jacobs</div>
+      <div class="founder-role">Chief Delivery &amp; Learning</div>
+      <p class="founder-bio">Speaker academy founder, learning design and HR capability expert. Leads service design, the academy, certification and client delivery quality.</p>
+    </div>
+    <div class="glass-sm founder-card">
+      <div class="founder-avatar" style="background: linear-gradient(135deg, var(--amber), var(--mint));">JW</div>
+      <div class="founder-name">Jan van Waveren</div>
+      <div class="founder-role">Chief Commercial &amp; Marketing</div>
+      <p class="founder-bio">Strategic positioning and commercial engine. Leads the pitch, prospect development, brand identity and commercial conversion.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SLIDE 8: CLOSE ===================== -->
+<section class="slide slide-8" id="slide-7">
+  <div style="max-width: 800px;">
+    <p class="close-text">
+      The women inheriting the world's wealth need firms that <span class="spectrum-text">understand them.</span>
+    </p>
+    <p class="close-sub">We are that firm. And we move now.</p>
+    <div class="prism-line">
+      <div class="refraction">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <p class="close-footer">IFC &middot; The Inclusive Finance Collective &middot; 2026</p>
+  </div>
+</section>
+
+<script>
+// Navigation dots
+const dots = document.querySelectorAll('.nav-dot');
+const slides = document.querySelectorAll('.slide');
+
+dots.forEach(dot => {
+  dot.addEventListener('click', () => {
+    const idx = dot.getAttribute('data-slide');
+    document.getElementById('slide-' + idx).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// Observer for active dot
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = entry.target.id.replace('slide-', '');
+      dots.forEach(d => d.classList.remove('active'));
+      document.querySelector(`.nav-dot[data-slide="${idx}"]`).classList.add('active');
+    }
+  });
+}, { threshold: 0.5 });
+
+slides.forEach(slide => observer.observe(slide));
+
+// ── Capture mode: isolate one slide + optionally blank text ──
+(function () {
+  const p = new URLSearchParams(location.search);
+  const mode = p.get('capturemode');
+  if (!mode) return;
+  const n = parseInt(p.get('slide') || '1', 10);
+  document.documentElement.classList.add('single-slide-mode');
+  // Pitch deck slide IDs are `slide-1`, `slide-2`, ... based on .slide-N class
+  // Use .slide:nth-of-type(N) selector to find the Nth slide reliably.
+  const allSlides = document.querySelectorAll('.slide');
+  const target = allSlides[n - 1];
+  if (target) target.classList.add('capture-target');
+  if (mode === 'backgrounds') {
+    document.documentElement.classList.add('capture-hide-text');
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => { node.nodeValue = node.nodeValue.replace(/\S/g, ' '); });
+  }
+})();
+</script>
+
+</body>
+</html>
