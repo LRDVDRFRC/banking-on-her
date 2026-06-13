@@ -1,0 +1,29 @@
+{
+  "name": "unlockt-sprint-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Internal MVP — Unlockt Gender Capital Lab Sprint platform. Local only, do not deploy.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "seed": "node seed.mjs",
+    "import-research": "node scripts/import-research.mjs",
+    "backup": "node scripts/backup-db.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.104.1",
+    "@libsql/client": "^0.15.0",
+    "jszip": "^3.10.1",
+    "next": "^15.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "unpdf": "^1.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.0.0"
+  }
+}
