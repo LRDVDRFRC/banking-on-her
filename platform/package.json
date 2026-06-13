@@ -9,7 +9,8 @@
     "start": "next start",
     "seed": "node seed.mjs",
     "import-research": "node scripts/import-research.mjs",
-    "backup": "node scripts/backup-db.mjs"
+    "backup": "node scripts/backup-db.mjs",
+    "delete-sprint": "node scripts/delete-sprint.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.104.1",
