@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unlockt × BeFrank — 24-uur Propositie Sprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #EAF6F1;
+  --glass: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.85);
+  --sky: #6DC0C8;
+  --rose: #F5B896;
+  --amber: #F2D080;
+  --mint: #9FD4B0;
+  --ink: #0D3B2E;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--deep);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* Ambient standalone colour flares — global wash behind all slides */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55vw 45vh at 10% 14%, rgba(109,192,200,0.55) 0%, rgba(109,192,200,0.14) 30%, transparent 58%),
+    radial-gradient(ellipse 50vw 42vh at 92% 16%, rgba(245,184,150,0.48) 0%, rgba(245,184,150,0.12) 30%, transparent 58%),
+    radial-gradient(ellipse 60vw 50vh at 88% 90%, rgba(242,208,128,0.42) 0%, rgba(242,208,128,0.11) 32%, transparent 60%),
+    radial-gradient(ellipse 55vw 45vh at 10% 92%, rgba(159,212,176,0.52) 0%, rgba(159,212,176,0.13) 30%, transparent 58%);
+  z-index: -2;
+  pointer-events: none;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle 170px at 14% 16%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.28) 30%, transparent 65%),
+    radial-gradient(circle 140px at 90% 18%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%),
+    radial-gradient(circle 160px at 86% 88%, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.27) 30%, transparent 65%),
+    radial-gradient(circle 130px at 12% 90%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%);
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; font-weight: 600; line-height: 1.2; }
+
+.slide {
+  min-height: 100vh;
+  width: 100%;
+  padding: 80px 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  scroll-snap-align: start;
+}
+.slide::before {
+  content: '';
+  position: absolute;
+  width: 800px; height: 800px;
+  border-radius: 50%;
+  filter: blur(180px);
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 0;
+}
+.slide > * { position: relative; z-index: 1; }
+
+.s-title::before    { background: radial-gradient(circle, var(--sky), var(--rose), transparent); top: -200px; right: -200px; }
+.s-mandate::before  { background: radial-gradient(circle, var(--rose), var(--amber), transparent); bottom: -300px; left: -200px; }
+.s-diagnose::before { background: radial-gradient(circle, var(--amber), var(--mint), transparent); top: -100px; left: 50%; transform: translateX(-50%); }
+.s-kans::before     { background: radial-gradient(circle, var(--sky), var(--mint), transparent); bottom: -200px; right: -100px; }
+.s-prop::before     { background: radial-gradient(circle, var(--rose), var(--sky), transparent); top: -200px; left: -100px; }
+.s-persona::before  { background: radial-gradient(circle, var(--amber), var(--rose), transparent); bottom: -200px; left: 30%; }
+.s-reis::before     { background: radial-gradient(circle, var(--mint), var(--sky), transparent); top: 50%; right: -200px; transform: translateY(-50%); }
+.s-case::before     { background: radial-gradient(circle, var(--sky), var(--amber), transparent); top: -200px; right: -200px; }
+.s-comms::before    { background: radial-gradient(circle, var(--rose), var(--mint), transparent); bottom: -250px; right: -150px; }
+.s-proto::before    { background: radial-gradient(circle, var(--amber), var(--sky), transparent); top: -150px; left: -150px; }
+.s-roadmap::before  { background: radial-gradient(circle, var(--mint), var(--rose), transparent); bottom: -250px; left: 40%; }
+.s-besluit::before  { background: radial-gradient(circle, var(--sky), var(--rose), var(--amber), transparent); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+/* Glass panel — layered refraction */
+.glass, .glass-sm {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.48) 42%, rgba(255,255,255,0.38) 72%, rgba(255,255,255,0.55) 100%);
+  backdrop-filter: blur(24px) saturate(1.25);
+  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 24px;
+  overflow: hidden;
+}
+.glass {
+  padding: 40px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1), inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7), inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10), inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08), 0 4px 8px rgba(42,80,70,0.06),
+    0 12px 24px -8px rgba(42,80,70,0.14), 0 24px 48px -16px rgba(42,80,70,0.16),
+    0 32px 64px -24px rgba(109,192,200,0.2);
+}
+.glass-sm {
+  padding: 32px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1), inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7), inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10), inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08), 0 3px 6px rgba(42,80,70,0.06),
+    0 8px 18px -6px rgba(42,80,70,0.12), 0 18px 36px -12px rgba(42,80,70,0.14),
+    0 24px 48px -20px rgba(109,192,200,0.18);
+}
+.glass::before, .glass-sm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.spectrum-text {
+  background: linear-gradient(90deg, var(--sky), var(--mint));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Prism mark — beam enters a glass triangle, exits as the brand spectrum */
+.prism-mark { margin: 36px 0; }
+.prism-mark svg { width: 420px; max-width: 100%; height: auto; display: block; }
+
+.logo {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  position: absolute;
+  top: 40px; left: 80px;
+  z-index: 10;
+}
+.logo span { font-weight: 400; letter-spacing: 0.02em; opacity: 0.7; }
+
+.slide-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(13,59,46,0.35);
+  margin-bottom: 24px;
+}
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+
+.stat-number {
+  font-family: 'Sora', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.stat-body { font-size: 0.95rem; color: rgba(13,59,46,0.75); line-height: 1.65; }
+
+.kicker {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* Readiness ring — circle whose border fills to the score (--p: 0–100, --c: colour) */
+.ring { position: relative; width: 110px; height: 110px; margin: 0 auto 14px; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 10; }
+.ring .track { stroke: rgba(13,59,46,0.08); }
+.ring .fill {
+  stroke: var(--c);
+  stroke-linecap: round;
+  stroke-dasharray: 326.7;
+  stroke-dashoffset: calc(326.7 * (1 - var(--p) / 100));
+  transition: stroke-dashoffset 1.2s ease 0.2s;
+}
+.slide:not(.in-view) .ring .fill { stroke-dashoffset: 326.7; }
+.ring-value {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--c);
+}
+.grade-dim {
+  font-size: 0.85rem;
+  text-align: center;
+  color: rgba(13,59,46,0.75);
+  line-height: 1.45;
+}
+.band-legend {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: rgba(13,59,46,0.45);
+}
+
+.journey-item { display: flex; gap: 12px; margin-bottom: 14px; font-size: 0.95rem; line-height: 1.55; }
+.journey-item .mark { font-weight: 700; flex: 0 0 auto; }
+.journey-item.bad { color: rgba(13,59,46,0.6); }
+.journey-item.bad .mark { color: var(--rose); }
+.journey-item.good .mark { color: var(--sky); }
+
+.assumption-note {
+  margin-top: 32px;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(13,59,46,0.55);
+}
+
+.token { color: #8a6d3b; background: rgba(242,208,128,0.25); border-radius: 6px; padding: 0 6px; }
+
+/* Navigation dots */
+.nav-dots {
+  position: fixed;
+  right: 32px; top: 50%;
+  transform: translateY(-50%);
+  display: flex; flex-direction: column; gap: 12px;
+  z-index: 100;
+}
+.nav-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(13,59,46,0.4);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.25s ease;
+}
+.nav-dot.active { background: var(--ink); border-color: var(--ink); transform: scale(1.25); }
+
+/* Print: one slide per page, drop interactive chrome */
+@media print {
+  html { scroll-snap-type: none; }
+  .nav-dots { display: none !important; }
+  .slide { min-height: auto; page-break-after: always; padding: 40px; }
+  body::before, body::after, .slide::before { display: none; }
+  .ring .fill { stroke-dashoffset: calc(326.7 * (1 - var(--p) / 100)) !important; transition: none; }
+}
+
+@media (max-width: 900px) {
+  .slide { padding: 64px 28px; }
+  .logo { left: 28px; }
+  .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+  .stat-number { font-size: 2.4rem; }
+  h1 { font-size: 2.1rem !important; }
+  .nav-dots { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation dots -->
+<nav class="nav-dots" aria-label="Slide navigatie"></nav>
+
+<!-- ===================== 1 · TITEL ===================== -->
+<section class="slide s-title" id="slide-0">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div style="max-width: 900px;">
+    <div class="slide-label">24-uur propositie sprint · 26 juni 2026</div>
+    <h1 style="font-size: 3.2rem; font-weight: 700; margin-bottom: 28px;">
+      Van inzicht naar propositie.<br><span class="spectrum-text">In 24 uur.</span>
+    </h1>
+    <p style="font-size: 1.15rem; color: rgba(13,59,46,0.65); max-width: 680px; line-height: 1.7;">
+      Hoe BeFrank de pensioenuitvoerder wordt die de kloof als eerste dicht.
+    </p>
+    <div class="prism-mark" aria-hidden="true">
+      <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pmFace" x1="0" y1="0" x2="0.6" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+            <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.45"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0.7"/>
+          </linearGradient>
+          <linearGradient id="pmSide" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0D3B2E" stop-opacity="0.34"/>
+            <stop offset="1" stop-color="#0D3B2E" stop-opacity="0.08"/>
+          </linearGradient>
+          <linearGradient id="pmRose" gradientUnits="userSpaceOnUse" x1="168" y1="0" x2="402" y2="0">
+            <stop offset="0" stop-color="#F5B896"/><stop offset="1" stop-color="#F5B896" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmAmber" gradientUnits="userSpaceOnUse" x1="176" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#F2D080"/><stop offset="1" stop-color="#F2D080" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmMint" gradientUnits="userSpaceOnUse" x1="184" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#9FD4B0"/><stop offset="1" stop-color="#9FD4B0" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmSky" gradientUnits="userSpaceOnUse" x1="191" y1="0" x2="400" y2="0">
+            <stop offset="0" stop-color="#6DC0C8"/><stop offset="1" stop-color="#6DC0C8" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="pmBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <!-- ground shadow -->
+        <ellipse cx="152" cy="132" rx="62" ry="7" fill="#0D3B2E" opacity="0.14" filter="url(#pmBlur)"/>
+        <!-- spectrum beams, emerging from behind the glass and fading out -->
+        <polygon fill="url(#pmRose)"  points="168,57 168,63 402,33 402,21"/>
+        <polygon fill="url(#pmAmber)" points="176,70 176,76 406,66 406,54"/>
+        <polygon fill="url(#pmMint)"  points="184,83 184,89 406,99 406,87"/>
+        <polygon fill="url(#pmSky)"   points="191,95 191,101 400,131 400,119"/>
+        <!-- extruded side face (depth) -->
+        <polygon fill="url(#pmSide)" points="150,16 166,7 220,103 204,114" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-linejoin="round"/>
+        <!-- front glass face -->
+        <path d="M150,16 L204,114 L96,114 Z" fill="url(#pmFace)" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linejoin="round"/>
+        <!-- highlight streak -->
+        <line x1="143" y1="34" x2="116" y2="82" stroke="#ffffff" stroke-opacity="0.85" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p style="font-size: 0.85rem; color: rgba(13,59,46,0.45);">Gender Capital Lab™ Sprint</p>
+  </div>
+</section>
+
+<!-- ===================== 2 · DE OPDRACHT ===================== -->
+<section class="slide s-mandate" id="slide-1">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Dag 1 · De opdracht</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 40px;">Dit is wat we gisteren hebben vastgelegd.</h2>
+  <div class="glass" style="margin-bottom: 32px;">
+    <p style="font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 600; font-style: italic; line-height: 1.5;">
+      “Hoe wordt BeFrank de uitvoerder die de pensioenkloof voor vrouwen meetbaar dicht — zonder dat de deelnemer iets hoeft te doen?”
+    </p>
+  </div>
+  <div class="grid-3">
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--sky);">Succesmaat 1</div>
+      <p class="stat-body">Projectiekloof bij vrouwelijke deelnemers <strong>↓ 30%</strong> in 18 maanden.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--rose);">Succesmaat 2</div>
+      <p class="stat-body">Activatie van deeltijders rond levensgebeurtenissen <strong>↑</strong>.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--amber);">Succesmaat 3</div>
+      <p class="stat-body">Werkgevers met gap-dashboard: <strong>10</strong> in jaar 1.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 3 · DIAGNOSE ===================== -->
+<section class="slide s-diagnose" id="slide-2">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Dag 1 · Diagnose</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 40px;">Uw readiness, in uw eigen cijfers.</h2>
+  <div class="grid-5" style="margin-bottom: 32px;">
+    <div class="glass-sm" style="padding: 24px;">
+      <div class="ring" style="--p: 52; --c: var(--rose);">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>
+        <span class="ring-value">52%</span>
+      </div>
+      <p class="grade-dim">Mens &amp; organisatie</p>
+    </div>
+    <div class="glass-sm" style="padding: 24px;">
+      <div class="ring" style="--p: 68; --c: var(--sky);">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>
+        <span class="ring-value">68%</span>
+      </div>
+      <p class="grade-dim">Data</p>
+    </div>
+    <div class="glass-sm" style="padding: 24px;">
+      <div class="ring" style="--p: 48; --c: var(--rose);">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>
+        <span class="ring-value">48%</span>
+      </div>
+      <p class="grade-dim">Marketing &amp; communicatie</p>
+    </div>
+    <div class="glass-sm" style="padding: 24px;">
+      <div class="ring" style="--p: 30; --c: var(--amber);">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>
+        <span class="ring-value">30%</span>
+      </div>
+      <p class="grade-dim">Ecosystemen</p>
+    </div>
+    <div class="glass-sm" style="padding: 24px;">
+      <div class="ring" style="--p: 45; --c: var(--rose);">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>
+        <span class="ring-value">45%</span>
+      </div>
+      <p class="grade-dim">Proposities</p>
+    </div>
+  </div>
+  <div class="glass-sm">
+    <p style="font-size: 1.05rem;"><strong>Totaaloordeel: <span style="color: var(--rose);">49% — latent.</span></strong>
+    De ambitie en de data zijn er; de propositie en het ecosysteem zijn de onbenutte kans.</p>
+    <p class="band-legend">0–34% blinde vlek &nbsp;·&nbsp; 35–59% latent &nbsp;·&nbsp; 60–79% in opbouw &nbsp;·&nbsp; 80–100% koploper</p>
+  </div>
+</section>
+
+<!-- ===================== 4 · DE KANS ===================== -->
+<section class="slide s-kans" id="slide-3">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Dag 1 · De kans</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 48px;">De kloof is geen idee.<br>Het is een getal.</h2>
+  <div class="grid-3">
+    <div class="glass-sm">
+      <div class="stat-number" style="color: var(--sky);">36–40%</div>
+      <p class="stat-body">lager pensioen voor vrouwen in NL — de op één na grootste kloof van de EU. Bron: Eurostat / OESO.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="stat-number" style="color: var(--rose);">€400</div>
+      <p class="stat-body">minder per maand bij pensionering, gemiddeld. Dit is besteedbaar inkomen, geen abstractie.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="stat-number" style="color: var(--amber);"><span class="token">«X»</span>%</div>
+      <p class="stat-body">van BeFrank’s vrouwelijke deelnemers ligt op een traject onder vergelijkbare mannen. <em>(uit dataroom)</em></p>
+    </div>
+  </div>
+  <p class="assumption-note">Kosten van nietsdoen: elke maand dat de kloof open blijft, is een deelnemer die straks tekortkomt — en een reputatierisico voor een merk dat ‘eerlijk’ belooft.</p>
+</section>
+
+<!-- ===================== 5 · DE PROPOSITIE ===================== -->
+<section class="slide s-prop" id="slide-4">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Dag 1 · De propositie</div>
+  <h2 style="font-family: 'Sora', sans-serif; font-size: 3rem; font-weight: 800; color: var(--sky); margin-bottom: 20px;">De Pensioen-APK</h2>
+  <p style="font-size: 1.2rem; max-width: 820px; color: rgba(13,59,46,0.75); margin-bottom: 48px; line-height: 1.7;">
+    Een automatische check + nudge die de kloof-vergrotende levensgebeurtenissen detecteert — en de deelnemer op het juiste moment één eerlijke keuze voorlegt.
+  </p>
+  <div class="grid-3">
+    <div class="glass-sm">
+      <h3 style="color: var(--sky); margin-bottom: 14px;">Detecteert</h3>
+      <p class="stat-body">Minder uren, ouderschapsverlof, salarisdaling, baanwissel — zichtbaar in BeFrank’s eigen systemen op het moment dat het gebeurt.</p>
+    </div>
+    <div class="glass-sm">
+      <h3 style="color: var(--rose); margin-bottom: 14px;">Duidt</h3>
+      <p class="stat-body">Vertaalt de gebeurtenis naar wat het over 30 jaar betekent: ‘dit kost je €<span class="token">«X»</span>/maand straks’. Persoonlijk, niet abstract.</p>
+    </div>
+    <div class="glass-sm">
+      <h3 style="color: var(--amber); margin-bottom: 14px;">Doet</h3>
+      <p class="stat-body">Eén knop in Mijn Pensioen: vrijwillig bijstorten of het verschil compenseren. Default zo gezet dat nietsdoen de kloof niet vergroot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6 · PERSONA ===================== -->
+<section class="slide s-persona" id="slide-5">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Build · Persona</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 40px;">Voor wie we dit bouwen.</h2>
+  <div class="grid-2">
+    <div class="glass">
+      <h3 style="font-size: 1.8rem; color: var(--sky); margin-bottom: 16px;">Sanne, 34</h3>
+      <p class="stat-body" style="margin-bottom: 24px;">
+        Net 3 dagen gaan werken na haar tweede kind. Werkt bij een BeFrank-werkgever.
+        Logt twee keer per jaar in op Mijn Pensioen, denkt dat ‘het wel goed zit’.
+      </p>
+      <p style="font-family: 'Sora', sans-serif; font-size: 1.15rem; font-weight: 600; font-style: italic; line-height: 1.5;">
+        “Niemand heeft me ooit verteld wat parttime gaan met mijn pensioen doet.”
+      </p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div class="glass-sm" style="padding: 24px 32px;">
+        <div class="kicker" style="color: var(--rose);">De kloof voor Sanne</div>
+        <p class="stat-body">~€<span class="token">«X»</span>/maand minder pensioen op haar huidige traject.</p>
+      </div>
+      <div class="glass-sm" style="padding: 24px 32px;">
+        <div class="kicker" style="color: var(--sky);">Het moment</div>
+        <p class="stat-body">De urenwijziging — nu zichtbaar in het systeem.</p>
+      </div>
+      <div class="glass-sm" style="padding: 24px 32px;">
+        <div class="kicker" style="color: var(--amber);">Wat ze nodig heeft</div>
+        <p class="stat-body">Geen folder. Eén eerlijke keuze, op het juiste moment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 7 · KLANTREIS ===================== -->
+<section class="slide s-reis" id="slide-6">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Build · Klantreis</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 40px;">Het moment dat de kloof ontstaat — herontworpen.</h2>
+  <div class="grid-2">
+    <div class="glass-sm" style="opacity: 0.85;">
+      <div class="kicker" style="color: var(--rose);">Vandaag</div>
+      <div class="journey-item bad"><span class="mark">—</span><span>Sanne gaat parttime werken.</span></div>
+      <div class="journey-item bad"><span class="mark">—</span><span>Werkgever past de inleg aan.</span></div>
+      <div class="journey-item bad"><span class="mark">—</span><span>Geen signaal, geen melding.</span></div>
+      <div class="journey-item bad"><span class="mark">—</span><span>Mijn Pensioen toont een lager getal — zonder uitleg.</span></div>
+      <div class="journey-item bad"><span class="mark">—</span><span>Sanne merkt het pas bij pensionering.</span></div>
+    </div>
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--sky);">Met de Pensioen-APK</div>
+      <div class="journey-item good"><span class="mark">✓</span><span>Urenwijziging triggert de APK automatisch.</span></div>
+      <div class="journey-item good"><span class="mark">✓</span><span>Sanne krijgt één bericht: wat dit over 30 jaar betekent.</span></div>
+      <div class="journey-item good"><span class="mark">✓</span><span>Eerlijk, persoonlijk, geen jargon.</span></div>
+      <div class="journey-item good"><span class="mark">✓</span><span>Eén knop: compenseren of bijstorten.</span></div>
+      <div class="journey-item good"><span class="mark">✓</span><span>Default beschermt haar als ze niets doet.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 8 · BUSINESS CASE ===================== -->
+<section class="slide s-case" id="slide-7">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Build · Business case</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 48px;">De cijfers achter de propositie.</h2>
+  <div class="grid-4">
+    <div class="glass-sm" style="padding: 28px;">
+      <div class="stat-number" style="font-size: 2.4rem; color: var(--sky);"><span class="token">«X»</span>k</div>
+      <div class="kicker" style="color: var(--sky);">Adresseerbaar</div>
+      <p class="stat-body" style="font-size: 0.88rem;">vrouwelijke deelnemers in BeFrank’s boek op een kloof-traject. <em>(uit dataroom)</em></p>
+    </div>
+    <div class="glass-sm" style="padding: 28px;">
+      <div class="stat-number" style="font-size: 2.4rem; color: var(--rose);">+<span class="token">«X»</span>%</div>
+      <div class="kicker" style="color: var(--rose);">Activatie</div>
+      <p class="stat-body" style="font-size: 0.88rem;">verwachte stijging in vrijwillige bijstortingen rond levensgebeurtenissen. <em>(aanname — zichtbaar)</em></p>
+    </div>
+    <div class="glass-sm" style="padding: 28px;">
+      <div class="stat-number" style="font-size: 2.4rem; color: var(--mint);"><span class="token">«X»</span>%</div>
+      <div class="kicker" style="color: var(--mint);">Retentie / ESG</div>
+      <p class="stat-body" style="font-size: 0.88rem;">lagere uitstroom + hard ESG-/SFDR-verhaal voor werkgevers en toezichthouder.</p>
+    </div>
+    <div class="glass-sm" style="padding: 28px;">
+      <div class="stat-number" style="font-size: 2.4rem; color: var(--amber);">€<span class="token">«X»</span></div>
+      <div class="kicker" style="color: var(--amber);">Kosten nietsdoen</div>
+      <p class="stat-body" style="font-size: 0.88rem;">reputatie- en commercieel risico per jaar dat de kloof open blijft.</p>
+    </div>
+  </div>
+  <p class="assumption-note">Alle aannames staan open en zijn aanpasbaar. Dit is het model dat het bestuur mag uitdagen — niet een black box.</p>
+</section>
+
+<!-- ===================== 9 · COMMUNICATIE ===================== -->
+<section class="slide s-comms" id="slide-8">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Build · Communicatie</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 40px;">In de stem van BeFrank. Geen folder.</h2>
+  <div class="glass" style="margin-bottom: 32px;">
+    <p style="font-family: 'Sora', sans-serif; font-size: 1.3rem; font-weight: 600; font-style: italic;">
+      Positionering: “Een pensioen dat bij jou past — <span class="spectrum-text">ook als je leven verandert.</span>”
+    </p>
+  </div>
+  <div class="grid-2">
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--sky);">Push in Mijn Pensioen</div>
+      <p style="font-size: 1.02rem; line-height: 1.7;">
+        Hoi Sanne — je werkt nu wat minder. Slim! En je pensioen? Dat kunnen we samen even bijhouden.
+        In 2 minuten zie je wat het verschil is, en wat je eraan kunt doen. Geen gedoe.
+      </p>
+    </div>
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--rose);">Principes</div>
+      <div class="journey-item good"><span class="mark">—</span><span>Warm en direct — nooit belerend.</span></div>
+      <div class="journey-item good"><span class="mark">—</span><span>Persoonlijk getal, geen percentages.</span></div>
+      <div class="journey-item good"><span class="mark">—</span><span>Eén actie per bericht.</span></div>
+      <div class="journey-item good"><span class="mark">—</span><span>Eerlijk over wat het kost én oplevert.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 10 · PROTOTYPE ===================== -->
+<section class="slide s-proto" id="slide-9">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Build · Prototype</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 40px;">Het voelt niet als een idee.<br>Het voelt echt.</h2>
+  <div class="grid-2" style="grid-template-columns: 0.8fr 1.2fr;">
+    <div class="glass-sm" style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 380px; text-align: center;">
+      <p style="font-style: italic; color: rgba(13,59,46,0.55); margin-bottom: 12px;"><span class="token">«Mijn Pensioen — klikbaar conceptscherm»</span></p>
+      <p style="font-size: 0.8rem; color: rgba(13,59,46,0.4);">[ schermafbeelding van het prototype — ingevoegd door de Presentation Builder ]</p>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div class="glass-sm" style="padding: 20px 28px; display: flex; gap: 20px; align-items: baseline;">
+        <strong style="color: var(--sky); white-space: nowrap; font-family: 'Sora', sans-serif;">1 · De trigger</strong>
+        <span class="stat-body">‘Je uren zijn aangepast.’ De APK opent vanzelf.</span>
+      </div>
+      <div class="glass-sm" style="padding: 20px 28px; display: flex; gap: 20px; align-items: baseline;">
+        <strong style="color: var(--sky); white-space: nowrap; font-family: 'Sora', sans-serif;">2 · Het inzicht</strong>
+        <span class="stat-body">Eén scherm: jouw kloof, in euro’s per maand.</span>
+      </div>
+      <div class="glass-sm" style="padding: 20px 28px; display: flex; gap: 20px; align-items: baseline;">
+        <strong style="color: var(--sky); white-space: nowrap; font-family: 'Sora', sans-serif;">3 · De keuze</strong>
+        <span class="stat-body">Compenseer met één tik — of stel in dat het automatisch meebeweegt.</span>
+      </div>
+      <div class="glass-sm" style="padding: 20px 28px; display: flex; gap: 20px; align-items: baseline;">
+        <strong style="color: var(--sky); white-space: nowrap; font-family: 'Sora', sans-serif;">4 · De bevestiging</strong>
+        <span class="stat-body">‘Goed geregeld. We houden het voor je in de gaten.’</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 11 · ROADMAP ===================== -->
+<section class="slide s-roadmap" id="slide-10">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div class="slide-label">Vervolg</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 48px;">Van propositie naar werkende pilot.</h2>
+  <div class="grid-3">
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--sky);">Nu → wk 6</div>
+      <h3 style="color: var(--sky); margin-bottom: 14px;">Pilot</h3>
+      <p class="stat-body">1 werkgever, 1 levensgebeurtenis (urenwijziging). Meet activatie en kloof-effect.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--rose);">Wk 6 → 6 mnd</div>
+      <h3 style="color: var(--rose); margin-bottom: 14px;">Advisory Trajectory</h3>
+      <p class="stat-body">Uitbouw over alle levensgebeurtenissen, defaults herontworpen, marcom-team getraind.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--amber);">6 → 18 mnd</div>
+      <h3 style="color: var(--amber); margin-bottom: 14px;">Embed &amp; Scale</h3>
+      <p class="stat-body">Werkgever-dashboard, certificering, continue scan. De kloof als merkbelofte.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 12 · DE BESLISSING ===================== -->
+<section class="slide s-besluit" id="slide-11">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div style="max-width: 900px;">
+    <div class="slide-label">De beslissing</div>
+    <h1 style="font-size: 2.9rem; font-weight: 700; margin-bottom: 28px;">
+      Wil BeFrank de uitvoerder zijn die de kloof <span class="spectrum-text">als eerste dicht?</span>
+    </h1>
+    <p style="font-size: 1.15rem; color: rgba(13,59,46,0.65); max-width: 680px; line-height: 1.7;">
+      Greenlight de 6-weken pilot. Eén werkgever. Eén moment. Een meetbaar resultaat.
+    </p>
+    <div class="prism-mark" aria-hidden="true">
+      <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pmFace" x1="0" y1="0" x2="0.6" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+            <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.45"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0.7"/>
+          </linearGradient>
+          <linearGradient id="pmSide" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0D3B2E" stop-opacity="0.34"/>
+            <stop offset="1" stop-color="#0D3B2E" stop-opacity="0.08"/>
+          </linearGradient>
+          <linearGradient id="pmRose" gradientUnits="userSpaceOnUse" x1="168" y1="0" x2="402" y2="0">
+            <stop offset="0" stop-color="#F5B896"/><stop offset="1" stop-color="#F5B896" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmAmber" gradientUnits="userSpaceOnUse" x1="176" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#F2D080"/><stop offset="1" stop-color="#F2D080" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmMint" gradientUnits="userSpaceOnUse" x1="184" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#9FD4B0"/><stop offset="1" stop-color="#9FD4B0" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmSky" gradientUnits="userSpaceOnUse" x1="191" y1="0" x2="400" y2="0">
+            <stop offset="0" stop-color="#6DC0C8"/><stop offset="1" stop-color="#6DC0C8" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="pmBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <!-- ground shadow -->
+        <ellipse cx="152" cy="132" rx="62" ry="7" fill="#0D3B2E" opacity="0.14" filter="url(#pmBlur)"/>
+        <!-- spectrum beams, emerging from behind the glass and fading out -->
+        <polygon fill="url(#pmRose)"  points="168,57 168,63 402,33 402,21"/>
+        <polygon fill="url(#pmAmber)" points="176,70 176,76 406,66 406,54"/>
+        <polygon fill="url(#pmMint)"  points="184,83 184,89 406,99 406,87"/>
+        <polygon fill="url(#pmSky)"   points="191,95 191,101 400,131 400,119"/>
+        <!-- extruded side face (depth) -->
+        <polygon fill="url(#pmSide)" points="150,16 166,7 220,103 204,114" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-linejoin="round"/>
+        <!-- front glass face -->
+        <path d="M150,16 L204,114 L96,114 Z" fill="url(#pmFace)" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linejoin="round"/>
+        <!-- highlight streak -->
+        <line x1="143" y1="34" x2="116" y2="82" stroke="#ffffff" stroke-opacity="0.85" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p style="font-size: 0.85rem; color: rgba(13,59,46,0.45);">Unlockt · Gender Capital Lab™ Sprint · 26 juni 2026</p>
+  </div>
+</section>
+
+<script>
+// Build nav dots from slides, then wire navigation + active state
+const slides = document.querySelectorAll('.slide');
+const nav = document.querySelector('.nav-dots');
+slides.forEach((s, i) => {
+  const b = document.createElement('button');
+  b.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  b.setAttribute('data-slide', i);
+  b.setAttribute('aria-label', 'Slide ' + (i + 1));
+  b.addEventListener('click', () => s.scrollIntoView({ behavior: 'smooth' }));
+  nav.appendChild(b);
+});
+const dots = document.querySelectorAll('.nav-dot');
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('in-view');
+      const idx = entry.target.id.replace('slide-', '');
+      dots.forEach(d => d.classList.remove('active'));
+      document.querySelector(`.nav-dot[data-slide="${idx}"]`).classList.add('active');
+    }
+  });
+}, { threshold: 0.5 });
+slides.forEach(slide => observer.observe(slide));
+
+// Keyboard navigation: arrows / PageUp-PageDown jump per slide
+let current = 0;
+const goTo = i => { current = Math.max(0, Math.min(slides.length - 1, i)); slides[current].scrollIntoView({ behavior: 'smooth' }); };
+window.addEventListener('keydown', e => {
+  if (['ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); goTo(current + 1); }
+  if (['ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); goTo(current - 1); }
+});
+const syncCurrent = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) current = parseInt(en.target.id.replace('slide-', ''), 10); }), { threshold: 0.5 });
+slides.forEach(s => syncCurrent.observe(s));
+</script>
+</body>
+</html>

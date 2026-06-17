@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBC — The Inclusive Business Collective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ── Reset & Base ─────────────────────────────────── */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --midnight: #0C1B33;
+  --gold: #C8A951;
+  --cream: #F7F2EA;
+  --mauve: #C4A0A0;
+  --slate: #3D4558;
+  --navy: #1A2E4A;
+  --gold-hover: #b8993f;
+  --radius: 10px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: var(--midnight);
+  background: var(--cream);
+  line-height: 1.7;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  line-height: 1.15;
+}
+
+a { text-decoration: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── Navigation ───────────────────────────────────── */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 0 40px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(12, 27, 51, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(200, 169, 81, 0.12);
+}
+
+.nav-logo {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: 3px;
+}
+
+.nav-logo span { color: var(--gold); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+  text-transform: uppercase;
+}
+
+.nav-links a:hover { color: #fff; }
+
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: var(--gold);
+  color: var(--midnight);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+  text-transform: uppercase;
+}
+
+.btn-gold:hover {
+  background: var(--gold-hover);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  background: transparent;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+  text-transform: uppercase;
+}
+
+.btn-outline:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-outline-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--midnight);
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(12, 27, 51, 0.2);
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+  text-transform: uppercase;
+}
+
+.btn-outline-dark:hover {
+  border-color: var(--midnight);
+  background: rgba(12, 27, 51, 0.04);
+}
+
+/* ── Hero ─────────────────────────────────────────── */
+.hero {
+  padding-top: 72px;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--midnight);
+  overflow: hidden;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px 60px 80px 80px;
+}
+
+.hero-tag {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 28px;
+}
+
+.hero-title {
+  font-size: clamp(40px, 4.2vw, 64px);
+  color: #fff;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-subtitle {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 440px;
+  margin-bottom: 40px;
+  line-height: 1.8;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 60px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  padding-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hero-stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px;
+  font-weight: 300;
+  color: #fff;
+}
+
+.hero-stat-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.hero-image {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, var(--midnight) 0%, transparent 20%);
+}
+
+/* ── Social Proof ─────────────────────────────────── */
+.social-proof {
+  padding: 48px 0;
+  background: #fff;
+  border-bottom: 1px solid rgba(12, 27, 51, 0.06);
+}
+
+.social-proof-inner {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.social-proof-label {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--slate);
+  opacity: 0.5;
+  white-space: nowrap;
+}
+
+.social-proof-logos {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.social-proof-logos span {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--slate);
+  opacity: 0.35;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+/* ── Services ─────────────────────────────────────── */
+.services {
+  padding: 120px 0;
+  background: var(--cream);
+}
+
+.section-tag {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: clamp(32px, 3.5vw, 48px);
+  color: var(--midnight);
+  margin-bottom: 20px;
+}
+
+.section-subtitle {
+  font-size: 17px;
+  color: var(--slate);
+  max-width: 520px;
+  line-height: 1.8;
+  margin-bottom: 60px;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.service-card {
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 44px 36px;
+  border: 1px solid rgba(12, 27, 51, 0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s;
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(12, 27, 51, 0.08);
+}
+
+.service-card:hover::before { transform: scaleX(1); }
+
+.service-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(200, 169, 81, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+  color: var(--gold);
+  font-size: 20px;
+}
+
+.service-card h3 {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: var(--midnight);
+}
+
+.service-card p {
+  font-size: 15px;
+  color: var(--slate);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.service-link {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.3s;
+}
+
+.service-link:hover { gap: 10px; }
+
+/* ── Photo Feature ────────────────────────────────── */
+.feature {
+  padding: 120px 0;
+  background: #fff;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.feature-image {
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+}
+
+.feature-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.feature-tag {
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.feature-content h2 {
+  font-size: clamp(28px, 2.8vw, 40px);
+  color: var(--midnight);
+  margin-bottom: 24px;
+}
+
+.feature-content p {
+  font-size: 16px;
+  color: var(--slate);
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.feature-quote {
+  padding: 28px 0;
+  margin: 28px 0;
+  border-top: 1px solid rgba(12, 27, 51, 0.06);
+  border-bottom: 1px solid rgba(12, 27, 51, 0.06);
+}
+
+.feature-quote blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-style: italic;
+  color: var(--midnight);
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.feature-quote-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.feature-quote-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.feature-quote-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.feature-quote-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--midnight);
+}
+
+.feature-quote-role {
+  font-size: 12px;
+  color: var(--slate);
+}
+
+/* ── Feature Reversed ─────────────────────────────── */
+.feature-reversed {
+  padding: 120px 0;
+  background: var(--cream);
+}
+
+.feature-reversed .feature-grid {
+  direction: rtl;
+}
+
+.feature-reversed .feature-grid > * {
+  direction: ltr;
+}
+
+.feature-check-list {
+  list-style: none;
+  margin: 28px 0;
+}
+
+.feature-check-list li {
+  font-size: 15px;
+  color: var(--slate);
+  padding: 10px 0;
+  padding-left: 28px;
+  position: relative;
+}
+
+.feature-check-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 16px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* ── Impact Stats ─────────────────────────────────── */
+.impact {
+  padding: 100px 0;
+  background: var(--navy);
+  text-align: center;
+}
+
+.impact .section-tag { color: var(--gold); }
+
+.impact .section-title {
+  color: #fff;
+  margin-bottom: 60px;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+}
+
+.impact-item {
+  padding: 20px;
+}
+
+.impact-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(42px, 4vw, 60px);
+  font-weight: 300;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+
+.impact-label {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.5px;
+  line-height: 1.6;
+}
+
+/* ── Team ─────────────────────────────────────────── */
+.team {
+  padding: 120px 0;
+  background: #fff;
+}
+
+.team-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.team-header .section-subtitle {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.team-card {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+}
+
+.team-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+
+.team-card:hover img { transform: scale(1.05); }
+
+.team-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(12, 27, 51, 0.9) 0%, rgba(12, 27, 51, 0.3) 40%, transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 36px;
+  transition: background 0.4s;
+}
+
+.team-card:hover .team-overlay {
+  background: linear-gradient(to top, rgba(12, 27, 51, 0.95) 0%, rgba(12, 27, 51, 0.5) 50%, rgba(12, 27, 51, 0.2) 100%);
+}
+
+.team-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.team-role {
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.team-bio {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s, opacity 0.4s;
+  opacity: 0;
+}
+
+.team-card:hover .team-bio {
+  max-height: 120px;
+  opacity: 1;
+}
+
+/* ── CTA Band ─────────────────────────────────────── */
+.cta-band {
+  padding: 100px 0;
+  background: var(--midnight);
+  text-align: center;
+}
+
+.cta-band h2 {
+  font-size: clamp(32px, 3.5vw, 52px);
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.cta-band h2 em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.cta-band p {
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 500px;
+  margin: 0 auto 40px;
+  line-height: 1.8;
+}
+
+/* ── Footer ───────────────────────────────────────── */
+.footer {
+  padding: 80px 0 40px;
+  background: #080f1e;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+.footer-brand-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: 2px;
+  margin-bottom: 16px;
+}
+
+.footer-brand-desc {
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 300px;
+}
+
+.footer-col h4 {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 20px;
+}
+
+.footer-col ul {
+  list-style: none;
+}
+
+.footer-col li { margin-bottom: 12px; }
+
+.footer-col a {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  transition: color 0.3s;
+}
+
+.footer-col a:hover { color: var(--gold); }
+
+.footer-bottom {
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 24px;
+}
+
+.footer-bottom-links a {
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.3s;
+}
+
+.footer-bottom-links a:hover { color: var(--gold); }
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-content { padding: 100px 40px 60px; }
+  .hero-image { height: 400px; }
+  .hero-image::after { background: linear-gradient(to bottom, var(--midnight) 0%, transparent 30%); }
+  .services-grid { grid-template-columns: 1fr; max-width: 480px; }
+  .feature-grid { grid-template-columns: 1fr; gap: 40px; }
+  .feature-reversed .feature-grid { direction: ltr; }
+  .impact-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .container { padding: 0 24px; }
+  .nav { padding: 0 24px; }
+  .nav-links { display: none; }
+  .hero-content { padding: 100px 24px 48px; }
+  .hero-stats { flex-direction: column; gap: 24px; }
+  .hero-buttons { flex-direction: column; }
+  .btn-gold, .btn-outline, .btn-outline-dark { justify-content: center; }
+  .impact-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── Navigation ────────────────────────────────── -->
+<nav class="nav">
+  <a href="#" class="nav-logo">IBC</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#approach">Approach</a></li>
+    <li><a href="#impact">Impact</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#contact" class="btn-gold">Book a Consult</a></li>
+  </ul>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────── -->
+<section class="hero">
+  <div class="hero-content">
+    <p class="hero-tag">The Inclusive Business Collective</p>
+    <h1 class="hero-title">We don't disrupt.<br>We <em>elevate.</em></h1>
+    <p class="hero-subtitle">Guiding inclusive ventures from ambition to investment-readiness with the rigour and discretion of a private advisory.</p>
+    <div class="hero-buttons">
+      <a href="#contact" class="btn-gold">Start your journey &rarr;</a>
+      <a href="#services" class="btn-outline">Explore services</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-number">87%</div>
+        <div class="hero-stat-label">Funding success rate</div>
+      </div>
+      <div>
+        <div class="hero-stat-number">&euro;14M+</div>
+        <div class="hero-stat-label">Capital facilitated</div>
+      </div>
+      <div>
+        <div class="hero-stat-number">120+</div>
+        <div class="hero-stat-label">Ventures elevated</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-image">
+    <img src="https://images.unsplash.com/photo-1589156280159-27698a70f29e?w=800&q=80&fit=crop" alt="Professional woman in natural light" loading="eager">
+  </div>
+</section>
+
+<!-- ── Social Proof ──────────────────────────────── -->
+<section class="social-proof">
+  <div class="container">
+    <div class="social-proof-inner">
+      <span class="social-proof-label">Trusted by</span>
+      <div class="social-proof-logos">
+        <span>Rabobank</span>
+        <span>NL Groeit</span>
+        <span>Techleap</span>
+        <span>StartupAmsterdam</span>
+        <span>KVK</span>
+        <span>Invest-NL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Services ───────────────────────────────────── -->
+<section class="services" id="services">
+  <div class="container">
+    <p class="section-tag">What we offer</p>
+    <h2 class="section-title">Three pillars of elevation</h2>
+    <p class="section-subtitle">Each track is tailored to where you are today and where the market needs you tomorrow.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <h3>Readiness Scan</h3>
+        <p>A forensic assessment of your venture's investment-readiness, market positioning, and governance. Know exactly where you stand before you approach capital.</p>
+        <a href="#" class="service-link">Learn more &rarr;</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <h3>CFO Track</h3>
+        <p>Fractional CFO guidance to build financial models that investors trust. From unit economics to cap tables, we make your numbers speak with authority.</p>
+        <a href="#" class="service-link">Learn more &rarr;</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <h3>Mentorship</h3>
+        <p>Matched with senior advisors who have scaled, exited, and invested. Quarterly board-style sessions that hold you accountable to your boldest ambitions.</p>
+        <a href="#" class="service-link">Learn more &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Feature: Testimonial ──────────────────────── -->
+<section class="feature" id="approach">
+  <div class="container">
+    <div class="feature-grid">
+      <div class="feature-image">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80&fit=crop" alt="Collaborative meeting" loading="lazy">
+      </div>
+      <div class="feature-content">
+        <p class="feature-tag">Our approach</p>
+        <h2>Built on trust,<br>measured by outcomes</h2>
+        <p>We work with a deliberately small portfolio of ventures. This is not a programme you apply to en masse. It is a considered partnership, built on mutual ambition and candid dialogue.</p>
+        <div class="feature-quote">
+          <blockquote>"IBC didn't just prepare our pitch deck. They restructured how we think about growth. Within four months, we closed our seed round oversubscribed."</blockquote>
+          <div class="feature-quote-author">
+            <div class="feature-quote-avatar">
+              <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80&fit=crop" alt="Testimonial avatar" loading="lazy">
+            </div>
+            <div>
+              <div class="feature-quote-name">Sophie de Graaf</div>
+              <div class="feature-quote-role">Founder, Luma Health</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Feature Reversed: Readiness Scan ──────────── -->
+<section class="feature-reversed">
+  <div class="container">
+    <div class="feature-grid">
+      <div class="feature-image">
+        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80&fit=crop" alt="Confident businesswoman" loading="lazy">
+      </div>
+      <div class="feature-content">
+        <p class="feature-tag">Readiness Scan</p>
+        <h2>Know your position<br>before you pitch</h2>
+        <p>Our proprietary assessment evaluates your venture across twelve dimensions that institutional investors care about most. No vanity metrics. No guesswork.</p>
+        <ul class="feature-check-list">
+          <li>Financial model stress-testing and scenario planning</li>
+          <li>Governance and board readiness evaluation</li>
+          <li>Market positioning and competitive landscape mapping</li>
+          <li>Investor narrative and pitch architecture review</li>
+        </ul>
+        <a href="#contact" class="btn-outline-dark">Request a scan &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Impact Stats ───────────────────────────────── -->
+<section class="impact" id="impact">
+  <div class="container">
+    <p class="section-tag">Our impact</p>
+    <h2 class="section-title">Measured in outcomes, not intentions</h2>
+    <div class="impact-grid">
+      <div class="impact-item">
+        <div class="impact-number">&euro;14M+</div>
+        <div class="impact-label">Capital raised by our portfolio ventures</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-number">87%</div>
+        <div class="impact-label">Ventures that secured funding within 6 months</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-number">120+</div>
+        <div class="impact-label">Founders guided through investment readiness</div>
+      </div>
+      <div class="impact-item">
+        <div class="impact-number">3.2x</div>
+        <div class="impact-label">Average revenue growth post-programme</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Team ────────────────────────────────────────── -->
+<section class="team" id="team">
+  <div class="container">
+    <div class="team-header">
+      <p class="section-tag">Leadership</p>
+      <h2 class="section-title">The partners behind IBC</h2>
+      <p class="section-subtitle">Seasoned operators who have built, scaled, and invested. We advise from experience, not theory.</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=600&q=80&fit=crop" alt="Chantal van der Berg" loading="lazy">
+        <div class="team-overlay">
+          <div class="team-name">Chantal van der Berg</div>
+          <div class="team-role">Managing Partner</div>
+          <div class="team-bio">Fifteen years in impact investing and corporate strategy. Former director at a leading Dutch development bank. Chantal shapes the vision behind every partnership.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80&fit=crop" alt="Jan van Waveren" loading="lazy">
+        <div class="team-overlay">
+          <div class="team-name">Jan van Waveren</div>
+          <div class="team-role">Operations &amp; Pitch</div>
+          <div class="team-bio">Operational architect with a track record in scaling ventures from seed to Series A. Jan ensures every pitch is airtight and every process runs on precision.</div>
+        </div>
+      </div>
+      <div class="team-card">
+        <img src="https://images.unsplash.com/photo-1573497019236-17f8177b81e8?w=600&q=80&fit=crop" alt="Britt de Vries" loading="lazy">
+        <div class="team-overlay">
+          <div class="team-name">Britt de Vries</div>
+          <div class="team-role">Commercial &amp; Revenue</div>
+          <div class="team-bio">Revenue strategist with deep expertise in B2B SaaS and marketplace models. Britt turns commercial ambition into repeatable, defensible growth.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA Band ────────────────────────────────────── -->
+<section class="cta-band" id="contact">
+  <div class="container">
+    <h2>Ready to be <em>elevated?</em></h2>
+    <p>Book a confidential introductory conversation. No pitch required. Just bring your ambition.</p>
+    <a href="#" class="btn-gold">Book your consultation &rarr;</a>
+  </div>
+</section>
+
+<!-- ── Footer ──────────────────────────────────────── -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-name">IBC</div>
+        <p class="footer-brand-desc">The Inclusive Business Collective. Guiding purpose-driven ventures to investment-readiness with discretion and rigour.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#">Readiness Scan</a></li>
+          <li><a href="#">CFO Track</a></li>
+          <li><a href="#">Mentorship</a></li>
+          <li><a href="#">Portfolio</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Team</a></li>
+          <li><a href="#">Impact</a></li>
+          <li><a href="#">Journal</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">hello@ibc-collective.nl</a></li>
+          <li><a href="#">Amsterdam, NL</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 IBC &mdash; The Inclusive Business Collective. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookie Preferences</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

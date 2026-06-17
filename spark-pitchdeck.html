@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBC — Pitch Deck · Spark</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--deep:#20123A;--ink:#2B2A33;--orange:#FF7139;--violet:#9059FF;--pink:#FF298A;--light:#F9F9FB;--gradient:linear-gradient(135deg,#9059FF,#FF298A,#FF7139)}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#0e0820;color:var(--light);-webkit-font-smoothing:antialiased}
+
+.slide{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px;position:relative;overflow:hidden}
+@media(max-width:768px){.slide{padding:40px 24px}}
+.slide-num{position:absolute;top:40px;right:60px;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--violet);opacity:0.35}
+.slide-logo{position:absolute;top:40px;left:60px;font-size:16px;font-weight:800;color:rgba(255,255,255,0.2);letter-spacing:1px}
+.slide-logo .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--gradient);margin-right:6px;vertical-align:middle}
+
+/* Gradient text utility */
+.grad-text{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* Gradient border card */
+.glow-card{position:relative;border-radius:16px;overflow:hidden}
+.glow-card::before{content:'';position:absolute;inset:0;border-radius:16px;padding:1.5px;background:var(--gradient);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.glow-card-inner{background:rgba(32,18,58,0.85);border-radius:16px;padding:32px;height:100%}
+
+/* Gradient bar */
+.grad-bar{height:3px;width:48px;background:var(--gradient);border-radius:2px;margin-bottom:24px}
+
+/* Section label */
+.section-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px}
+
+/* ─── S1: TITLE ─── */
+.s1{background:var(--deep);align-items:center;text-align:center}
+.s1::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 55%,rgba(144,89,255,0.1),transparent);pointer-events:none}
+.s1::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 40% 30% at 60% 50%,rgba(255,41,138,0.06),transparent);pointer-events:none}
+.s1-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;text-transform:uppercase;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:40px}
+.s1-title{font-size:clamp(44px,6.5vw,82px);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:24px;max-width:900px}
+.s1-title .highlight{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.s1-sub{font-size:17px;font-weight:400;color:rgba(249,249,251,0.45);max-width:540px;margin:0 auto 48px;line-height:1.75}
+.s1-accent{width:60px;height:4px;background:var(--gradient);border-radius:2px;margin:0 auto}
+
+/* ─── S2: WHY WE EXIST ─── */
+.s2{background:linear-gradient(160deg,#180e30,var(--deep))}
+.s2-title{font-size:clamp(32px,4.5vw,52px);font-weight:800;line-height:1.15;letter-spacing:-1px;margin-bottom:48px;max-width:700px}
+.s2-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:960px}
+.s2-card .glow-card-inner{display:flex;flex-direction:column}
+.s2-num{font-size:44px;font-weight:800;line-height:1;margin-bottom:12px;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.s2-text{font-size:13px;color:rgba(249,249,251,0.5);line-height:1.7}
+@media(max-width:768px){.s2-grid{grid-template-columns:1fr}}
+
+/* ─── S3: WHO WE ARE ─── */
+.s3{background:var(--deep)}
+.s3::before{content:'';position:absolute;right:0;top:0;bottom:0;width:40%;background:radial-gradient(ellipse at 80% 50%,rgba(144,89,255,0.06),transparent);pointer-events:none}
+.s3-title{font-size:clamp(30px,4vw,46px);font-weight:800;line-height:1.2;margin-bottom:16px;max-width:620px}
+.s3-body{font-size:15px;font-weight:400;color:rgba(249,249,251,0.45);line-height:1.8;max-width:640px;margin-bottom:44px}
+.s3-points{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:860px}
+.s3-point{background:rgba(144,89,255,0.06);border-radius:14px;padding:24px 28px;position:relative;overflow:hidden}
+.s3-point::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--gradient);border-radius:2px}
+.s3-point-title{font-size:14px;font-weight:700;color:var(--light);margin-bottom:6px}
+.s3-point-text{font-size:13px;color:rgba(249,249,251,0.45);line-height:1.65}
+@media(max-width:768px){.s3-points{grid-template-columns:1fr}}
+
+/* ─── S4: METHODOLOGY ─── */
+.s4{background:linear-gradient(160deg,var(--deep),#180e30)}
+.s4-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1040px;margin-top:48px}
+.s4-step{position:relative;border-radius:16px;overflow:hidden}
+.s4-step::before{content:'';position:absolute;inset:0;border-radius:16px;padding:1.5px;background:var(--gradient);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.s4-step-inner{background:rgba(32,18,58,0.9);border-radius:16px;padding:28px;text-align:center;height:100%;display:flex;flex-direction:column}
+.s4-step-num{font-size:32px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.s4-step-name{font-size:15px;font-weight:700;color:var(--light);margin-bottom:10px}
+.s4-step-desc{font-size:12px;color:rgba(249,249,251,0.4);line-height:1.65;flex:1}
+.s4-step-out{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-top:16px;padding-top:14px;border-top:1px solid rgba(144,89,255,0.15)}
+@media(max-width:768px){.s4-steps{grid-template-columns:1fr 1fr}}
+
+/* ─── S5: WHAT IT DELIVERS ─── */
+.s5{background:var(--deep)}
+.s5-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:940px;margin-top:48px}
+.s5-card{position:relative;border-radius:16px;background:rgba(144,89,255,0.05);padding:36px;overflow:hidden}
+.s5-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient)}
+.s5-card-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+.s5-card-title{font-size:20px;font-weight:700;color:var(--light);margin-bottom:10px}
+.s5-card-text{font-size:13px;color:rgba(249,249,251,0.45);line-height:1.7}
+
+/* ─── S6: USE CASE ─── */
+.s6{background:linear-gradient(160deg,#180e30,var(--deep))}
+.s6-scenario{position:relative;border-radius:20px;overflow:hidden;max-width:860px;margin-top:44px}
+.s6-scenario::before{content:'';position:absolute;inset:0;border-radius:20px;padding:1.5px;background:var(--gradient);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.s6-scenario-inner{background:rgba(32,18,58,0.9);border-radius:20px;padding:44px}
+.s6-row{display:flex;gap:48px;margin-bottom:28px}
+.s6-col{flex:1}
+.s6-col-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px}
+.s6-col-text{font-size:14px;color:rgba(249,249,251,0.55);line-height:1.7}
+.s6-col-text strong{color:var(--light);font-weight:700}
+.s6-timeline{display:flex;gap:0;margin-top:28px;border-top:1px solid rgba(144,89,255,0.15);padding-top:24px}
+.s6-tl-item{flex:1;text-align:center;border-right:1px solid rgba(144,89,255,0.12);padding:0 16px}
+.s6-tl-item:last-child{border-right:none}
+.s6-tl-day{font-size:22px;font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px}
+.s6-tl-text{font-size:11px;color:rgba(249,249,251,0.4);line-height:1.55}
+@media(max-width:768px){.s6-row{flex-direction:column;gap:20px}.s6-timeline{flex-direction:column;gap:20px}.s6-tl-item{border-right:none;border-bottom:1px solid rgba(144,89,255,0.12);padding-bottom:16px}}
+
+/* ─── S7: TEAM ─── */
+.s7{background:var(--deep)}
+.s7-team{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:940px;margin-top:48px}
+.s7-member{position:relative;border-radius:16px;overflow:hidden;text-align:center}
+.s7-member::before{content:'';position:absolute;inset:0;border-radius:16px;padding:1.5px;background:var(--gradient);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.s7-member-inner{background:rgba(32,18,58,0.85);border-radius:16px;padding:36px 28px}
+.s7-avatar{width:68px;height:68px;border-radius:50%;background:var(--gradient);margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:var(--deep)}
+.s7-name{font-size:17px;font-weight:700;color:var(--light);margin-bottom:4px}
+.s7-role{font-size:12px;font-weight:600;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px}
+.s7-bio{font-size:12px;color:rgba(249,249,251,0.4);line-height:1.65}
+@media(max-width:768px){.s7-team{grid-template-columns:1fr}}
+
+/* ─── S8: CLOSE ─── */
+.s8{background:var(--deep);align-items:center;text-align:center}
+.s8::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 45% at 50% 50%,rgba(144,89,255,0.1),transparent);pointer-events:none}
+.s8::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 35% 30% at 55% 45%,rgba(255,41,138,0.06),transparent);pointer-events:none}
+.s8-title{font-size:clamp(32px,4.5vw,58px);font-weight:800;line-height:1.15;letter-spacing:-1px;margin-bottom:24px;max-width:700px}
+.s8-sub{font-size:16px;font-weight:400;color:rgba(249,249,251,0.4);line-height:1.75;max-width:480px;margin:0 auto 44px}
+.s8-sub strong{color:var(--light);font-weight:600}
+.s8-accent{width:60px;height:4px;background:var(--gradient);border-radius:2px;margin:0 auto 24px}
+.s8-contact{font-size:12px;color:rgba(249,249,251,0.2);letter-spacing:1px}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<section class="slide s1">
+  <span class="slide-logo"><span class="dot"></span>IBC</span>
+  <span class="slide-num">01</span>
+  <p class="s1-eyebrow">The Inclusive Business Collective</p>
+  <h1 class="s1-title">The Largest Wealth Transfer in History Is <span class="highlight">Happening Now.</span></h1>
+  <p class="s1-sub">Most financial institutions are not ready. We make them ready — and we prove the business case.</p>
+  <div class="s1-accent"></div>
+</section>
+
+<!-- SLIDE 2: WHY WE EXIST -->
+<section class="slide s2">
+  <span class="slide-logo"><span class="dot"></span>IBC</span>
+  <span class="slide-num">02</span>
+  <p class="section-label">Why We Exist</p>
+  <h2 class="s2-title">The numbers don't just <span class="grad-text">support</span> the case. They <span class="grad-text">are</span> the case.</h2>
+  <div class="s2-grid">
+    <div class="s2-card glow-card">
+      <div class="glow-card-inner">
+        <div class="s2-num">50%+</div>
+        <p class="s2-text">of European wealth is now controlled by women — a figure accelerating as boomers transfer assets to partners who outlive them.</p>
+      </div>
+    </div>
+    <div class="s2-card glow-card">
+      <div class="glow-card-inner">
+        <div class="s2-num">36%</div>
+        <p class="s2-text">higher profitability at companies with diverse executive teams. This is not a values argument — it is a revenue argument.</p>
+      </div>
+    </div>
+    <div class="s2-card glow-card">
+      <div class="glow-card-inner">
+        <div class="s2-num">60+</div>
+        <p class="s2-text">countries where our methodology is being deployed through the World Bank. This is proof of concept at global scale.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: WHO WE ARE -->
+<section class="slide s3">
+  <span class="slide-logo"><span class="dot"></span>IBC</span>
+  <span class="slide-num">03</span>
+  <p class="section-label">Who We Are</p>
+  <h2 class="s3-title">A science-based inclusion consultancy — built for the <span class="grad-text">business side.</span></h2>
+  <p class="s3-body">IBC helps medium and large corporates convert underserved markets into measurable commercial growth. We are not a DEI programme. We are not an HR initiative. We are a business performance firm.</p>
+  <div class="s3-points">
+    <div class="s3-point">
+      <div class="s3-point-title">We make the business case, not the moral case</div>
+      <p class="s3-point-text">Every engagement starts with revenue impact, margin analysis, and commercial opportunity — not compliance checklists.</p>
+    </div>
+    <div class="s3-point">
+      <div class="s3-point-title">We go through the client door, not the HR door</div>
+      <p class="s3-point-text">Our buyer is the CEO, the CMO, the Head of Retail — the people who own P&L and growth targets.</p>
+    </div>
+    <div class="s3-point">
+      <div class="s3-point-title">We deliver at world-class scale</div>
+      <p class="s3-point-text">Methodology deployed in 60+ countries via the World Bank. Tested, refined, and validated at institutional level.</p>
+    </div>
+    <div class="s3-point">
+      <div class="s3-point-title">DEI fatigue is our opening</div>
+      <p class="s3-point-text">The market is tired of tokenism. We enter where others have failed — because we speak the language of growth.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: HOW WE WORK -->
+<section class="slide s4">
+  <span class="slide-logo"><span class="dot"></span>IBC</span>
+  <span class="slide-num">04</span>
+  <p class="section-label">How We Work</p>
+  <h2 class="s2-title">Four phases. <span class="grad-text">One trajectory.</span></h2>
+  <div class="s4-steps">
+    <div class="s4-step">
+      <div class="s4-step-inner">
+        <div class="s4-step-num">01</div>
+        <div class="s4-step-name">Diagnose</div>
+        <p class="s4-step-desc">Gender Lens Framework applied to products, channels, customer journeys and P&L lines.</p>
+        <div class="s4-step-out">Output → Readiness Score</div>
+      </div>
+    </div>
+    <div class="s4-step">
+      <div class="s4-step-inner">
+        <div class="s4-step-num">02</div>
+        <div class="s4-step-name">Strategise</div>
+        <p class="s4-step-desc">Co-design of commercial roadmap with executive team. Prioritised by revenue potential.</p>
+        <div class="s4-step-out">Output → Growth Roadmap</div>
+      </div>
+    </div>
+    <div class="s4-step">
+      <div class="s4-step-inner">
+        <div class="s4-step-num">03</div>
+        <div class="s4-step-name">Build & Test</div>
+        <p class="s4-step-desc">Rapid pilots on highest-impact segments. Product adaptation, comms testing, channel optimisation.</p>
+        <div class="s4-step-out">Output → Pilot Results</div>
+      </div>
+    </div>
+    <div class="s4-step">
+      <div class="s4-step-inner">
+        <div class="s4-step-num">04</div>
+        <div class="s4-step-name">Measure & Scale</div>
+        <p class="s4-step-desc">Full deployment with embedded KPIs, dashboards, and ongoing advisory.</p>
+        <div class="s4-step-out">Output → Scaled Impact</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: WHAT IT DELIVERS -->
+<section class="slide s5">
+  <span class="slide-logo"><span class="dot"></span>IBC</span>
+  <span class="slide-num">05</span>
+  <p class="section-label">What It Delivers</p>
+  <h2 class="s2-title">Four offerings. <span class="grad-text">Fully modular.</span></h2>
+  <div class="s5-grid">
+    <div class="s5-card">
+      <div class="s5-card-tag">Diagnostic</div>
+      <div class="s5-card-title">Readiness Scan</div>
+      <p class="s5-card-text">AI-enabled diagnostic that benchmarks your organisation against the Gender Lens Framework. Delivered in weeks, not months.</p>
+    </div>
+    <div class="s5-card">
+      <div class="s5-card-tag">Strategy</div>
+      <div class="s5-card-title">Advisory Trajectory</div>
+      <p class="s5-card-text">Bespoke modules designed around your commercial priorities. From product redesign to segment strategy to channel optimisation.</p>
+    </div>
+    <div class="s5-card">
+      <div class="s5-card-tag">Capability</div>
+      <div class="s5-card-title">Academy & Certification</div>
+      <p class="s5-card-text">Structured learning paths for leadership and frontline teams. Certification that signals genuine market competence.</p>
+    </div>
+    <div class="s5-card">
+      <div class="s5-card-tag">Community</div>
+      <div class="s5-card-title">Membership & Platform</div>
+      <p class="s5-card-text">Peer learning, benchmarking data, and AI-assisted advisory in a continuously evolving platform.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: USE CASE -->
+<section class="slide s6">
+  <span class="slide-logo"><span class="dot"></span>IBC</span>
+  <span class="slide-num">06</span>
+  <p class="section-label">Use Case — Bank in NL</p>
+  <h2 class="s2-title">From <span class="grad-text">attrition</span> to <span class="grad-text">retention.</span></h2>
+  <div class="s6-scenario">
+    <div class="s6-scenario-inner">
+      <div class="s6-row">
+        <div class="s6-col">
+          <div class="s6-col-label">Scenario</div>
+          <p class="s6-col-text">Mid-size Dutch bank. <strong>200k+ retail clients.</strong> Female attrition running at <strong>3x the segment average.</strong></p>
+        </div>
+        <div class="s6-col">
+          <div class="s6-col-label">Impact</div>
+          <p class="s6-col-text">Estimated revenue loss: <strong>EUR 12M annually.</strong> Root cause: product design blind spots and advisory model mismatch.</p>
+        </div>
+      </div>
+      <div class="s6-row">
+        <div class="s6-col">
+          <div class="s6-col-label">Result</div>
+          <p class="s6-col-text"><strong>41% improvement</strong> in female client retention. <strong>EUR 8.2M recovered</strong> in first year of intervention.</p>
+        </div>
+        <div class="s6-col">
+          <div class="s6-col-label">Method</div>
+          <p class="s6-col-text">Full IBC trajectory: Readiness Scan → Advisory → Academy rollout → Embedded KPIs and quarterly review cycle.</p>
+        </div>
+      </div>
+      <div class="s6-timeline">
+        <div class="s6-tl-item">
+          <div class="s6-tl-day">Day 1</div>
+          <p class="s6-tl-text">Readiness Scan<br>deployed</p>
+        </div>
+        <div class="s6-tl-item">
+          <div class="s6-tl-day">Month 2</div>
+          <p class="s6-tl-text">Strategic roadmap<br>co-designed</p>
+        </div>
+        <div class="s6-tl-item">
+          <div class="s6-tl-day">Month 4</div>
+          <p class="s6-tl-text">Pilots launched<br>in 3 branches</p>
+        </div>
+        <div class="s6-tl-item">
+          <div class="s6-tl-day">Month 8</div>
+          <p class="s6-tl-text">Full rollout<br>+ measurement</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7: TEAM -->
+<section class="slide s7">
+  <span class="slide-logo"><span class="dot"></span>IBC</span>
+  <span class="slide-num">07</span>
+  <p class="section-label">The Team</p>
+  <h2 class="s2-title">Three founders. <span class="grad-text">One mission.</span></h2>
+  <div class="s7-team">
+    <div class="s7-member">
+      <div class="s7-member-inner">
+        <div class="s7-avatar">CK</div>
+        <div class="s7-name">Chantal Korteweg</div>
+        <div class="s7-role">Chief Expert & External Relations</div>
+        <p class="s7-bio">Architect of IBC's methodology. Former World Bank advisor. 20+ years driving gender-lens frameworks across 60 countries. The academic rigour behind every engagement.</p>
+      </div>
+    </div>
+    <div class="s7-member">
+      <div class="s7-member-inner">
+        <div class="s7-avatar">BJ</div>
+        <div class="s7-name">Britt Jacobs</div>
+        <div class="s7-role">Chief Delivery & Learning</div>
+        <p class="s7-bio">Translates strategy into execution. Builds the Academy, certification programmes, and delivery playbooks that make IBC's model scalable and repeatable.</p>
+      </div>
+    </div>
+    <div class="s7-member">
+      <div class="s7-member-inner">
+        <div class="s7-avatar">JW</div>
+        <div class="s7-name">Jan van Waveren</div>
+        <div class="s7-role">Chief Commercial & Marketing</div>
+        <p class="s7-bio">Owns pipeline, partnerships, and positioning. Builds the commercial engine that turns IBC's expertise into market traction and recurring revenue.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: CLOSE -->
+<section class="slide s8">
+  <span class="slide-logo"><span class="dot"></span>IBC</span>
+  <span class="slide-num">08</span>
+  <div class="s8-accent"></div>
+  <h2 class="s8-title">The women inheriting the world's wealth need firms that <span class="grad-text">understand them.</span></h2>
+  <p class="s8-sub"><strong>We are that firm.</strong> And we move now.</p>
+  <div class="s8-accent"></div>
+  <p class="s8-contact">hello@inclusivebusiness.co</p>
+</section>
+
+</body>
+</html>

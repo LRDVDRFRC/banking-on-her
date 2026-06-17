@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Ring from "@/components/Ring";
 import SprintNav from "@/components/SprintNav";
+import IntelCollector from "@/components/IntelCollector";
 import { db, ensureSchema } from "@/lib/db";
 import { formatDutchDate } from "@/lib/dates";
 import { regionLabel, sectorLabel } from "@/lib/sectors";
@@ -21,11 +22,13 @@ export default async function OverviewPage({
   const c = db();
 
   const sprintRes = await c.execute({
-    sql: "SELECT id, client, sprint_date, token, sector, region, research_brief, readout_json FROM sprints WHERE id = ?",
+    sql: "SELECT id, client, sprint_date, token, sector, region, research_brief, readout_json, intel_at FROM sprints WHERE id = ?",
     args: [id],
   });
   if (sprintRes.rows.length === 0) notFound();
   const s = sprintRes.rows[0];
+  const intelAt = s.intel_at == null ? null : String(s.intel_at);
+  const aiEnabled = Boolean(process.env.ANTHROPIC_API_KEY);
   const client = String(s.client);
   const token = String(s.token);
   const sector = s.sector == null ? "pensioen" : String(s.sector);
@@ -98,6 +101,8 @@ export default async function OverviewPage({
       </p>
 
       <SprintNav sprintId={id} active="overview" />
+
+      <IntelCollector sprintId={id} collectedAt={intelAt} enabled={aiEnabled} />
 
       {/* compact readiness glance */}
       {overall !== null && (

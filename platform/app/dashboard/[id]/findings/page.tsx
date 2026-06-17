@@ -602,15 +602,17 @@ export default async function FindingsPage({
         )}
       </section>
 
-      {/* ---------- 4 · Market & competitors ---------- */}
-      <section className="glass-sm" style={{ marginBottom: 36 }} aria-label="Market and competitors">
-        <div className="kicker" style={{ color: "var(--sky)" }}>4 · Market &amp; competitors</div>
+      {/* ---------- 4 · Market, media & competitors ---------- */}
+      <section className="glass-sm" style={{ marginBottom: 36 }} aria-label="Market media and competitors">
+        <div className="kicker" style={{ color: "var(--sky)" }}>4 · Markt, media &amp; concurrenten</div>
         <h2 style={{ fontSize: "1.3rem", marginBottom: 6 }}>
           What the outside world says about {client}.
         </h2>
         <p className="muted small" style={{ marginBottom: 18 }}>
-          Live web research: company snapshot, the inclusive-finance angle,
-          competitor best practices and the hooks for the morning presentation.
+          Auto-collected at sprint creation: company snapshot, the
+          inclusive-finance angle, recent media coverage, competitor best
+          practices and the hooks for the morning. Recent reports land in the
+          evidence base below.
         </p>
         <ResearchTrigger
           sprintId={id}

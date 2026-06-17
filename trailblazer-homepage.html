@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBC — The Inclusive Business Collective</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+--black:#1C1C1C;--orange:#FF6B00;--white:#FAFAF5;--green:#2D6A4F;--peach:#FFB380;--gravel:#3A3A3A;
+--radius:12px;
+--head:'Barlow Condensed',sans-serif;
+--body:'Space Grotesk',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--black);background:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{text-decoration:none;color:inherit}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;width:100%;z-index:999;background:rgba(28,28,28,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;max-width:1200px;margin:0 auto;padding:0 24px}
+.logo{font-family:var(--head);font-weight:900;font-size:1.6rem;color:var(--white);letter-spacing:-.02em}
+.logo span{color:var(--orange)}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-family:var(--body);font-size:.88rem;font-weight:500;color:rgba(250,250,245,.7);transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--body);font-weight:600;font-size:.9rem;padding:10px 24px;border-radius:var(--radius);border:none;cursor:pointer;transition:all .25s}
+.btn-orange{background:var(--orange);color:var(--white)}
+.btn-orange:hover{background:#e55e00;transform:translateY(-1px)}
+.btn-outline{border:2px solid var(--orange);color:var(--orange);background:transparent}
+.btn-outline:hover{background:var(--orange);color:var(--white)}
+.btn-white{background:var(--white);color:var(--black)}
+.btn-white:hover{background:#eee;transform:translateY(-1px)}
+
+/* HERO */
+.hero{padding:140px 0 80px;background:var(--white)}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.hero-tag{display:inline-block;font-family:var(--body);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;color:var(--orange);background:rgba(255,107,0,.08);padding:6px 14px;border-radius:100px;margin-bottom:20px}
+.hero h1{font-family:var(--head);font-weight:900;font-size:clamp(2.8rem,5.5vw,4.4rem);line-height:.95;text-transform:uppercase;letter-spacing:-.02em;color:var(--black);margin-bottom:24px}
+.hero h1 .accent{color:var(--orange)}
+.hero p{font-size:1.15rem;color:var(--gravel);max-width:480px;margin-bottom:32px;line-height:1.65}
+.hero-buttons{display:flex;gap:14px;flex-wrap:wrap}
+.hero-img{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:4/5}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+.hero-img::after{content:'';position:absolute;inset:0;border-radius:var(--radius);border:3px solid var(--orange);pointer-events:none}
+.hero-badge{position:absolute;bottom:20px;left:20px;background:var(--orange);color:var(--white);font-family:var(--head);font-weight:800;font-size:.85rem;text-transform:uppercase;padding:8px 16px;border-radius:8px;letter-spacing:.04em}
+
+/* PROOF BAR */
+.proof{background:var(--black);padding:28px 0}
+.proof-inner{display:flex;align-items:center;justify-content:center;gap:48px;flex-wrap:wrap}
+.proof-item{font-family:var(--body);font-size:.88rem;font-weight:500;color:rgba(250,250,245,.55);letter-spacing:.02em;text-transform:uppercase;white-space:nowrap}
+.proof-dot{width:5px;height:5px;border-radius:50%;background:var(--orange);flex-shrink:0}
+
+/* SECTION TITLES */
+.section-tag{display:inline-block;font-family:var(--body);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:.14em;color:var(--orange);margin-bottom:12px}
+.section-title{font-family:var(--head);font-weight:900;font-size:clamp(2rem,4vw,3rem);text-transform:uppercase;line-height:1;letter-spacing:-.01em;color:var(--black);margin-bottom:16px}
+.section-sub{font-size:1.05rem;color:var(--gravel);max-width:560px;line-height:1.6}
+
+/* SERVICES */
+.services{padding:100px 0;background:var(--white)}
+.services-header{text-align:center;margin-bottom:56px}
+.services-header .section-sub{margin:0 auto}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{background:var(--black);border-radius:var(--radius);padding:40px 32px;color:var(--white);position:relative;overflow:hidden;transition:transform .3s}
+.card:hover{transform:translateY(-4px)}
+.card-icon{width:48px;height:48px;background:var(--orange);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:24px}
+.card h3{font-family:var(--head);font-weight:800;font-size:1.4rem;text-transform:uppercase;margin-bottom:12px;letter-spacing:.01em}
+.card p{font-size:.92rem;color:rgba(250,250,245,.7);line-height:1.6}
+.card::after{content:'';position:absolute;top:0;right:0;width:80px;height:80px;background:var(--orange);opacity:.06;border-radius:0 0 0 80px}
+
+/* PHOTO FEATURE */
+.feature{padding:100px 0}
+.feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.feature-grid.reversed{direction:rtl}
+.feature-grid.reversed>*{direction:ltr}
+.feature-img{border-radius:var(--radius);overflow:hidden;aspect-ratio:5/4}
+.feature-img img{width:100%;height:100%;object-fit:cover}
+.feature-content .section-title{margin-bottom:20px}
+.feature-content p{margin-bottom:24px}
+.testimonial{background:rgba(255,107,0,.05);border-left:3px solid var(--orange);border-radius:0 var(--radius) var(--radius) 0;padding:24px;margin-top:32px}
+.testimonial p{font-style:italic;font-size:.95rem;color:var(--gravel);margin-bottom:14px}
+.testimonial-author{display:flex;align-items:center;gap:12px}
+.testimonial-author img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+.testimonial-author .name{font-weight:600;font-size:.88rem;color:var(--black)}
+.testimonial-author .role{font-size:.78rem;color:var(--gravel)}
+
+.feature-alt{background:rgba(45,106,79,.04)}
+
+/* IMPACT */
+.impact{padding:100px 0;background:var(--black)}
+.impact .section-tag{color:var(--peach)}
+.impact .section-title{color:var(--white);text-align:center}
+.impact .section-sub{color:rgba(250,250,245,.6);text-align:center;margin:0 auto 56px}
+.impact-header{text-align:center;margin-bottom:56px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.stat{text-align:center;padding:32px 16px}
+.stat-number{font-family:var(--head);font-weight:900;font-size:clamp(2.6rem,5vw,4rem);color:var(--orange);line-height:1;margin-bottom:8px}
+.stat-label{font-size:.88rem;font-weight:500;color:rgba(250,250,245,.6);text-transform:uppercase;letter-spacing:.06em}
+
+/* TEAM */
+.team{padding:100px 0;background:var(--white)}
+.team-header{text-align:center;margin-bottom:56px}
+.team-header .section-sub{margin:0 auto}
+.team-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.team-card{border-radius:var(--radius);overflow:hidden;background:var(--white);box-shadow:0 2px 20px rgba(28,28,28,.07);transition:transform .3s}
+.team-card:hover{transform:translateY(-4px)}
+.team-img{aspect-ratio:3/4;overflow:hidden}
+.team-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.team-card:hover .team-img img{transform:scale(1.03)}
+.team-info{padding:24px}
+.team-info h3{font-family:var(--head);font-weight:800;font-size:1.25rem;text-transform:uppercase;margin-bottom:4px}
+.team-info .role{font-size:.85rem;color:var(--orange);font-weight:600;margin-bottom:10px}
+.team-info p{font-size:.88rem;color:var(--gravel);line-height:1.55}
+
+/* CTA BAND */
+.cta-band{padding:80px 0;background:var(--orange);text-align:center}
+.cta-band h2{font-family:var(--head);font-weight:900;font-size:clamp(2rem,4.5vw,3.2rem);text-transform:uppercase;color:var(--white);line-height:1;margin-bottom:12px}
+.cta-band p{font-size:1.05rem;color:rgba(255,255,255,.85);margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto}
+
+/* FOOTER */
+footer{background:var(--black);padding:56px 0 28px;color:rgba(250,250,245,.5)}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px}
+.footer-brand .logo{margin-bottom:14px;display:inline-block}
+.footer-brand p{font-size:.88rem;line-height:1.6;max-width:280px}
+.footer-col h4{font-family:var(--head);font-weight:700;font-size:.95rem;text-transform:uppercase;color:var(--white);margin-bottom:16px;letter-spacing:.04em}
+.footer-col a{display:block;font-size:.88rem;color:rgba(250,250,245,.5);margin-bottom:10px;transition:color .2s}
+.footer-col a:hover{color:var(--orange)}
+.footer-bottom{border-top:1px solid rgba(250,250,245,.08);padding-top:24px;display:flex;justify-content:space-between;align-items:center;font-size:.8rem;flex-wrap:wrap;gap:12px}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .hero-grid,.feature-grid,.cards,.stats,.team-cards,.footer-grid{grid-template-columns:1fr}
+  .feature-grid.reversed{direction:ltr}
+  .hero{padding:100px 0 60px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .proof-inner{gap:20px}
+  .footer-grid{gap:28px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="logo">IBC<span>/</span></a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#impact">Impact</a>
+      <a href="#team">Team</a>
+      <a href="#contact" class="btn btn-orange">Start a Trail</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="hero-tag">The Inclusive Business Collective</span>
+        <h1>DON'T WAIT FOR A SEAT.<br><span class="accent">BUILD A BETTER TABLE.</span></h1>
+        <p>We help ambitious founders and forward-thinking companies create businesses that are as diverse as the world they serve. No gatekeeping. No excuses. Just results.</p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn-orange">Book a Discovery Call &rarr;</a>
+          <a href="#services" class="btn btn-outline">What We Do</a>
+        </div>
+      </div>
+      <div class="hero-img">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80&fit=crop" alt="Confident entrepreneur ready to blaze the trail">
+        <div class="hero-badge">Blaze Your Trail</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="proof">
+  <div class="proof-inner">
+    <span class="proof-item">Trusted by 50+ Founders</span>
+    <span class="proof-dot"></span>
+    <span class="proof-item">Amsterdam &bull; Rotterdam &bull; Brussels</span>
+    <span class="proof-dot"></span>
+    <span class="proof-item">Featured in Sprout &amp; MT/Sprout</span>
+    <span class="proof-dot"></span>
+    <span class="proof-item">Since 2021</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="services-header">
+      <span class="section-tag">What We Do</span>
+      <h2 class="section-title">THREE TRAILS,<br>ONE DESTINATION</h2>
+      <p class="section-sub">We partner with founders and corporates to build inclusive businesses from the ground up &mdash; or shake up the ones that already exist.</p>
+    </div>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">&#9889;</div>
+        <h3>Pitch &amp; Launch</h3>
+        <p>From napkin sketch to investor-ready deck. We sharpen your story, pressure-test your model, and get you in front of the right people.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#9775;</div>
+        <h3>Growth &amp; Revenue</h3>
+        <p>You have product-market fit &mdash; now scale it. Commercial strategy, partnerships, and revenue engines that actually run.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127793;</div>
+        <h3>Inclusive Strategy</h3>
+        <p>DE&amp;I that goes beyond the slide deck. We embed inclusion into your business model, culture, and bottom line.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO FEATURE 1 + TESTIMONIAL -->
+<section class="feature">
+  <div class="container">
+    <div class="feature-grid">
+      <div class="feature-img">
+        <img src="https://images.unsplash.com/photo-1551836022-deb4988cc6c0?w=800&q=80&fit=crop" alt="Founder building a better future">
+      </div>
+      <div class="feature-content">
+        <span class="section-tag">Our Approach</span>
+        <h2 class="section-title">TRAIL RUNNERS,<br>NOT SPECTATORS</h2>
+        <p>We don't do fluffy workshops or 80-page reports that collect dust. We roll up our sleeves and run alongside you &mdash; from first pitch to first million.</p>
+        <div class="testimonial">
+          <p>"IBC didn't just help us pitch &mdash; they helped us think bigger about who we're building for. Game-changing energy from day one."</p>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80&fit=crop" alt="Client">
+            <div>
+              <div class="name">Sophie de Graaf</div>
+              <div class="role">Founder, VeloVentures</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO FEATURE 2 — REVERSED -->
+<section class="feature feature-alt">
+  <div class="container">
+    <div class="feature-grid reversed">
+      <div class="feature-img">
+        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80&fit=crop" alt="Leader driving inclusive business change">
+      </div>
+      <div class="feature-content">
+        <span class="section-tag">Why It Matters</span>
+        <h2 class="section-title">INCLUSION IS<br>NOT A CHECKBOX</h2>
+        <p>Diverse teams build better products. Inclusive companies outperform. We're not here for optics &mdash; we're here because the business case is bulletproof and the moral case is non-negotiable.</p>
+        <p>From boardrooms in Amsterdam to startup hubs in Rotterdam, we're changing who gets to build, lead, and win.</p>
+        <a href="#contact" class="btn btn-orange" style="margin-top:8px">Let's Talk &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT STATS -->
+<section class="impact" id="impact">
+  <div class="container">
+    <div class="impact-header">
+      <span class="section-tag">Impact</span>
+      <h2 class="section-title" style="color:var(--white)">NUMBERS THAT<br>HIT THE TRAIL</h2>
+      <p class="section-sub">We measure what matters. Here's the ground we've covered so far.</p>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number">52</div>
+        <div class="stat-label">Founders Supported</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">&euro;4.2M</div>
+        <div class="stat-label">Funding Raised</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">78%</div>
+        <div class="stat-label">Women &amp; Minority-Led</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">14</div>
+        <div class="stat-label">Corporate Partners</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team" id="team">
+  <div class="container">
+    <div class="team-header">
+      <span class="section-tag">The Crew</span>
+      <h2 class="section-title">MEET THE<br>TRAILBLAZERS</h2>
+      <p class="section-sub">Small team. Big ambition. We bring corporate firepower and startup hustle to every engagement.</p>
+    </div>
+    <div class="team-cards">
+      <div class="team-card">
+        <div class="team-img">
+          <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=600&q=80&fit=crop" alt="Chantal van der Berg">
+        </div>
+        <div class="team-info">
+          <h3>Chantal van der Berg</h3>
+          <div class="role">Managing Partner</div>
+          <p>Visionary leader driving IBC's mission to make inclusive business the norm, not the exception.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-img">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80&fit=crop" alt="Jan van Waveren">
+        </div>
+        <div class="team-info">
+          <h3>Jan van Waveren</h3>
+          <div class="role">Operations &amp; Pitch</div>
+          <p>Turns founder chaos into investor-ready stories. Obsessed with operational clarity and killer decks.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-img">
+          <img src="https://images.unsplash.com/photo-1573497019236-17f8177b81e8?w=600&q=80&fit=crop" alt="Britt de Vries">
+        </div>
+        <div class="team-info">
+          <h3>Britt de Vries</h3>
+          <div class="role">Commercial &amp; Revenue</div>
+          <p>Revenue architect who builds commercial engines. If it doesn't grow the business, it doesn't ship.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="cta-band" id="contact">
+  <div class="container">
+    <h2>READY TO BLAZE<br>YOUR OWN TRAIL?</h2>
+    <p>Whether you're a founder with a bold idea or a company ready to walk the talk on inclusion &mdash; we want to hear from you.</p>
+    <a href="mailto:hello@inclusivebusiness.co" class="btn btn-white">Get in Touch &rarr;</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#" class="logo">IBC<span>/</span></a>
+        <p>The Inclusive Business Collective. Building better tables since 2021.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigate</h4>
+        <a href="#services">Services</a>
+        <a href="#impact">Impact</a>
+        <a href="#team">Team</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <a href="#">LinkedIn</a>
+        <a href="#">Instagram</a>
+        <a href="#">Newsletter</a>
+      </div>
+      <div class="footer-col">
+        <h4>Base Camp</h4>
+        <a href="#">Amsterdam, NL</a>
+        <a href="mailto:hello@inclusivebusiness.co">hello@inclusivebusiness.co</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 IBC &mdash; The Inclusive Business Collective</span>
+      <span>Built with grit &amp; trail dust</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

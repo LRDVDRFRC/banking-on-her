@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "mandate": "Hoe wordt BeFrank de uitvoerder die de pensioenkloof voor vrouwen meetbaar dicht — zonder dat de deelnemer iets hoeft te doen?",
+  "successMetrics": [
+    "Projectiekloof bij vrouwelijke deelnemers daalt «X»% binnen 18 maanden",
+    "Activatie van deeltijders rond levensgebeurtenissen stijgt «X»%",
+    "«X» werkgevers met gap-dashboard in jaar 1"
+  ],
+  "proposition": {
+    "name": "De Pensioen-APK",
+    "oneliner": "Detecteert automatisch de kloof-vergrotende levensgebeurtenissen in BeFrank's eigen systemen en legt de deelnemer op dat moment één eerlijke keuze voor in Mijn Pensioen — met defaults die beschermen als ze niets doet."
+  },
+  "persona": {
+    "name": "Sanne",
+    "age": 34,
+    "situation": "Net 3 dagen gaan werken na haar tweede kind. Werkt bij een BeFrank-werkgever, logt twee keer per jaar in op Mijn Pensioen en denkt dat het wel goed zit. Niemand heeft haar verteld wat parttime gaan met haar pensioen doet — op haar huidige traject komt ze straks ~€«X»/maand tekort ten opzichte van vergelijkbare mannen.",
+    "quote": "Niemand heeft me ooit verteld wat parttime gaan met mijn pensioen doet."
+  },
+  "journeyMoment": "urenwijziging",
+  "artifacts": ["concept", "journey", "businesscase", "comms", "prototype"],
+  "tone": "BeFrank: warm, direct, no jargon",
+  "constraints": [
+    "Elke cijferclaim herleidt naar de dataroom of een gepubliceerde bron (Eurostat/OESO/CBS) — onbekende getallen blijven «tokens», nooit verzonnen",
+    "AFM-proof: guidance, geen advies; geen gegarandeerde rendementen",
+    "Klantgerichte copy in het Nederlands, in BeFrank-stem; prototype in Mijn Pensioen-stijl",
+    "Defaults mogen de kloof nooit vergroten als de deelnemer niets doet",
+    "Bouwbaar binnen een 6-weken pilot op de bestaande Mijn Pensioen-omgeving"
+  ]
+}

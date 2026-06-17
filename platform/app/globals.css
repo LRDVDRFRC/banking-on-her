@@ -608,3 +608,16 @@ code, .code {
 .journey-status { font-size: 0.88rem; color: rgba(13, 59, 46, 0.6); }
 .journey-arrow { color: rgba(13, 59, 46, 0.35); font-size: 1.1rem; }
 .journey-card:hover .journey-arrow { color: var(--sky); }
+
+/* intel collector spinner */
+.intel-spin {
+  display: inline-block;
+  width: 13px; height: 13px;
+  margin-right: 6px;
+  vertical-align: -1px;
+  border: 2px solid rgba(13, 59, 46, 0.2);
+  border-top-color: var(--sky);
+  border-radius: 50%;
+  animation: intel-spin 0.8s linear infinite;
+}
+@keyframes intel-spin { to { transform: rotate(360deg); } }

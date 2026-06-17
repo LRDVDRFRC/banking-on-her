@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unlockt × BeFrank — De 24-uur Propositie Sprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #EAF6F1;
+  --glass: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.85);
+  --sky: #6DC0C8;
+  --rose: #F5B896;
+  --amber: #F2D080;
+  --mint: #9FD4B0;
+  --ink: #0D3B2E;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--deep);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* Ambient standalone colour flares — global wash behind the page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55vw 45vh at 10% 14%, rgba(109,192,200,0.55) 0%, rgba(109,192,200,0.14) 30%, transparent 58%),
+    radial-gradient(ellipse 50vw 42vh at 92% 16%, rgba(245,184,150,0.48) 0%, rgba(245,184,150,0.12) 30%, transparent 58%),
+    radial-gradient(ellipse 60vw 50vh at 88% 90%, rgba(242,208,128,0.42) 0%, rgba(242,208,128,0.11) 32%, transparent 60%),
+    radial-gradient(ellipse 55vw 45vh at 10% 92%, rgba(159,212,176,0.52) 0%, rgba(159,212,176,0.13) 30%, transparent 58%);
+  z-index: -2;
+  pointer-events: none;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle 170px at 14% 16%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.28) 30%, transparent 65%),
+    radial-gradient(circle 140px at 90% 18%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%),
+    radial-gradient(circle 160px at 86% 88%, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.27) 30%, transparent 65%),
+    radial-gradient(circle 130px at 12% 90%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%);
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; font-weight: 600; line-height: 1.2; }
+
+/* Sections — flowing scroll page, not slides */
+.section {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 90px 80px;
+  position: relative;
+}
+.section::before {
+  content: '';
+  position: absolute;
+  width: 700px; height: 700px;
+  border-radius: 50%;
+  filter: blur(180px);
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+}
+.section > * { position: relative; z-index: 1; }
+
+.s-hero::before    { background: radial-gradient(circle, var(--sky), var(--rose), transparent); top: -200px; right: -200px; }
+.s-gap::before     { background: radial-gradient(circle, var(--rose), var(--amber), transparent); bottom: -250px; left: -200px; }
+.s-waarom::before  { background: radial-gradient(circle, var(--sky), var(--mint), transparent); top: -100px; right: -150px; }
+.s-hoe::before     { background: radial-gradient(circle, var(--amber), var(--mint), transparent); top: 30%; left: -250px; }
+.s-deliver::before { background: radial-gradient(circle, var(--rose), var(--sky), transparent); bottom: -200px; right: -150px; }
+.s-invest::before  { background: radial-gradient(circle, var(--sky), var(--rose), var(--amber), transparent); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+/* Glass panel — layered refraction */
+.glass, .glass-sm {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.48) 42%, rgba(255,255,255,0.38) 72%, rgba(255,255,255,0.55) 100%);
+  backdrop-filter: blur(24px) saturate(1.25);
+  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 24px;
+  overflow: hidden;
+}
+.glass {
+  padding: 40px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1), inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7), inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10), inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08), 0 4px 8px rgba(42,80,70,0.06),
+    0 12px 24px -8px rgba(42,80,70,0.14), 0 24px 48px -16px rgba(42,80,70,0.16),
+    0 32px 64px -24px rgba(109,192,200,0.2);
+}
+.glass-sm {
+  padding: 32px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1), inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7), inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10), inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08), 0 3px 6px rgba(42,80,70,0.06),
+    0 8px 18px -6px rgba(42,80,70,0.12), 0 18px 36px -12px rgba(42,80,70,0.14),
+    0 24px 48px -20px rgba(109,192,200,0.18);
+}
+.glass::before, .glass-sm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.spectrum-text {
+  background: linear-gradient(90deg, var(--sky), var(--mint));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Prism mark — beam enters a glass triangle, exits as the brand spectrum */
+.prism-mark { margin: 36px 0; }
+.prism-mark svg { width: 420px; max-width: 100%; height: auto; display: block; }
+
+.logo {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  position: absolute;
+  top: 40px; left: 80px;
+  z-index: 10;
+}
+.logo span { font-weight: 400; letter-spacing: 0.02em; opacity: 0.7; }
+
+.section-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(13,59,46,0.35);
+  margin-bottom: 24px;
+}
+
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+
+.stat-number {
+  font-family: 'Sora', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 16px;
+}
+.stat-body { font-size: 0.95rem; color: rgba(13,59,46,0.75); line-height: 1.65; }
+
+.kicker {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+/* Readiness ring — circle whose border fills to the score (--p: 0–100, --c: colour) */
+.ring { position: relative; width: 110px; height: 110px; margin: 0 auto 14px; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 10; }
+.ring .track { stroke: rgba(13,59,46,0.08); }
+.ring .fill {
+  stroke: var(--c);
+  stroke-linecap: round;
+  stroke-dasharray: 326.7;
+  stroke-dashoffset: calc(326.7 * (1 - var(--p) / 100));
+  transition: stroke-dashoffset 1.2s ease 0.2s;
+}
+.section:not(.in-view) .ring .fill { stroke-dashoffset: 326.7; }
+.ring-value {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--c);
+}
+.ring-sm { width: 78px; height: 78px; margin: 0 auto 8px; }
+.ring-sm .ring-value { font-size: 0.95rem; }
+.grade-dim {
+  font-size: 0.8rem;
+  text-align: center;
+  color: rgba(13,59,46,0.75);
+  line-height: 1.4;
+}
+
+.token { color: #8a6d3b; background: rgba(242,208,128,0.25); border-radius: 6px; padding: 0 6px; }
+
+.assumption-note {
+  margin-top: 32px;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(13,59,46,0.55);
+}
+
+/* Vertical timeline — the 7 sprint phases */
+.timeline { position: relative; max-width: 820px; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 19px; top: 10px; bottom: 10px;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, var(--sky) 0%, var(--mint) 30%, var(--amber) 60%, var(--rose) 100%);
+  opacity: 0.55;
+}
+.t-item { position: relative; padding: 0 0 32px 68px; }
+.t-item:last-child { padding-bottom: 0; }
+.t-dot {
+  position: absolute;
+  left: 7px; top: 6px;
+  width: 27px; height: 27px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, rgba(255,255,255,0.95), rgba(255,255,255,0.6));
+  border: 3px solid var(--c);
+  box-shadow: 0 2px 8px rgba(42,80,70,0.18), inset 0 1px 0 rgba(255,255,255,0.9);
+}
+.t-time {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--c);
+  margin-bottom: 6px;
+}
+.t-item h3 { font-size: 1.15rem; margin-bottom: 6px; }
+.t-item p { font-size: 0.95rem; color: rgba(13,59,46,0.7); max-width: 620px; }
+
+/* Deliverables checklist */
+.deliver-item { display: flex; gap: 16px; align-items: baseline; padding: 20px 28px; }
+.deliver-item .mark { font-weight: 700; color: var(--sky); flex: 0 0 auto; font-family: 'Sora', sans-serif; }
+.deliver-item strong { font-family: 'Sora', sans-serif; }
+
+/* CTA */
+.cta-btn {
+  display: inline-block;
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: linear-gradient(120deg, var(--sky), var(--mint));
+  padding: 16px 44px;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow:
+    0 10px 28px -10px rgba(109,192,200,0.65),
+    0 4px 10px rgba(42,80,70,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.6);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 34px -10px rgba(109,192,200,0.75), 0 6px 14px rgba(42,80,70,0.14), inset 0 1px 0 rgba(255,255,255,0.6); }
+
+.footer {
+  text-align: center;
+  padding: 48px 24px 64px;
+  font-size: 0.85rem;
+  color: rgba(13,59,46,0.45);
+}
+
+@media print {
+  body::before, body::after, .section::before { display: none; }
+  .section { padding: 40px; }
+  .ring .fill { stroke-dashoffset: calc(326.7 * (1 - var(--p) / 100)) !important; transition: none; }
+}
+
+@media (max-width: 900px) {
+  .section { padding: 64px 28px; }
+  .logo { left: 28px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .stat-number { font-size: 2.4rem; }
+  h1 { font-size: 2.1rem !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== HERO ===================== -->
+<header class="section s-hero in-view" style="padding-top: 130px;">
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+  <div style="max-width: 900px;">
+    <div class="section-label">De 24-uur propositie sprint · voorstel voor BeFrank</div>
+    <h1 style="font-size: 3.2rem; font-weight: 700; margin-bottom: 28px;">
+      Van inzicht naar propositie.<br><span class="spectrum-text">In 24 uur.</span>
+    </h1>
+    <p style="font-size: 1.18rem; color: rgba(13,59,46,0.7); max-width: 720px; line-height: 1.7;">
+      Commit één dag. Loop de volgende ochtend naar buiten met een gekwantificeerde,
+      AI-gebouwde propositie voor de vrouwen die u nu onderbedient — klaar om te shippen.
+    </p>
+    <div class="prism-mark" aria-hidden="true">
+      <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pmFace" x1="0" y1="0" x2="0.6" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+            <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.45"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0.7"/>
+          </linearGradient>
+          <linearGradient id="pmSide" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0D3B2E" stop-opacity="0.34"/>
+            <stop offset="1" stop-color="#0D3B2E" stop-opacity="0.08"/>
+          </linearGradient>
+          <linearGradient id="pmRose" gradientUnits="userSpaceOnUse" x1="168" y1="0" x2="402" y2="0">
+            <stop offset="0" stop-color="#F5B896"/><stop offset="1" stop-color="#F5B896" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmAmber" gradientUnits="userSpaceOnUse" x1="176" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#F2D080"/><stop offset="1" stop-color="#F2D080" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmMint" gradientUnits="userSpaceOnUse" x1="184" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#9FD4B0"/><stop offset="1" stop-color="#9FD4B0" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmSky" gradientUnits="userSpaceOnUse" x1="191" y1="0" x2="400" y2="0">
+            <stop offset="0" stop-color="#6DC0C8"/><stop offset="1" stop-color="#6DC0C8" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="pmBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <!-- ground shadow -->
+        <ellipse cx="152" cy="132" rx="62" ry="7" fill="#0D3B2E" opacity="0.14" filter="url(#pmBlur)"/>
+        <!-- spectrum beams, emerging from behind the glass and fading out -->
+        <polygon fill="url(#pmRose)"  points="168,57 168,63 402,33 402,21"/>
+        <polygon fill="url(#pmAmber)" points="176,70 176,76 406,66 406,54"/>
+        <polygon fill="url(#pmMint)"  points="184,83 184,89 406,99 406,87"/>
+        <polygon fill="url(#pmSky)"   points="191,95 191,101 400,131 400,119"/>
+        <!-- extruded side face (depth) -->
+        <polygon fill="url(#pmSide)" points="150,16 166,7 220,103 204,114" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-linejoin="round"/>
+        <!-- front glass face -->
+        <path d="M150,16 L204,114 L96,114 Z" fill="url(#pmFace)" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linejoin="round"/>
+        <!-- highlight streak -->
+        <line x1="143" y1="34" x2="116" y2="82" stroke="#ffffff" stroke-opacity="0.85" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p style="font-size: 0.85rem; color: rgba(13,59,46,0.45);">Gender Capital Lab™ Sprint</p>
+  </div>
+</header>
+
+<!-- ===================== DE KLOOF ===================== -->
+<section class="section s-gap">
+  <div class="section-label">De kloof</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 18px;">De kloof is geen idee. Het is een getal.</h2>
+  <p style="font-size: 1.05rem; color: rgba(13,59,46,0.65); max-width: 720px; margin-bottom: 40px;">
+    Geen morele oproep — een commerciële realiteit, zichtbaar in elke pensioenadministratie van Nederland.
+  </p>
+  <div class="grid-3">
+    <div class="glass-sm">
+      <div class="stat-number" style="color: var(--sky);">36–40%</div>
+      <p class="stat-body">minder pensioen voor Nederlandse vrouwen dan voor mannen — bij pensionering. Bron: Eurostat / OESO.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="stat-number" style="color: var(--rose);">±€400</div>
+      <p class="stat-body">minder per maand, gemiddeld. Dit is besteedbaar inkomen — geen abstractie, geen percentagepunt.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="stat-number" style="color: var(--amber);">#2</div>
+      <p class="stat-body">van de EU: alleen één land kent een grotere kloof. De oorzaken — deeltijd, zorgonderbrekingen, loonkloof — zijn bekend en meetbaar.</p>
+    </div>
+  </div>
+  <p class="assumption-note">
+    Het cruciale punt: elk van die oorzaken is <strong>zichtbaar in de eigen systemen van een pensioenuitvoerder
+    op het moment dat ze gebeuren</strong> — een urenwijziging, ouderschapsverlof, een salarisstap die uitblijft.
+    De data om in te grijpen bestaat al. Wat ontbreekt is de propositie.
+  </p>
+</section>
+
+<!-- ===================== WAAROM BEFRANK, WAAROM NU ===================== -->
+<section class="section s-waarom">
+  <div class="section-label">Waarom BeFrank, waarom nu</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 40px;">Eén partij is gepositioneerd om dit als eerste te dichten.</h2>
+  <div class="glass" style="margin-bottom: 32px;">
+    <p style="font-family: 'Sora', sans-serif; font-size: 1.35rem; font-weight: 600; font-style: italic; line-height: 1.5;">
+      “Eerlijk, transparant, een pensioen dat bij jou past.”
+    </p>
+    <p style="margin-top: 14px; font-size: 0.98rem; color: rgba(13,59,46,0.7);">
+      Dat is de merkbelofte van BeFrank. Een kloof van ±€400 per maand bij de helft van de deelnemers
+      staat daar haaks op — en juist daarom is BeFrank de partij die er als eerste iets aan kán doen, geloofwaardig.
+    </p>
+  </div>
+  <div class="grid-3">
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--sky);">Het merk</div>
+      <p class="stat-body">Wie ‘eerlijk’ belooft, kan deze kloof niet open laten staan. Omgekeerd: de uitvoerder die hem meetbaar dicht, máákt die belofte waar — zichtbaar voor deelnemers, werkgevers en toezichthouder.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--rose);">De data</div>
+      <p class="stat-body">De momenten waarop de kloof ontstaat, lopen door uw eigen administratie. Geen extern onderzoek nodig: het signaal zit al in het systeem. Het wachten is op de propositie eromheen.</p>
+    </div>
+    <div class="glass-sm">
+      <div class="kicker" style="color: var(--amber);">De timing</div>
+      <p class="stat-body">De eerste uitvoerder die dit claimt, bezit het verhaal — bij werkgevers, in ESG-rapportage, in de markt. Wie wacht, reageert straks op de concurrent. Elke maand uitstel is een deelnemer die straks tekortkomt.</p>
+    </div>
+  </div>
+  <p class="assumption-note">Onze huisregel in de sprint: we maken de business case, niet de morele case. Elke claim in de ruimte herleidt naar een getal of naar uw eigen data.</p>
+</section>
+
+<!-- ===================== HOE HET WERKT ===================== -->
+<section class="section s-hoe">
+  <div class="section-label">Hoe het werkt</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 18px;">Zeven fasen. Eén etmaal in de kern.</h2>
+  <p style="font-size: 1.05rem; color: rgba(13,59,46,0.65); max-width: 720px; margin-bottom: 48px;">
+    Een week voor de sprint start de voorbereiding op afstand. Daarna: één werkdag met uw team,
+    één nacht waarin de AI bouwt, en de volgende ochtend een besluit.
+  </p>
+  <div class="timeline">
+    <div class="t-item" style="--c: var(--sky);">
+      <span class="t-dot"></span>
+      <div class="t-time">T–7 · Async</div>
+      <h3>Intake op afstand</h3>
+      <p>Dataroom (geanonimiseerd/geaggregeerd volstaat) + self-assessment per teamlid. Geen vergaderingen — alles asynchroon. Dit is meteen de go/no-go: zonder dataroom draaien we geen sprint.</p>
+    </div>
+    <div class="t-item" style="--c: var(--sky);">
+      <span class="t-dot"></span>
+      <div class="t-time">Dag 1 · 09:00</div>
+      <h3>Kaders &amp; doelen</h3>
+      <p>De opdracht in één zin, plus de succesmaten in getallen: welk cijfer moet bewegen voordat uw board dit een succes noemt?</p>
+    </div>
+    <div class="t-item" style="--c: var(--mint);">
+      <span class="t-dot"></span>
+      <div class="t-time">Dag 1 · 11:00</div>
+      <h3>Live diagnose</h3>
+      <p>Uw readiness per dimensie, als percentage-ringen — berekend uit uw eigen data en self-assessments. Plus de kans, gekwantificeerd: de kloof toegepast op úw deelnemersbestand.</p>
+      <div class="grid-3" style="max-width: 480px; gap: 16px; margin-top: 20px;">
+        <div>
+          <div class="ring ring-sm" style="--p: 62; --c: var(--sky);">
+            <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>
+            <span class="ring-value">62%</span>
+          </div>
+          <p class="grade-dim">Data</p>
+        </div>
+        <div>
+          <div class="ring ring-sm" style="--p: 45; --c: var(--rose);">
+            <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>
+            <span class="ring-value">45%</span>
+          </div>
+          <p class="grade-dim">Proposities</p>
+        </div>
+        <div>
+          <div class="ring ring-sm" style="--p: 33; --c: var(--amber);">
+            <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>
+            <span class="ring-value">33%</span>
+          </div>
+          <p class="grade-dim">Ecosystemen</p>
+        </div>
+      </div>
+      <p style="font-size: 0.78rem; color: rgba(13,59,46,0.45); margin-top: 4px;">Voorbeeldweergave — uw scores volgen uit uw eigen data.</p>
+    </div>
+    <div class="t-item" style="--c: var(--mint);">
+      <span class="t-dot"></span>
+      <div class="t-time">Dag 1 · 13:00</div>
+      <h3>Kies dé propositie</h3>
+      <p>Uit 4–6 kandidaat-richtingen kiest het team er één, gescoord op impact × haalbaarheid × strategische fit. Eén propositie, in één zin vastgelegd. Geen vijf halve ideeën — één heel.</p>
+    </div>
+    <div class="t-item" style="--c: var(--amber);">
+      <span class="t-dot"></span>
+      <div class="t-time">Dag 1 · 14:30</div>
+      <h3>Ideatiesprint</h3>
+      <p>Van wát naar hóe: persona, het interventiemoment, de toon, de harde randvoorwaarden. Het resultaat is een bouwbrief die de AI ’s nachts kan uitvoeren. Om 17:00 gaat uw team naar huis.</p>
+    </div>
+    <div class="t-item" style="--c: var(--amber);">
+      <span class="t-dot"></span>
+      <div class="t-time">’s Nachts</div>
+      <h3>De AI bouwt</h3>
+      <p>Concept, klantreis, business case, communicatie en prototype — gebouwd op uw data, elk artefact door een mens gecureerd en gecontroleerd. Elk getal herleidbaar; niets dat een toezichthouder zou afkeuren.</p>
+    </div>
+    <div class="t-item" style="--c: var(--rose);">
+      <span class="t-dot"></span>
+      <div class="t-time">Dag 2 · 09:00</div>
+      <h3>Presentatie &amp; besluit</h3>
+      <p>Board-ready presentatie van de gebouwde propositie. Eén vraag op tafel: greenlight voor de pilot — ja of nee. Om 10:30 bent u klaar.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WAT U MEENEEMT ===================== -->
+<section class="section s-deliver">
+  <div class="section-label">Wat u meeneemt</div>
+  <h2 style="font-size: 2.2rem; margin-bottom: 18px;">U loopt niet naar buiten met een verslag.<br>U loopt naar buiten met dit.</h2>
+  <p style="font-size: 1.05rem; color: rgba(13,59,46,0.65); max-width: 720px; margin-bottom: 40px;">
+    Vijf concrete artefacten, gebouwd op uw eigen cijfers — de ochtend na dag één op tafel.
+  </p>
+  <div style="display: flex; flex-direction: column; gap: 16px; max-width: 820px;">
+    <div class="glass-sm deliver-item">
+      <span class="mark">01</span>
+      <span class="stat-body"><strong>Boardroom-deck</strong> — de propositie gepresenteerd zoals uw bestuur hem moet zien: mandaat, diagnose, kans, oplossing, besluit.</span>
+    </div>
+    <div class="glass-sm deliver-item">
+      <span class="mark">02</span>
+      <span class="stat-body"><strong>Business case met open aannames</strong> — adresseerbaar segment, verwacht effect, kosten van nietsdoen. Elk getal zichtbaar en aanpasbaar; het model dat uw board mag uitdagen, geen black box.</span>
+    </div>
+    <div class="glass-sm deliver-item">
+      <span class="mark">03</span>
+      <span class="stat-body"><strong>Klikbaar prototype</strong> — een concept-scherm in Mijn Pensioen-stijl. Het voelt niet als een idee; het voelt als iets dat u kunt shippen.</span>
+    </div>
+    <div class="glass-sm deliver-item">
+      <span class="mark">04</span>
+      <span class="stat-body"><strong>Communicatieconcept</strong> — positionering plus een voorbeeldbericht op het triggermoment, in de stem van BeFrank: warm, direct, geen jargon.</span>
+    </div>
+    <div class="glass-sm deliver-item">
+      <span class="mark">05</span>
+      <span class="stat-body"><strong>Roadmap naar pilot</strong> — de kortste route van besluit naar meetbaar effect: één werkgever, één levensgebeurtenis, zes weken.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== INVESTERING + CTA ===================== -->
+<section class="section s-invest">
+  <div class="section-label">Investering &amp; volgende stap</div>
+  <div class="glass" style="max-width: 860px;">
+    <h2 style="font-size: 2rem; margin-bottom: 28px;">Wat het kost — en wat we van u vragen.</h2>
+    <div class="grid-2" style="margin-bottom: 32px;">
+      <div>
+        <div class="kicker" style="color: var(--sky);">Investering</div>
+        <p style="font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 10px;"><span class="token">«investering»</span></p>
+        <p class="stat-body">Vaste prijs, vooraf bekend. Inclusief intake, facilitatie, de AI-build en alle vijf artefacten.</p>
+      </div>
+      <div>
+        <div class="kicker" style="color: var(--rose);">Uw inzet</div>
+        <p style="font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 800; margin-bottom: 10px;">1 dag + dataroom</p>
+        <p class="stat-body">Eén werkdag van een team van maximaal acht mensen — met één beslisser in de zaal — plus de dataroom, een week vooraf. Meer vergt het niet.</p>
+      </div>
+    </div>
+    <p style="font-size: 1.05rem; color: rgba(13,59,46,0.75); margin-bottom: 32px; max-width: 640px;">
+      De volgende ochtend om 10:30 heeft u een gekwantificeerde propositie en een besluit.
+      Niet over zes maanden. Niet na drie stuurgroepen. <strong>De volgende ochtend.</strong>
+    </p>
+    <span class="cta-btn">Prik de datum&ensp;→</span>
+    <p style="margin-top: 24px; font-size: 0.9rem; color: rgba(13,59,46,0.55);">
+      <span class="token">«contactpersoon»</span> · <span class="token">«e-mail»</span> · <span class="token">«telefoon»</span>
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  Unlockt · Gender Capital Lab™ Sprint
+</footer>
+
+<script>
+// Animate readiness rings (and any future per-section reveals) on scroll into view
+const sections = document.querySelectorAll('.section');
+const inView = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('in-view');
+  });
+}, { threshold: 0.2 });
+sections.forEach(s => inView.observe(s));
+</script>
+</body>
+</html>

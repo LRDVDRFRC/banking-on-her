@@ -21,6 +21,7 @@ export interface ResearchBriefInput {
 export const BRIEF_SECTIONS = [
   "## Company snapshot",
   "## The inclusive-finance angle",
+  "## In the media",
   "## Competitors & best practices",
   "## Hooks for the sprint",
   "## Sources",
@@ -37,6 +38,9 @@ Size, market positioning, client segments, recent strategic moves (acquisitions,
 ## The inclusive-finance angle
 What they publicly say or do about women clients, the diversity of their client base, ESG/DEI signals — and, crucially, the gaps between what they claim and what they demonstrably do.
 
+## In the media
+What the press, trade media and notable voices have published RECENTLY about ${client} specifically in relation to women, gender, equality or inclusion — and the broader narrative being written about this company on those themes. For each notable item give the outlet, the date if findable, and one line on what it said. If coverage is thin or absent, say so plainly (that silence is itself a finding). Prefer recent items.
+
 ## Competitors & best practices
 Direct competitors AND indirect or inspiration players: who serves women clients well anywhere in finance, and concretely WHAT they do (products, defaults, campaigns, data practices) — not vague praise.
 
@@ -46,7 +50,7 @@ Direct competitors AND indirect or inspiration players: who serves women clients
 ## Sources
 A bulleted list of the URLs you actually used.
 
-Tone: fact-based and commercial, no DEI fluff. Every factual claim should trace to a search result — if you could not verify something, say so rather than inventing it. Write the brief in English; quote Dutch source material verbatim in Dutch where the wording itself matters. Keep the whole brief under 900 words — sharp beats exhaustive.`;
+Tone: fact-based and commercial, no DEI fluff. Every factual claim should trace to a search result — if you could not verify something, say so rather than inventing it. Write the brief in English; quote Dutch source material verbatim in Dutch where the wording itself matters. Keep the whole brief under 1100 words — sharp beats exhaustive.`;
 }
 
 const USER_PROMPT =

@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unlockt × BeFrank — Voorbereiding op uw 24-uur sprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #EAF6F1;
+  --glass: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.85);
+  --sky: #6DC0C8;
+  --rose: #F5B896;
+  --amber: #F2D080;
+  --mint: #9FD4B0;
+  --ink: #0D3B2E;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--deep);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.6;
+  position: relative;
+}
+
+/* Ambient standalone colour flares — global wash behind the page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55vw 45vh at 10% 14%, rgba(109,192,200,0.55) 0%, rgba(109,192,200,0.14) 30%, transparent 58%),
+    radial-gradient(ellipse 50vw 42vh at 92% 16%, rgba(245,184,150,0.48) 0%, rgba(245,184,150,0.12) 30%, transparent 58%),
+    radial-gradient(ellipse 60vw 50vh at 88% 90%, rgba(242,208,128,0.42) 0%, rgba(242,208,128,0.11) 32%, transparent 60%),
+    radial-gradient(ellipse 55vw 45vh at 10% 92%, rgba(159,212,176,0.52) 0%, rgba(159,212,176,0.13) 30%, transparent 58%);
+  z-index: -2;
+  pointer-events: none;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle 170px at 14% 16%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.28) 30%, transparent 65%),
+    radial-gradient(circle 140px at 90% 18%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%),
+    radial-gradient(circle 160px at 86% 88%, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.27) 30%, transparent 65%),
+    radial-gradient(circle 130px at 12% 90%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%);
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; font-weight: 600; line-height: 1.2; }
+
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 56px 32px 96px;
+  position: relative;
+  z-index: 1;
+}
+
+.logo {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  margin-bottom: 56px;
+}
+.logo span { font-weight: 400; letter-spacing: 0.02em; opacity: 0.7; }
+
+/* Glass panel — layered refraction */
+.glass, .glass-sm {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.48) 42%, rgba(255,255,255,0.38) 72%, rgba(255,255,255,0.55) 100%);
+  backdrop-filter: blur(24px) saturate(1.25);
+  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 24px;
+  overflow: hidden;
+}
+.glass {
+  padding: 40px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1), inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7), inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10), inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08), 0 4px 8px rgba(42,80,70,0.06),
+    0 12px 24px -8px rgba(42,80,70,0.14), 0 24px 48px -16px rgba(42,80,70,0.16),
+    0 32px 64px -24px rgba(109,192,200,0.2);
+}
+.glass-sm {
+  padding: 32px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1), inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7), inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10), inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08), 0 3px 6px rgba(42,80,70,0.06),
+    0 8px 18px -6px rgba(42,80,70,0.12), 0 18px 36px -12px rgba(42,80,70,0.14),
+    0 24px 48px -20px rgba(109,192,200,0.18);
+}
+.glass::before, .glass-sm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.spectrum-text {
+  background: linear-gradient(90deg, var(--sky), var(--mint));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Prism mark — beam enters a glass triangle, exits as the brand spectrum */
+.prism-mark { margin: 36px 0; }
+.prism-mark svg { width: 420px; max-width: 100%; height: auto; display: block; }
+
+.kicker {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+section { margin-bottom: 72px; }
+section h2 { font-size: 1.9rem; margin-bottom: 16px; }
+.section-intro {
+  font-size: 1.02rem;
+  color: rgba(13,59,46,0.7);
+  max-width: 700px;
+  margin-bottom: 32px;
+  line-height: 1.7;
+}
+
+/* Vertical timeline */
+.timeline { position: relative; }
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 10px; top: 14px; bottom: 14px;
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--sky), var(--rose), var(--amber), var(--mint), var(--ink));
+  opacity: 0.55;
+}
+.t-item { position: relative; padding-left: 48px; margin-bottom: 22px; }
+.t-item:last-child { margin-bottom: 0; }
+.t-item::before {
+  content: "";
+  position: absolute;
+  left: 2px; top: 30px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--c, var(--sky));
+  border: 3px solid rgba(255,255,255,0.95);
+  box-shadow: 0 0 0 2px rgba(13,59,46,0.08), 0 2px 6px rgba(42,80,70,0.18);
+}
+.t-panel { padding: 26px 32px; }
+.t-panel h3 { font-size: 1.2rem; margin-bottom: 8px; }
+.t-panel p { font-size: 0.95rem; color: rgba(13,59,46,0.75); line-height: 1.65; }
+
+/* Checklist (visual only) */
+.check-list { display: flex; flex-direction: column; gap: 12px; }
+.check-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 18px 24px;
+  cursor: pointer;
+}
+.check-item input[type="checkbox"] {
+  width: 20px; height: 20px;
+  margin-top: 3px;
+  flex: 0 0 auto;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+.check-item .check-text { font-size: 0.97rem; line-height: 1.6; }
+.check-item .check-text strong { font-weight: 600; }
+.check-item .check-text em { color: rgba(13,59,46,0.55); font-size: 0.9em; }
+
+/* Quote block */
+.quote-block {
+  border-left: 5px solid var(--sky);
+}
+.quote-block blockquote {
+  font-family: 'Sora', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+.quote-block .how {
+  font-size: 0.95rem;
+  color: rgba(13,59,46,0.7);
+  line-height: 1.65;
+}
+
+/* Privacy list */
+.privacy-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.privacy-item { padding: 24px 28px; }
+.privacy-item .mark {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  color: var(--mint);
+  margin-right: 8px;
+}
+.privacy-item p { font-size: 0.95rem; line-height: 1.6; }
+
+/* Forcing function */
+.forcing { border-left: 5px solid var(--amber); }
+.forcing p { font-size: 1.05rem; line-height: 1.7; }
+
+.token { color: #8a6d3b; background: rgba(242,208,128,0.25); border-radius: 6px; padding: 0 6px; }
+
+footer {
+  font-size: 0.9rem;
+  color: rgba(13,59,46,0.55);
+  padding-top: 24px;
+  border-top: 1px solid rgba(13,59,46,0.1);
+}
+
+a { color: var(--ink); font-weight: 600; text-decoration-color: var(--sky); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+a:hover { text-decoration-color: var(--rose); }
+
+/* Print: drop ambient chrome */
+@media print {
+  body::before, body::after { display: none; }
+  .wrap { padding: 24px; }
+  section { page-break-inside: avoid; }
+}
+
+@media (max-width: 720px) {
+  .wrap { padding: 36px 20px 72px; }
+  h1 { font-size: 1.9rem !important; }
+  section h2 { font-size: 1.5rem; }
+  .privacy-grid { grid-template-columns: 1fr; }
+  .quote-block blockquote { font-size: 1.15rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <div class="logo">UNLOCKT <span>× BeFrank</span></div>
+
+  <!-- ===================== HERO ===================== -->
+  <section>
+    <div class="kicker" style="color: rgba(13,59,46,0.45);">Gender Capital Lab™ Sprint · pre-sprint pakket · «datum»</div>
+    <h1 style="font-size: 2.7rem; font-weight: 700; margin-bottom: 24px;">
+      Voorbereiding op uw <span class="spectrum-text">24-uur sprint</span>
+    </h1>
+    <p style="font-size: 1.12rem; color: rgba(13,59,46,0.7); max-width: 720px; line-height: 1.75;">
+      U committeert één dag — plus de ochtend erna. Wij brengen de methode en de AI-bouwstraat mee;
+      u brengt uw eigen data. Op dag 1 stellen we de diagnose in uw eigen cijfers en kiezen we sámen
+      één propositie. Die nacht bouwt onze AI haar uit tot concept, klantreis, business case, communicatie
+      en een klikbaar prototype. Op dag 2 om 09:00 ligt er een propositie waar uw bestuur direct over kan
+      besluiten. Deze pagina vertelt u precies wat we vooraf van u nodig hebben — en waarom.
+    </p>
+    <div class="prism-mark" aria-hidden="true">
+      <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pmFace" x1="0" y1="0" x2="0.6" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+            <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.45"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0.7"/>
+          </linearGradient>
+          <linearGradient id="pmSide" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0D3B2E" stop-opacity="0.34"/>
+            <stop offset="1" stop-color="#0D3B2E" stop-opacity="0.08"/>
+          </linearGradient>
+          <linearGradient id="pmRose" gradientUnits="userSpaceOnUse" x1="168" y1="0" x2="402" y2="0">
+            <stop offset="0" stop-color="#F5B896"/><stop offset="1" stop-color="#F5B896" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmAmber" gradientUnits="userSpaceOnUse" x1="176" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#F2D080"/><stop offset="1" stop-color="#F2D080" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmMint" gradientUnits="userSpaceOnUse" x1="184" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#9FD4B0"/><stop offset="1" stop-color="#9FD4B0" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmSky" gradientUnits="userSpaceOnUse" x1="191" y1="0" x2="400" y2="0">
+            <stop offset="0" stop-color="#6DC0C8"/><stop offset="1" stop-color="#6DC0C8" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="pmBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <!-- ground shadow -->
+        <ellipse cx="152" cy="132" rx="62" ry="7" fill="#0D3B2E" opacity="0.14" filter="url(#pmBlur)"/>
+        <!-- spectrum beams, emerging from behind the glass and fading out -->
+        <polygon fill="url(#pmRose)"  points="168,57 168,63 402,33 402,21"/>
+        <polygon fill="url(#pmAmber)" points="176,70 176,76 406,66 406,54"/>
+        <polygon fill="url(#pmMint)"  points="184,83 184,89 406,99 406,87"/>
+        <polygon fill="url(#pmSky)"   points="191,95 191,101 400,131 400,119"/>
+        <!-- extruded side face (depth) -->
+        <polygon fill="url(#pmSide)" points="150,16 166,7 220,103 204,114" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-linejoin="round"/>
+        <!-- front glass face -->
+        <path d="M150,16 L204,114 L96,114 Z" fill="url(#pmFace)" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linejoin="round"/>
+        <!-- highlight streak -->
+        <line x1="143" y1="34" x2="116" y2="82" stroke="#ffffff" stroke-opacity="0.85" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ===================== TIJDLIJN ===================== -->
+  <section>
+    <div class="kicker" style="color: var(--sky);">Het verloop</div>
+    <h2>Van T–7 tot het besluit.</h2>
+    <p class="section-intro">
+      De sprint is kort omdat de voorbereiding goed is. Dit is de hele route — uw inzet zit vooral
+      in de eerste stap.
+    </p>
+    <div class="timeline">
+      <div class="t-item" style="--c: var(--sky);">
+        <div class="glass-sm t-panel">
+          <div class="kicker" style="color: var(--sky); margin-bottom: 6px;">T–7 · een week vooraf</div>
+          <h3>Dataroom &amp; self-assessment</h3>
+          <p>U ontvangt een beveiligde uploadlink voor de dataroom (checklist hieronder) en ieder
+          crew-lid vult onafhankelijk de self-assessment in. Reken op zo'n één uur per persoon —
+          dit is het enige echte huiswerk.</p>
+        </div>
+      </div>
+      <div class="t-item" style="--c: var(--rose);">
+        <div class="glass-sm t-panel">
+          <div class="kicker" style="color: var(--rose); margin-bottom: 6px;">T–3 · wij aan zet</div>
+          <h3>Wij rekenen voor</h3>
+          <p>Ons team draait de analyse over uw dataroom: gestructureerde feiten, eerste readiness-beelden,
+          benchmarks als referentiekader. U hoeft niets te doen. De uitkomst ziet u live op de sprintdag —
+          niet eerder, bewust.</p>
+        </div>
+      </div>
+      <div class="t-item" style="--c: var(--amber);">
+        <div class="glass-sm t-panel">
+          <div class="kicker" style="color: #b88a2e; margin-bottom: 6px;">Dag 1 · 09:00–17:00</div>
+          <h3>De sprintdag</h3>
+          <p>Eén dag, vier blokken: de opdracht scherp stellen, de diagnose in uw eigen cijfers,
+          convergeren op één propositie, en die uitschrijven tot een bouwbare opdracht. Om 17:00
+          gaat u naar huis — met een afgetekende build brief.</p>
+        </div>
+      </div>
+      <div class="t-item" style="--c: var(--mint);">
+        <div class="glass-sm t-panel">
+          <div class="kicker" style="color: var(--mint); margin-bottom: 6px;">'s Nachts · dag 1 → dag 2</div>
+          <h3>De AI bouwt</h3>
+          <p>Onze AI bouwt de propositie uit: concept, klantreis, business case, communicatie en een
+          klikbaar prototype. Elk onderdeel wordt door een mens gecureerd en gecheckt — geen ruwe
+          modeloutput richting een gereguleerde klant.</p>
+        </div>
+      </div>
+      <div class="t-item" style="--c: var(--ink);">
+        <div class="glass-sm t-panel">
+          <div class="kicker" style="color: var(--ink); margin-bottom: 6px;">Dag 2 · 09:00–10:30</div>
+          <h3>Presentatie &amp; besluit</h3>
+          <p>Wij presenteren de gebouwde propositie aan uw sponsor en de mensen die een pilot kunnen
+          goedkeuren. Eén vraag ligt op tafel: gaan we dit piloteren, ja of nee?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DATAROOM CHECKLIST ===================== -->
+  <section>
+    <div class="kicker" style="color: var(--rose);">Stap 1</div>
+    <h2>De dataroom-checklist.</h2>
+    <p class="section-intro">
+      Upload via <span class="token">«beveiligde uploadlink»</span>, uiterlijk op T–1. Stuur wat u heeft —
+      liever onvolledig dan laat. Geanonimiseerd of geaggregeerd volstaat overal; wij hebben geen
+      persoonsgegevens op individueel niveau nodig.
+    </p>
+    <div class="check-list">
+      <label class="glass-sm check-item">
+        <input type="checkbox" aria-label="Deelnemersbestand">
+        <span class="check-text"><strong>Deelnemersbestand</strong>, gesplitst naar geslacht × leeftijd ×
+        opgebouwd pensioen × premie-inleg. <em>Geanonimiseerd of geaggregeerd volstaat.</em></span>
+      </label>
+      <label class="glass-sm check-item">
+        <input type="checkbox" aria-label="Deeltijd/voltijd-verdeling">
+        <span class="check-text"><strong>Deeltijd/voltijd-verdeling</strong> naar geslacht.</span>
+      </label>
+      <label class="glass-sm check-item">
+        <input type="checkbox" aria-label="App-gebruik">
+        <span class="check-text"><strong>App-gebruik Mijn Pensioen</strong> — logins en gemaakte keuzes,
+        naar geslacht. <em>Indien beschikbaar.</em></span>
+      </label>
+      <label class="glass-sm check-item">
+        <input type="checkbox" aria-label="Communicatievoorbeelden">
+        <span class="check-text"><strong>Communicatievoorbeelden</strong> — de onboarding-flow,
+        berichten rond levensgebeurtenissen, en de laatste campagne.</span>
+      </label>
+      <label class="glass-sm check-item">
+        <input type="checkbox" aria-label="Productdefaults">
+        <span class="check-text"><strong>Productdefaults</strong> — de standaardpremie en het standaard
+        beleggingsprofiel zoals een nieuwe deelnemer ze aantreft.</span>
+      </label>
+      <label class="glass-sm check-item">
+        <input type="checkbox" aria-label="NPS, klachten en uitval">
+        <span class="check-text"><strong>NPS, klachten en uitvalpunten</strong> in uw deelnemer-journeys.</span>
+      </label>
+    </div>
+  </section>
+
+  <!-- ===================== SELF-ASSESSMENT ===================== -->
+  <section>
+    <div class="kicker" style="color: var(--amber);">Stap 2</div>
+    <h2>De self-assessment.</h2>
+    <div class="glass">
+      <p style="font-size: 1.02rem; line-height: 1.7; margin-bottom: 18px;">
+        Ieder crew-lid vult <strong>onafhankelijk</strong> het assessment-formulier in:
+        <a href="05_self-assessment-form.html">05_self-assessment-form.html</a>.
+        Niet samen, niet afgestemd — juist de verschillen tussen jullie antwoorden zijn op dag 1 goud waard.
+      </p>
+      <p style="font-size: 1.02rem; line-height: 1.7;">
+        Klaar? Gebruik de knop <strong>"Exporteer als JSON"</strong> onderaan het formulier en stuur het
+        bestand terug naar <span class="token">«e-mailadres Unlockt»</span>. Het kost ongeveer 20 minuten
+        per persoon.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== DE GEDEELDE VRAAG ===================== -->
+  <section>
+    <div class="kicker" style="color: var(--sky);">Stap 3</div>
+    <h2>Eén vraag, voor iedereen.</h2>
+    <div class="glass quote-block">
+      <blockquote>
+        "Waar denk jij dat BeFrank geld laat liggen — voor vrouwelijke deelnemers én voor BeFrank zelf?"
+      </blockquote>
+      <p class="how">
+        Beantwoord deze vraag in <strong>drie zinnen</strong>, onafhankelijk van elkaar — overleg niet
+        vooraf met collega's. Mail uw antwoord samen met de JSON-export. Op de sprintdag leest ieder
+        zijn of haar antwoord voor; daar begint het gesprek.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== PRIVACY ===================== -->
+  <section>
+    <div class="kicker" style="color: var(--mint);">Uw data</div>
+    <h2>Hoe we met uw data omgaan.</h2>
+    <div class="privacy-grid">
+      <div class="glass-sm privacy-item">
+        <p><span class="mark">✓</span><strong>Binnen de sprint.</strong> Alleen het sprintteam heeft
+        toegang tot de dataroom. Niets wordt gedeeld buiten deze opdracht.</p>
+      </div>
+      <div class="glass-sm privacy-item">
+        <p><span class="mark">✓</span><strong>EU-opslag.</strong> Alle data staat op servers binnen
+        de Europese Unie.</p>
+      </div>
+      <div class="glass-sm privacy-item">
+        <p><span class="mark">✓</span><strong>Verwijdering na afloop.</strong> Na de sprint verwijderen
+        we de dataroom volledig. U krijgt daar een bevestiging van.</p>
+      </div>
+      <div class="glass-sm privacy-item">
+        <p><span class="mark">✓</span><strong>Geen modeltraining.</strong> Uw klantdata wordt
+        <strong>nooit</strong> gebruikt om AI-modellen te trainen. Dat leggen we ook schriftelijk vast
+        in de verwerkersafspraken.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== DE AFSPRAAK ===================== -->
+  <section>
+    <div class="kicker" style="color: #b88a2e;">Eén heldere afspraak</div>
+    <h2>Zonder data geen sprint.</h2>
+    <div class="glass forcing">
+      <p>
+        Staan de dataroom en de ingevulde assessments op <strong>T–1</strong> niet klaar, dan verzetten
+        we de sprint naar een nieuwe datum. Niet om streng te doen — maar een sprint zonder uw data is
+        een brainstorm, en daarvoor is uw dag te kostbaar. De voorbereiding ís de helft van het resultaat.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    Vragen over de voorbereiding? Mail <span class="token">«contactpersoon Unlockt»</span> ·
+    <span class="token">«e-mail»</span> &nbsp;—&nbsp; Gender Capital Lab™ Sprint · Unlockt × BeFrank
+  </footer>
+
+</div>
+
+</body>
+</html>

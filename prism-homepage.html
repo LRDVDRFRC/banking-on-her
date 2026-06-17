@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFC - The Inclusive Finance Collective | See Through Everything</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep: #EAF6F1;
+            --glass: rgba(255,255,255,0.55);
+            --glass-border: rgba(255,255,255,0.85);
+            --sky: #6DC0C8;
+            --rose: #F5B896;
+            --amber: #F2D080;
+            --mint: #9FD4B0;
+            --white: #0D3B2E;
+            --glass-bg: rgba(255,255,255,0.45);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--deep);
+            color: var(--white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== NAV ========== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(234,246,241, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.55);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-logo {
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--white);
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .nav-logo span {
+            background: linear-gradient(135deg, var(--sky), var(--mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            font-family: 'Inter', sans-serif;
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: rgba(13,59,46, 0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 4px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            overflow: hidden;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(109,192,200,0.08) 0%, rgba(245,184,150,0.06) 30%, rgba(242,208,128,0.04) 50%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-glow-secondary {
+            position: absolute;
+            bottom: -200px;
+            right: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(159,212,176,0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero-prism-line {
+            width: 80px;
+            height: 3px;
+            margin: 0 auto 40px;
+            background: linear-gradient(135deg, var(--sky), var(--mint));
+            border-radius: 3px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+            font-weight: 700;
+            line-height: 1.15;
+            margin-bottom: 28px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, var(--sky), var(--mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: rgba(13,59,46,0.65);
+            max-width: 580px;
+            margin: 0 auto 44px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        .btn-glass {
+            display: inline-block;
+            padding: 16px 40px;
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 60px;
+            color: var(--white);
+            font-family: 'Sora', sans-serif;
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-glass:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-glass-primary {
+            border-color: rgba(13,59,46,0.18);
+        }
+
+        .btn-glass-primary:hover {
+        }
+
+        .hero-spectrum {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 60px;
+        }
+
+        .hero-spectrum span {
+            display: block;
+            width: 60px;
+            height: 3px;
+            border-radius: 3px;
+            opacity: 0.6;
+        }
+
+        /* ========== SOCIAL PROOF ========== */
+        .social-proof {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .social-proof-inner {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 24px;
+            padding: 40px 48px;
+            text-align: center;
+        }
+
+        .social-proof p {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: rgba(13,59,46,0.45);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+            margin-bottom: 32px;
+        }
+
+        .logo-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .logo-placeholder {
+            width: 120px;
+            height: 40px;
+            background: rgba(255,255,255,0.55);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Sora', sans-serif;
+            font-size: 0.7rem;
+            color: rgba(13,59,46,0.25);
+            letter-spacing: 1px;
+        }
+
+        /* ========== SERVICES ========== */
+        .services {
+            position: relative;
+            padding: 120px 0;
+        }
+
+        .services-glow {
+            position: absolute;
+            top: 0;
+            left: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(245,184,150,0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .section-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: rgba(13,59,46,0.4);
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 1.05rem;
+            color: rgba(13,59,46,0.55);
+            max-width: 560px;
+            line-height: 1.7;
+            font-weight: 300;
+            margin-bottom: 60px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-card {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 24px;
+            padding: 40px 32px;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 24px 24px 0 0;
+            opacity: 0.7;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(13,59,46,0.18);
+            background: rgba(255,255,255,0.55);
+        }
+
+        .service-card.sky::before { background: var(--sky); }
+        .service-card.rose::before { background: var(--rose); }
+        .service-card.amber::before { background: var(--amber); }
+        .service-card.mint::before { background: var(--mint); }
+        .service-card.gradient::before { background: linear-gradient(135deg, var(--sky), var(--mint)); }
+
+        .service-number {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .service-card.sky .service-number { color: var(--sky); }
+        .service-card.rose .service-number { color: var(--rose); }
+        .service-card.amber .service-number { color: var(--amber); }
+        .service-card.mint .service-number { color: var(--mint); }
+        .service-card.gradient .service-number {
+            background: linear-gradient(135deg, var(--sky), var(--mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .service-card h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            line-height: 1.3;
+        }
+
+        .service-card p {
+            font-size: 0.92rem;
+            color: rgba(13,59,46,0.55);
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        .services-grid .service-card:nth-child(4),
+        .services-grid .service-card:nth-child(5) {
+            grid-column: span 1;
+        }
+
+        .services-bottom-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ========== PHOTO FEATURES ========== */
+        .photo-feature {
+            position: relative;
+            padding: 120px 0;
+        }
+
+        .photo-feature-glow {
+            position: absolute;
+            top: 50%;
+            right: -300px;
+            transform: translateY(-50%);
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(109,192,200,0.05) 0%, rgba(242,208,128,0.03) 40%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .photo-feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .photo-feature-grid.reverse {
+            direction: rtl;
+        }
+
+        .photo-feature-grid.reverse > * {
+            direction: ltr;
+        }
+
+        .photo-feature-img {
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+        }
+
+        .photo-feature-img img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            display: block;
+            border-radius: 28px;
+        }
+
+        .photo-feature-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(234,246,241,0.3), rgba(234,246,241,0.1));
+            border-radius: 28px;
+        }
+
+        .photo-feature-text {
+            padding: 20px 0;
+        }
+
+        .photo-feature-text .section-label {
+            margin-bottom: 12px;
+        }
+
+        .photo-feature-text h2 {
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 24px;
+        }
+
+        .photo-feature-text p {
+            font-size: 1.05rem;
+            color: rgba(13,59,46,0.55);
+            line-height: 1.75;
+            font-weight: 300;
+            margin-bottom: 16px;
+        }
+
+        .photo-feature-text .highlight-list {
+            list-style: none;
+            margin-top: 24px;
+        }
+
+        .photo-feature-text .highlight-list li {
+            font-size: 0.95rem;
+            color: rgba(13,59,46,0.6);
+            padding: 8px 0;
+            padding-left: 20px;
+            position: relative;
+            font-weight: 400;
+        }
+
+        .photo-feature-text .highlight-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .photo-feature-text .highlight-list li:nth-child(1)::before { background: var(--sky); }
+        .photo-feature-text .highlight-list li:nth-child(2)::before { background: var(--rose); }
+        .photo-feature-text .highlight-list li:nth-child(3)::before { background: var(--amber); }
+        .photo-feature-text .highlight-list li:nth-child(4)::before { background: var(--mint); }
+
+        /* ========== IMPACT STATS ========== */
+        .impact {
+            position: relative;
+            padding: 120px 0;
+        }
+
+        .impact-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1000px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(159,212,176,0.05) 0%, rgba(109,192,200,0.04) 30%, rgba(245,184,150,0.03) 50%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .impact-header {
+            text-align: center;
+            margin-bottom: 64px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .impact-header .section-subtitle {
+            margin: 0 auto;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .impact-card {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 24px;
+            padding: 44px 28px;
+            text-align: center;
+            transition: all 0.4s ease;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.55);
+            border-color: rgba(13,59,46,0.18);
+        }
+
+        .impact-number {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 16px;
+        }
+
+        .impact-card:nth-child(1) .impact-number { color: var(--sky); }
+        .impact-card:nth-child(2) .impact-number { color: var(--rose); }
+        .impact-card:nth-child(3) .impact-number { color: var(--amber); }
+        .impact-card:nth-child(4) .impact-number { color: var(--mint); }
+
+        .impact-label {
+            font-size: 0.9rem;
+            color: rgba(13,59,46,0.5);
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        /* ========== TEAM ========== */
+        .team {
+            position: relative;
+            padding: 120px 0;
+        }
+
+        .team-glow {
+            position: absolute;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(242,208,128,0.05) 0%, rgba(245,184,150,0.04) 40%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .team-header {
+            text-align: center;
+            margin-bottom: 64px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .team-header .section-subtitle {
+            margin: 0 auto;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .team-card {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 28px;
+            padding: 44px 32px;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.55);
+            border-color: rgba(13,59,46,0.18);
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Sora', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--deep);
+        }
+
+        .team-card:nth-child(1) .team-avatar { background: linear-gradient(135deg, var(--sky), rgba(109,192,200,0.6)); }
+        .team-card:nth-child(2) .team-avatar { background: linear-gradient(135deg, var(--rose), rgba(245,184,150,0.6)); }
+        .team-card:nth-child(3) .team-avatar { background: linear-gradient(135deg, var(--amber), rgba(242,208,128,0.6)); }
+
+        .team-card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .team-role {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .team-card:nth-child(1) .team-role { color: var(--sky); }
+        .team-card:nth-child(2) .team-role { color: var(--rose); }
+        .team-card:nth-child(3) .team-role { color: var(--amber); }
+
+        .team-card p.team-bio {
+            font-size: 0.9rem;
+            color: rgba(13,59,46,0.5);
+            line-height: 1.65;
+            font-weight: 300;
+        }
+
+        /* ========== CTA ========== */
+        .cta-section {
+            position: relative;
+            padding: 120px 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .cta-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(109,192,200,0.07) 0%, rgba(245,184,150,0.05) 30%, rgba(242,208,128,0.03) 50%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-spectrum {
+            width: 120px;
+            height: 3px;
+            margin: 0 auto 40px;
+            background: linear-gradient(135deg, var(--sky), var(--mint));
+            border-radius: 3px;
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.15;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            color: rgba(13,59,46,0.55);
+            max-width: 500px;
+            margin: 0 auto 44px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            position: relative;
+            padding: 60px 0 40px;
+        }
+
+        .footer-glass {
+            background: rgba(255,255,255,0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.75);
+            border-radius: 28px;
+            padding: 48px 48px 36px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand .nav-logo {
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+
+        .footer-brand p {
+            font-size: 0.88rem;
+            color: rgba(13,59,46,0.4);
+            line-height: 1.65;
+            font-weight: 300;
+            max-width: 280px;
+        }
+
+        .footer-col h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(13,59,46,0.5);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul a {
+            font-size: 0.88rem;
+            color: rgba(13,59,46,0.45);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 300;
+        }
+
+        .footer-col ul a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.55);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.8rem;
+            color: rgba(13,59,46,0.3);
+            font-weight: 300;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-bottom-links a {
+            font-size: 0.8rem;
+            color: rgba(13,59,46,0.3);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-bottom-links a:hover {
+            color: var(--white);
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .services-bottom-row {
+                grid-template-columns: 1fr;
+            }
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .team-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .team-grid .team-card:last-child {
+                grid-column: 1 / -1;
+                max-width: 400px;
+                margin: 0 auto;
+                width: 100%;
+            }
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+                gap: 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                background: rgba(234,246,241, 0.95);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(255,255,255,0.55);
+                padding: 24px;
+                gap: 20px;
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: clamp(2rem, 7vw, 3rem);
+            }
+
+            .photo-feature-grid,
+            .photo-feature-grid.reverse {
+                grid-template-columns: 1fr;
+                gap: 32px;
+                direction: ltr;
+            }
+
+            .photo-feature-img img {
+                height: 300px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .services-bottom-row {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .team-grid .team-card:last-child {
+                max-width: 100%;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            .social-proof-inner {
+                padding: 32px 24px;
+            }
+
+            .logo-row {
+                gap: 20px;
+            }
+
+            .logo-placeholder {
+                width: 100px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 0 16px;
+            }
+        }
+
+        /* ========== ANIMATIONS ========== */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ═══ LAYERED GLASS REFRACTION — slightly 3D ═══ */
+        .social-proof-inner,
+        .service-card,
+        .impact-card,
+        .team-card,
+        .photo-feature,
+        .feature-card,
+        .footer-glass,
+        .founder-card,
+        .insight-card,
+        .stat-card {
+            position: relative;
+            background: linear-gradient(160deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.48) 42%, rgba(255,255,255,0.38) 72%, rgba(255,255,255,0.55) 100%) !important;
+            backdrop-filter: blur(24px) saturate(1.25) !important;
+            -webkit-backdrop-filter: blur(24px) saturate(1.25) !important;
+            border: 1px solid rgba(255,255,255,0.9) !important;
+            box-shadow:
+                /* Top bright bevel — light catches the top edge */
+                inset 0 2px 0 rgba(255,255,255,1),
+                inset 0 1px 1px rgba(255,255,255,0.9),
+                /* Side bevels — subtle edge catches */
+                inset 1px 0 0 rgba(255,255,255,0.7),
+                inset -1px 0 0 rgba(255,255,255,0.5),
+                /* Bottom inner shadow — suggests thickness/curvature */
+                inset 0 -2px 4px rgba(42,80,70,0.10),
+                inset 0 -1px 0 rgba(255,255,255,0.35),
+                /* Tight contact shadow — anchors to page */
+                0 1px 2px rgba(42,80,70,0.08),
+                0 2px 4px rgba(42,80,70,0.06),
+                /* Main lift shadow — depth */
+                0 8px 16px -6px rgba(42,80,70,0.12),
+                0 20px 40px -12px rgba(42,80,70,0.16),
+                /* Coloured ambient glow — picks up background flares */
+                0 32px 64px -24px rgba(109,192,200,0.18) !important;
+            overflow: hidden;
+        }
+
+        .social-proof-inner::after,
+        .service-card::after,
+        .impact-card::after,
+        .team-card::after,
+        .photo-feature::after,
+        .feature-card::after,
+        .footer-glass::after,
+        .founder-card::after,
+        .insight-card::after,
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.22) 50%, transparent 60%);
+            pointer-events: none;
+            border-radius: inherit;
+            z-index: 0;
+        }
+
+        .social-proof-inner > *,
+        .service-card > *,
+        .impact-card > *,
+        .team-card > *,
+        .photo-feature > *,
+        .feature-card > *,
+        .footer-glass > *,
+        .founder-card > *,
+        .insight-card > *,
+        .stat-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ═══ BUTTONS — coloured gradient edge, slightly 3D ═══ */
+        .btn-glass,
+        .btn-glass-primary {
+            border: 1.5px solid transparent !important;
+            background:
+                linear-gradient(160deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.52) 45%, rgba(255,255,255,0.42) 72%, rgba(255,255,255,0.65) 100%) padding-box,
+                linear-gradient(135deg, rgba(109,192,200,0.95), rgba(159,212,176,0.9)) border-box !important;
+            box-shadow:
+                /* Top bevel */
+                inset 0 2px 0 rgba(255,255,255,1),
+                inset 0 1px 2px rgba(255,255,255,0.85),
+                /* Side highlights */
+                inset 1px 0 0 rgba(255,255,255,0.7),
+                inset -1px 0 0 rgba(255,255,255,0.5),
+                /* Bottom inner curve */
+                inset 0 -3px 5px rgba(42,80,70,0.12),
+                inset 0 -1px 0 rgba(255,255,255,0.4),
+                /* Coloured rim halo */
+                0 0 0 3px rgba(109,192,200,0.14),
+                /* Lift */
+                0 2px 4px rgba(42,80,70,0.08),
+                0 8px 16px -4px rgba(42,80,70,0.12),
+                0 14px 34px -10px rgba(109,192,200,0.55),
+                0 10px 28px -8px rgba(245,184,150,0.35) !important;
+            transition: all 0.35s ease !important;
+        }
+
+        .btn-glass:hover,
+        .btn-glass-primary:hover {
+            background:
+                linear-gradient(160deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.58) 45%, rgba(255,255,255,0.5) 72%, rgba(255,255,255,0.72) 100%) padding-box,
+                linear-gradient(135deg, rgba(109,192,200,1), rgba(242,208,128,0.95), rgba(159,212,176,1)) border-box !important;
+            box-shadow:
+                inset 0 2px 0 rgba(255,255,255,1),
+                inset 0 1px 2px rgba(255,255,255,0.95),
+                inset 1px 0 0 rgba(255,255,255,0.8),
+                inset -1px 0 0 rgba(255,255,255,0.55),
+                inset 0 -3px 5px rgba(42,80,70,0.10),
+                inset 0 -1px 0 rgba(255,255,255,0.5),
+                0 0 0 4px rgba(109,192,200,0.22),
+                0 3px 6px rgba(42,80,70,0.10),
+                0 12px 22px -6px rgba(42,80,70,0.14),
+                0 20px 44px -12px rgba(109,192,200,0.65),
+                0 14px 32px -10px rgba(245,184,150,0.45),
+                0 12px 28px -10px rgba(159,212,176,0.5) !important;
+            transform: translateY(-3px);
+        }
+
+        /* Ambient standalone colour flares — each in its own corner, no blending into a spectrum */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 55vw 45vh at 10% 12%, rgba(109,192,200,0.55) 0%, rgba(109,192,200,0.15) 30%, transparent 58%),
+                radial-gradient(ellipse 50vw 42vh at 92% 18%, rgba(245,184,150,0.50) 0%, rgba(245,184,150,0.13) 30%, transparent 58%),
+                radial-gradient(ellipse 60vw 50vh at 88% 90%, rgba(242,208,128,0.45) 0%, rgba(242,208,128,0.12) 32%, transparent 60%),
+                radial-gradient(ellipse 55vw 45vh at 10% 92%, rgba(159,212,176,0.55) 0%, rgba(159,212,176,0.14) 30%, transparent 58%);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Secondary flare layer — subtle light-flash hotspots */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle 180px at 14% 14%, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.3) 30%, transparent 65%),
+                radial-gradient(circle 150px at 90% 18%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.25) 30%, transparent 65%),
+                radial-gradient(circle 170px at 86% 88%, rgba(255,255,255,0.70) 0%, rgba(255,255,255,0.28) 30%, transparent 65%),
+                radial-gradient(circle 140px at 12% 90%, rgba(255,255,255,0.65) 0%, rgba(255,255,255,0.25) 30%, transparent 65%);
+            z-index: -1;
+            pointer-events: none;
+            mix-blend-mode: screen;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== NAV ========== -->
+    <nav>
+        <div class="nav-inner">
+            <a href="#" class="nav-logo"><span>IFC</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ========== HERO ========== -->
+    <section class="hero" id="about">
+        <div class="hero-glow"></div>
+        <div class="hero-glow-secondary"></div>
+        <div class="hero-content">
+            <div class="hero-prism-line"></div>
+            <h1>The Glass Ceiling<br>Isn't a Barrier.<br><span class="gradient-text">It's Our Brand.</span></h1>
+            <p>We help financial institutions unlock the commercial power of underserved markets &mdash; with full transparency.</p>
+            <a href="#contact" class="btn-glass btn-glass-primary">Start the Conversation</a>
+            <div class="hero-spectrum">
+                <span style="background: var(--sky);"></span>
+                <span style="background: var(--rose);"></span>
+                <span style="background: var(--amber);"></span>
+                <span style="background: var(--mint);"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SOCIAL PROOF ========== -->
+    <section class="social-proof">
+        <div class="container">
+            <div class="social-proof-inner animate-on-scroll">
+                <p>Trusted by forward-thinking institutions across Europe</p>
+                <div class="logo-row">
+                    <div class="logo-placeholder">PARTNER</div>
+                    <div class="logo-placeholder">PARTNER</div>
+                    <div class="logo-placeholder">PARTNER</div>
+                    <div class="logo-placeholder">PARTNER</div>
+                    <div class="logo-placeholder">PARTNER</div>
+                    <div class="logo-placeholder">PARTNER</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SERVICES ========== -->
+    <section class="services" id="services">
+        <div class="services-glow"></div>
+        <div class="container">
+            <div class="animate-on-scroll">
+                <p class="section-label">Our Approach</p>
+                <h2 class="section-title">Five phases. One transformation.</h2>
+                <p class="section-subtitle">A proven methodology that turns gender-lens insight into measurable commercial results.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card sky animate-on-scroll">
+                    <p class="service-number">01 &mdash; Diagnose</p>
+                    <h3>Gender Lens Framework</h3>
+                    <p>See where you're leaving money on the table. Our diagnostic reveals the gaps between your current portfolio and the market opportunity hiding in plain sight.</p>
+                </div>
+                <div class="service-card rose animate-on-scroll">
+                    <p class="service-number">02 &mdash; Strategise</p>
+                    <h3>Executive Business Case</h3>
+                    <p>Turn insight into an executive-ready business case. We translate data into language the C-suite acts on &mdash; with clear ROI projections and a phased roadmap.</p>
+                </div>
+                <div class="service-card amber animate-on-scroll">
+                    <p class="service-number">03 &mdash; Build &amp; Train</p>
+                    <h3>Capability &amp; Certification</h3>
+                    <p>Certify internal practitioners. Pilot new approaches. Build the internal muscle so this isn't a one-off project &mdash; it's a permanent competitive advantage.</p>
+                </div>
+            </div>
+            <div class="services-bottom-row">
+                <div class="service-card mint animate-on-scroll">
+                    <p class="service-number">04 &mdash; Measure</p>
+                    <h3>Impact &amp; Evidence</h3>
+                    <p>Prove the impact. Build the case for scaling. Rigorous measurement frameworks that satisfy boards, investors, and regulators alike.</p>
+                </div>
+                <div class="service-card gradient animate-on-scroll">
+                    <p class="service-number">05 &mdash; Scale</p>
+                    <h3>Enterprise Rollout</h3>
+                    <p>Embed across the organisation. Grow. What worked in one division becomes the operating model for the entire institution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PHOTO FEATURE 1 ========== -->
+    <section class="photo-feature">
+        <div class="photo-feature-glow"></div>
+        <div class="container">
+            <div class="photo-feature-grid animate-on-scroll">
+                <div class="photo-feature-img">
+                    <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800" alt="Professional woman in business setting" loading="lazy">
+                </div>
+                <div class="photo-feature-text">
+                    <p class="section-label">Our philosophy</p>
+                    <h2>Not DEI.<br>Not HR.<br><span style="color: var(--rose);">Business performance.</span></h2>
+                    <p>Inclusive business isn't a compliance exercise. It's the largest untapped commercial opportunity in financial services. Institutions that see it clearly move first &mdash; and win.</p>
+                    <ul class="highlight-list">
+                        <li>Revenue growth, not reporting</li>
+                        <li>Board-level strategy, not workshops</li>
+                        <li>Market expansion, not optics</li>
+                        <li>Measurable returns, not good intentions</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== PHOTO FEATURE 2 ========== -->
+    <section class="photo-feature">
+        <div class="photo-feature-glow" style="left: -300px; right: auto;"></div>
+        <div class="container">
+            <div class="photo-feature-grid reverse animate-on-scroll">
+                <div class="photo-feature-img">
+                    <img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=800" alt="Woman leading a business meeting" loading="lazy">
+                </div>
+                <div class="photo-feature-text">
+                    <p class="section-label">Track record</p>
+                    <h2>Proven at<br><span style="color: var(--amber);">world-class scale.</span></h2>
+                    <p>Our founders have delivered inclusive business programmes across more than 60 countries, including flagship engagements with the World Bank, IFC, and leading European financial institutions.</p>
+                    <p>This isn't theory. It's a methodology refined across emerging and developed markets &mdash; from Amsterdam to Nairobi, from boardrooms to branch offices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== IMPACT STATS ========== -->
+    <section class="impact" id="impact">
+        <div class="impact-glow"></div>
+        <div class="container">
+            <div class="impact-header animate-on-scroll">
+                <p class="section-label">The evidence</p>
+                <h2 class="section-title">Numbers that shift the conversation.</h2>
+                <p class="section-subtitle">The commercial case for inclusive business isn't emerging. It's established.</p>
+            </div>
+            <div class="impact-grid">
+                <div class="impact-card animate-on-scroll">
+                    <p class="impact-number">50%+</p>
+                    <p class="impact-label">of the global population remains underserved by financial institutions</p>
+                </div>
+                <div class="impact-card animate-on-scroll">
+                    <p class="impact-number">36%</p>
+                    <p class="impact-label">higher return on equity for companies in the top quartile for gender diversity</p>
+                </div>
+                <div class="impact-card animate-on-scroll">
+                    <p class="impact-number">60+</p>
+                    <p class="impact-label">countries where our methodology has been deployed and validated</p>
+                </div>
+                <div class="impact-card animate-on-scroll">
+                    <p class="impact-number">41%</p>
+                    <p class="impact-label">more revenue growth for institutions with women-focused product strategies</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TEAM ========== -->
+    <section class="team" id="team">
+        <div class="team-glow"></div>
+        <div class="container">
+            <div class="team-header animate-on-scroll">
+                <p class="section-label">Leadership</p>
+                <h2 class="section-title">The people behind the practice.</h2>
+                <p class="section-subtitle">Three founders with decades of combined experience turning inclusive business from concept into commercial reality.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card animate-on-scroll">
+                    <div class="team-avatar">CK</div>
+                    <h3>Chantal Korteweg</h3>
+                    <p class="team-role">Chief Expert & External Relations</p>
+                    <p class="team-bio">Internationally recognised expert in gender-lens investing and inclusive finance. A network spanning ministers, royalty and C-suite executives across four continents.</p>
+                </div>
+                <div class="team-card animate-on-scroll">
+                    <div class="team-avatar">BJ</div>
+                    <h3>Britt Jacobs</h3>
+                    <p class="team-role">Chief Delivery & Learning</p>
+                    <p class="team-bio">Speaker academy founder, learning design and HR capability expert. Transforms complex methodology into engaging programmes that organisations actually adopt.</p>
+                </div>
+                <div class="team-card animate-on-scroll">
+                    <div class="team-avatar">JW</div>
+                    <h3>Jan van Waveren</h3>
+                    <p class="team-role">Chief Commercial & Marketing</p>
+                    <p class="team-bio">Strategic positioning and commercial engine. Builds the brands, funnels and partnerships that turn expert credibility into scalable business growth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CTA ========== -->
+    <section class="cta-section" id="contact">
+        <div class="cta-glow"></div>
+        <div class="cta-content">
+            <div class="cta-spectrum"></div>
+            <h2>Ready to see clearly?</h2>
+            <p>The glass ceiling is still there. But now you can see through it &mdash; and build through it. Let's talk.</p>
+            <a href="mailto:hello@inclusivebusinesscollective.com" class="btn-glass btn-glass-primary">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER ========== -->
+    <footer>
+        <div class="container">
+            <div class="footer-glass">
+                <div class="footer-top">
+                    <div class="footer-brand">
+                        <a href="#" class="nav-logo"><span>IFC</span></a>
+                        <p>The Inclusive Finance Collective. Unlocking the commercial power of underserved markets through transparency, evidence and action.</p>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Navigate</h4>
+                        <ul>
+                            <li><a href="#about">About</a></li>
+                            <li><a href="#services">Services</a></li>
+                            <li><a href="#impact">Impact</a></li>
+                            <li><a href="#team">Team</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Services</h4>
+                        <ul>
+                            <li><a href="#services">Diagnose</a></li>
+                            <li><a href="#services">Strategise</a></li>
+                            <li><a href="#services">Build & Train</a></li>
+                            <li><a href="#services">Measure & Scale</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Connect</h4>
+                        <ul>
+                            <li><a href="mailto:hello@inclusivebusinesscollective.com">Email Us</a></li>
+                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">Amsterdam, NL</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2026 The Inclusive Finance Collective. All rights reserved.</p>
+                    <div class="footer-bottom-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script>
+        // Mobile nav toggle
+        const navToggle = document.getElementById('navToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        navToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        // Close nav on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    // Stagger animation for sibling cards
+                    const siblings = entry.target.parentElement.querySelectorAll('.animate-on-scroll');
+                    const idx = Array.from(siblings).indexOf(entry.target);
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, idx * 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

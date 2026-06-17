@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IBC — Pitch Deck · Meridian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#1A3326;--gold:#E8833A;--parchment:#F6F1E7;--terracotta:#C4623A;--deep:#2F4A3A}
+body{font-family:'Lato',sans-serif;font-weight:300;background:#111;color:var(--parchment);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Playfair Display',serif;font-weight:400;line-height:1.2}
+
+.slide{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:80px;position:relative;overflow:hidden}
+@media(max-width:768px){.slide{padding:40px 24px}}
+.slide-num{position:absolute;top:40px;right:60px;font-size:11px;font-weight:700;letter-spacing:2px;color:var(--gold);opacity:0.35}
+.slide-logo{position:absolute;top:40px;left:60px;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;color:var(--parchment);letter-spacing:3px;opacity:0.3}
+.section-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--gold);opacity:0.55;margin-bottom:24px}
+
+/* S1: Title */
+.s1{background:linear-gradient(160deg,var(--bg),#0f2018);align-items:center;text-align:center}
+.s1::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 55% 45% at 50% 55%,rgba(212,168,83,0.06),transparent);pointer-events:none}
+.s1-eyebrow{font-size:11px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--gold);opacity:0.5;margin-bottom:32px}
+.s1-title{font-family:'Playfair Display',serif;font-size:clamp(44px,6.5vw,84px);font-weight:400;line-height:1.08;letter-spacing:-1.5px;margin-bottom:20px}
+.s1-title em{font-style:italic;color:var(--gold)}
+.s1-sub{font-size:16px;font-weight:300;color:rgba(246,241,231,0.4);max-width:500px;margin:0 auto 48px;line-height:1.7}
+.s1-bar{width:48px;height:2px;background:var(--gold);margin:0 auto;border-radius:1px}
+
+/* S2: Why We Exist */
+.s2{background:linear-gradient(160deg,var(--deep),var(--bg))}
+.s2-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4.5vw,52px);font-weight:400;line-height:1.15;letter-spacing:-0.5px;margin-bottom:48px;max-width:720px}
+.s2-title em{color:var(--gold);font-style:italic}
+.s2-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:960px}
+.s2-card{background:rgba(246,241,231,0.04);border:1px solid rgba(212,168,83,0.12);border-radius:14px;padding:32px}
+.s2-card-num{font-family:'Playfair Display',serif;font-size:40px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:10px}
+.s2-card-text{font-size:13px;color:rgba(246,241,231,0.55);line-height:1.65}
+@media(max-width:768px){.s2-grid{grid-template-columns:1fr}}
+
+/* S3: Who We Are */
+.s3{background:var(--bg)}
+.s3::before{content:'';position:absolute;top:0;right:0;width:40%;height:100%;background:linear-gradient(270deg,rgba(47,74,58,0.5),transparent);pointer-events:none}
+.s3-title{font-family:'Playfair Display',serif;font-size:clamp(28px,3.5vw,44px);font-weight:400;line-height:1.2;margin-bottom:16px;max-width:600px}
+.s3-body{font-size:15px;font-weight:300;color:rgba(246,241,231,0.5);line-height:1.8;max-width:640px;margin-bottom:44px}
+.s3-points{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:840px}
+.s3-point{background:rgba(212,168,83,0.05);border-left:3px solid var(--terracotta);border-radius:0 10px 10px 0;padding:22px 26px}
+.s3-point-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:600;color:var(--gold);margin-bottom:6px}
+.s3-point-text{font-size:13px;color:rgba(246,241,231,0.5);line-height:1.65}
+@media(max-width:768px){.s3-points{grid-template-columns:1fr}}
+
+/* S4: How We Work */
+.s4{background:linear-gradient(160deg,var(--bg),var(--deep))}
+.s4-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1020px;margin-top:48px}
+.s4-step{background:rgba(246,241,231,0.035);border:1px solid rgba(212,168,83,0.1);border-radius:14px;padding:30px;text-align:center;position:relative}
+.s4-step::after{content:'';position:absolute;top:50%;right:-14px;width:8px;height:8px;border-top:2px solid var(--gold);border-right:2px solid var(--gold);transform:rotate(45deg);opacity:0.25}
+.s4-step:last-child::after{display:none}
+.s4-step-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--terracotta);margin-bottom:8px}
+.s4-step-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--parchment);margin-bottom:12px}
+.s4-step-desc{font-size:12px;color:rgba(246,241,231,0.4);line-height:1.65}
+.s4-step-out{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--gold);opacity:0.45;margin-top:16px;padding-top:14px;border-top:1px solid rgba(212,168,83,0.1)}
+@media(max-width:768px){.s4-steps{grid-template-columns:1fr 1fr}.s4-step::after{display:none}}
+
+/* S5: What It Delivers */
+.s5{background:var(--bg)}
+.s5-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:920px;margin-top:48px}
+.s5-card{background:rgba(246,241,231,0.035);border:1px solid rgba(212,168,83,0.1);border-radius:14px;padding:34px;position:relative;overflow:hidden}
+.s5-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--terracotta),var(--gold));opacity:0.6}
+.s5-card-icon{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--terracotta);opacity:0.6;margin-bottom:14px}
+.s5-card-title{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;color:var(--parchment);margin-bottom:10px}
+.s5-card-text{font-size:13px;color:rgba(246,241,231,0.45);line-height:1.7}
+
+/* S6: Use Case */
+.s6{background:linear-gradient(160deg,var(--deep),var(--bg))}
+.s6-scenario{background:rgba(212,168,83,0.05);border:1px solid rgba(212,168,83,0.12);border-radius:14px;padding:44px;max-width:840px;margin-top:44px}
+.s6-row{display:flex;gap:48px;margin-bottom:28px}
+.s6-col{flex:1}
+.s6-col-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--terracotta);opacity:0.6;margin-bottom:8px}
+.s6-col-text{font-size:14px;color:rgba(246,241,231,0.6);line-height:1.7}
+.s6-timeline{display:flex;gap:0;margin-top:32px;border-top:1px solid rgba(212,168,83,0.12);padding-top:24px}
+.s6-tl-item{flex:1;text-align:center;border-right:1px solid rgba(212,168,83,0.1);padding:0 16px}
+.s6-tl-item:last-child{border-right:none}
+.s6-tl-day{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:var(--gold);margin-bottom:6px}
+.s6-tl-text{font-size:11px;color:rgba(246,241,231,0.4);line-height:1.5}
+@media(max-width:768px){.s6-row{flex-direction:column;gap:20px}.s6-timeline{flex-direction:column;gap:20px}.s6-tl-item{border-right:none;border-bottom:1px solid rgba(212,168,83,0.1);padding-bottom:16px}}
+
+/* S7: Team */
+.s7{background:var(--bg)}
+.s7-team{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;max-width:920px;margin-top:48px}
+.s7-member{background:rgba(246,241,231,0.035);border:1px solid rgba(212,168,83,0.1);border-radius:14px;padding:34px;text-align:center}
+.s7-avatar{width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--terracotta),var(--gold));margin:0 auto 18px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--bg)}
+.s7-name{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--parchment);margin-bottom:4px}
+.s7-role{font-size:11px;font-weight:700;color:var(--terracotta);letter-spacing:0.5px;margin-bottom:14px}
+.s7-bio{font-size:12px;color:rgba(246,241,231,0.4);line-height:1.65}
+@media(max-width:768px){.s7-team{grid-template-columns:1fr}}
+
+/* S8: Close */
+.s8{background:linear-gradient(160deg,var(--bg),#0f2018);align-items:center;text-align:center}
+.s8::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 45% 40% at 50% 50%,rgba(212,168,83,0.06),transparent);pointer-events:none}
+.s8-title{font-family:'Playfair Display',serif;font-size:clamp(32px,4.5vw,60px);font-weight:400;line-height:1.15;letter-spacing:-1px;margin-bottom:24px;max-width:700px}
+.s8-title em{color:var(--gold);font-style:italic}
+.s8-sub{font-size:16px;font-weight:300;color:rgba(246,241,231,0.45);line-height:1.7;max-width:480px;margin:0 auto 44px}
+.s8-contact{font-size:12px;color:rgba(246,241,231,0.2);letter-spacing:1.5px}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: TITLE -->
+<div class="slide s1">
+  <div class="slide-logo">IBC</div>
+  <div class="s1-eyebrow">The Inclusive Business Collective</div>
+  <h1 class="s1-title">The Largest Wealth Transfer<br>in History Is <em>Happening Now.</em></h1>
+  <p class="s1-sub">Most financial institutions are not ready. We make them ready — and we prove the business case.</p>
+  <div class="s1-bar"></div>
+</div>
+
+<!-- SLIDE 2: WHY WE EXIST -->
+<div class="slide s2">
+  <div class="slide-logo">IBC</div>
+  <div class="slide-num">01</div>
+  <div class="section-label">Why We Exist</div>
+  <h2 class="s2-title">The baby boom generation is passing. Women inherit the wealth. <em>Most firms aren't built for this.</em></h2>
+  <div class="s2-grid">
+    <div class="s2-card">
+      <div class="s2-card-num">50%+</div>
+      <div class="s2-card-text">of European wealth is now controlled by women — a figure accelerating as boomers transfer assets to partners who outlive them.</div>
+    </div>
+    <div class="s2-card">
+      <div class="s2-card-num">36%</div>
+      <div class="s2-card-text">higher profitability at companies with diverse executive teams. This is not a values argument — it is a revenue argument.</div>
+    </div>
+    <div class="s2-card">
+      <div class="s2-card-num">60+</div>
+      <div class="s2-card-text">countries where our methodology is being deployed through the World Bank. This is proof of concept at global scale.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: WHO WE ARE -->
+<div class="slide s3">
+  <div class="slide-logo">IBC</div>
+  <div class="slide-num">02</div>
+  <div class="section-label">Who We Are</div>
+  <h2 class="s3-title">A science-based inclusion consultancy — built for the business side.</h2>
+  <p class="s3-body">IBC helps medium and large corporates convert underserved markets into measurable commercial growth. We are not a DEI programme. We are not an HR initiative. We are a business performance firm.</p>
+  <div class="s3-points">
+    <div class="s3-point">
+      <div class="s3-point-title">We make the business case, not the moral case</div>
+      <div class="s3-point-text">We come with revenue numbers. Underserved markets are a commercial opportunity with a calculable cost of inaction.</div>
+    </div>
+    <div class="s3-point">
+      <div class="s3-point-title">We go through the client door, not the HR door</div>
+      <div class="s3-point-text">We help companies reach, serve, and grow revenue from diverse clients externally. An almost entirely unoccupied space.</div>
+    </div>
+    <div class="s3-point">
+      <div class="s3-point-title">We deliver at world-class scale</div>
+      <div class="s3-point-text">Evidence-based methodology. 60+ country delivery via the World Bank. International credibility at ministerial and C-suite level.</div>
+    </div>
+    <div class="s3-point">
+      <div class="s3-point-title">DEI fatigue is our opening</div>
+      <div class="s3-point-text">The backlash against HR-driven DEI is real. Boards want commercial results. We are the only firm positioned to deliver them.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: HOW WE WORK -->
+<div class="slide s4">
+  <div class="slide-logo">IBC</div>
+  <div class="slide-num">03</div>
+  <div class="section-label">How We Work</div>
+  <h2 class="s3-title">The Gender Capital Lab Methodology</h2>
+  <p class="s3-body">A four-step framework through which financial institutions move from diagnosis to embedded, scaled change.</p>
+  <div class="s4-steps">
+    <div class="s4-step">
+      <div class="s4-step-num">01</div>
+      <div class="s4-step-name">Diagnose</div>
+      <div class="s4-step-desc">Gender Lens Framework. Data-driven analysis of where a financial institution is leaving money on the table.</div>
+      <div class="s4-step-out">Opportunity map with quantified business potential</div>
+    </div>
+    <div class="s4-step">
+      <div class="s4-step-num">02</div>
+      <div class="s4-step-name">Strategise</div>
+      <div class="s4-step-desc">Turn diagnosis into an executive-ready strategy. A fact-based business case that makes the commercial argument impossible to ignore.</div>
+      <div class="s4-step-out">Investment-grade strategy & business case</div>
+    </div>
+    <div class="s4-step">
+      <div class="s4-step-num">03</div>
+      <div class="s4-step-name">Build & Test</div>
+      <div class="s4-step-desc">Train internal teams, build certified practitioners and pilot improved products in a safe-to-fail environment.</div>
+      <div class="s4-step-out">Validated solutions + certified practitioners</div>
+    </div>
+    <div class="s4-step">
+      <div class="s4-step-num">04</div>
+      <div class="s4-step-name">Measure & Scale</div>
+      <div class="s4-step-desc">Embed proven interventions across the organisation. Measure impact rigorously. Build the case for scaling.</div>
+      <div class="s4-step-out">Proven impact + scaling strategy</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: WHAT IT DELIVERS -->
+<div class="slide s5">
+  <div class="slide-logo">IBC</div>
+  <div class="slide-num">04</div>
+  <div class="section-label">What It Delivers</div>
+  <h2 class="s3-title">Four interlocking revenue streams — each building on the previous.</h2>
+  <div class="s5-grid">
+    <div class="s5-card">
+      <div class="s5-card-icon">Entry Product</div>
+      <div class="s5-card-title">Readiness Scan</div>
+      <div class="s5-card-text">AI-enabled diagnostic: zero measurement, bias audit, readiness rating (A-D). Fast, affordable, creates the business case for the next step.</div>
+    </div>
+    <div class="s5-card">
+      <div class="s5-card-icon">Core Engagement</div>
+      <div class="s5-card-title">Advisory Trajectory</div>
+      <div class="s5-card-text">Bespoke work across employee & organisation, data, marketing, ecosystems and propositions. Menu-based: clients choose their modules.</div>
+    </div>
+    <div class="s5-card">
+      <div class="s5-card-icon">Capability Building</div>
+      <div class="s5-card-title">Academy & Certification</div>
+      <div class="s5-card-text">Train and certify internal practitioners at Associate, Advisor and Fellow level. Builds lasting organisational capability.</div>
+    </div>
+    <div class="s5-card">
+      <div class="s5-card-icon">Recurring Revenue</div>
+      <div class="s5-card-title">Membership & Platform</div>
+      <div class="s5-card-text">Peer learning, tools, benchmarks. Year 2-3: digital layer with AI-assisted advisory. Scales without headcount.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: USE CASE -->
+<div class="slide s6">
+  <div class="slide-logo">IBC</div>
+  <div class="slide-num">05</div>
+  <div class="section-label">Use Case -- Bank in the Netherlands</div>
+  <h2 class="s3-title">How it works in practice.</h2>
+  <div class="s6-scenario">
+    <div class="s6-row">
+      <div class="s6-col">
+        <div class="s6-col-label">Client</div>
+        <div class="s6-col-text">Mid-size Dutch bank with 200k+ retail clients. Wealth management arm underserving women clients who now control 52% of inherited assets.</div>
+      </div>
+      <div class="s6-col">
+        <div class="s6-col-label">Problem</div>
+        <div class="s6-col-text">Products designed for male clients. Female client attrition at 3x industry average after inheritance events. Estimated annual revenue loss: EUR 12M.</div>
+      </div>
+    </div>
+    <div class="s6-row">
+      <div class="s6-col">
+        <div class="s6-col-label">IBC Intervention</div>
+        <div class="s6-col-text">Readiness Scan (Day 1) revealed D-rating across propositions and marcom. Advisory trajectory redesigned 3 key products. Academy certified 24 internal practitioners.</div>
+      </div>
+      <div class="s6-col">
+        <div class="s6-col-label">Result</div>
+        <div class="s6-col-text">Female client retention improved 41%. New wealth product generated EUR 8.2M in first year. Bank became IBC Certified Gender Lab partner.</div>
+      </div>
+    </div>
+    <div class="s6-timeline">
+      <div class="s6-tl-item"><div class="s6-tl-day">Day 1</div><div class="s6-tl-text">24h Readiness Scan</div></div>
+      <div class="s6-tl-item"><div class="s6-tl-day">Month 2</div><div class="s6-tl-text">Strategy & business case</div></div>
+      <div class="s6-tl-item"><div class="s6-tl-day">Month 4</div><div class="s6-tl-text">Pilot & certification</div></div>
+      <div class="s6-tl-item"><div class="s6-tl-day">Month 8</div><div class="s6-tl-text">Scaled & measured</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 7: TEAM -->
+<div class="slide s7">
+  <div class="slide-logo">IBC</div>
+  <div class="slide-num">06</div>
+  <div class="section-label">The Team</div>
+  <h2 class="s3-title">Three founders. One mission.</h2>
+  <div class="s7-team">
+    <div class="s7-member">
+      <div class="s7-avatar">C</div>
+      <div class="s7-name">Chantal Korteweg</div>
+      <div class="s7-role">Chief Expert & External Relations</div>
+      <div class="s7-bio">Internationally recognised expert. Network spanning ministers, royalty and C-suite executives. Leads the methodology and World Bank relationship across 60 countries.</div>
+    </div>
+    <div class="s7-member">
+      <div class="s7-avatar">B</div>
+      <div class="s7-name">Britt Jacobs</div>
+      <div class="s7-role">Chief Delivery & Learning</div>
+      <div class="s7-bio">Speaker academy founder, learning design and HR capability expert. Leads service design, the academy, certification and client delivery quality.</div>
+    </div>
+    <div class="s7-member">
+      <div class="s7-avatar">J</div>
+      <div class="s7-name">Jan van Waveren</div>
+      <div class="s7-role">Chief Commercial & Marketing</div>
+      <div class="s7-bio">Strategic positioning and commercial engine. Leads the pitch, prospect development, brand identity and commercial conversion.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: CLOSE -->
+<div class="slide s8">
+  <div class="slide-logo">IBC</div>
+  <h1 class="s8-title">The women inheriting the world's<br>wealth need firms that <em>understand them.</em></h1>
+  <p class="s8-sub">We are that firm. And we move now.</p>
+  <div class="s1-bar" style="margin-bottom:44px"></div>
+  <div class="s8-contact">IBC &nbsp;·&nbsp; The Inclusive Business Collective &nbsp;·&nbsp; 2026</div>
+</div>
+
+</body>
+</html>

@@ -47,7 +47,7 @@ export default function ResearchTrigger({
     setBusy(true);
     setError(null);
     try {
-      const res = await fetch(`/dashboard/${sprintId}/research`, { method: "POST" });
+      const res = await fetch(`/dashboard/${sprintId}/intel`, { method: "POST" });
       const data = await res.json().catch(() => ({}));
       if (!res.ok) {
         setError(data.error ?? `Request failed (${res.status}).`);

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unlockt — 90-Day Plan</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #0f0f13;
+    color: #e8e8f0;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 40px 48px 32px;
+    border-bottom: 1px solid #ffffff18;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .logo {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #fff;
+  }
+  .logo span {
+    color: #6c63ff;
+  }
+  .goal-badge {
+    background: linear-gradient(135deg, #6c63ff, #a855f7);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+  .progress-bar-wrap {
+    margin-top: 20px;
+  }
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  .progress-bar-bg {
+    height: 6px;
+    background: #ffffff15;
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #6c63ff, #a855f7);
+    border-radius: 100px;
+    transition: width 1s ease;
+  }
+
+  /* ── OWNER LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 24px;
+    padding: 20px 48px;
+    background: #13131a;
+    border-bottom: 1px solid #ffffff10;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .owner-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .dot-c { background: #6c63ff; }
+  .dot-j { background: #06b6d4; }
+  .dot-b { background: #f59e0b; }
+
+  /* ── MAIN CONTENT ── */
+  .main {
+    padding: 32px 48px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* ── PHASE SECTION ── */
+  .phase {
+    margin-bottom: 12px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #ffffff0d;
+    transition: all 0.3s ease;
+  }
+  .phase:hover {
+    border-color: #ffffff20;
+  }
+
+  .phase-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 28px;
+    cursor: pointer;
+    user-select: none;
+    background: #1a1a2e;
+    transition: background 0.2s;
+  }
+  .phase-header:hover {
+    background: #1e1e35;
+  }
+  .phase-header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .phase-month-tag {
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    min-width: 80px;
+  }
+  .phase-subtitle {
+    font-size: 13px;
+    color: #888;
+    font-weight: 400;
+  }
+  .phase-status-chip {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .chip-active { background: #6c63ff22; color: #a78bfa; border: 1px solid #6c63ff44; }
+  .chip-upcoming { background: #ffffff0a; color: #666; border: 1px solid #ffffff15; }
+  .chip-milestone { background: #f59e0b22; color: #fbbf24; border: 1px solid #f59e0b44; }
+  .chip-decision { background: #ef444422; color: #f87171; border: 1px solid #ef444444; }
+  .chip-target { background: #10b98122; color: #34d399; border: 1px solid #10b98144; }
+
+  .phase-chevron {
+    color: #666;
+    font-size: 18px;
+    transition: transform 0.3s;
+  }
+  .phase-chevron.open { transform: rotate(180deg); }
+
+  .phase-body {
+    display: none;
+    padding: 0 28px 24px;
+    background: #13131a;
+  }
+  .phase-body.open { display: block; }
+
+  /* ── TASK GRID ── */
+  .task-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    padding-top: 20px;
+  }
+  @media (max-width: 900px) {
+    .task-grid { grid-template-columns: 1fr; }
+  }
+
+  .owner-column {
+    background: #1a1a2e;
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid #ffffff0d;
+  }
+  .owner-column-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ffffff10;
+  }
+  .owner-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .avatar-c { background: linear-gradient(135deg, #6c63ff, #a855f7); }
+  .avatar-j { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+  .avatar-b { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+  .owner-name { font-size: 15px; font-weight: 600; color: #e8e8f0; }
+  .owner-role { font-size: 11px; color: #666; }
+
+  /* ── TASK ITEMS ── */
+  .task-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ffffff08;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 6px;
+  }
+  .task-item:last-child { border-bottom: none; }
+  .task-item:hover { background: #ffffff05; padding-left: 4px; }
+
+  .task-checkbox {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 2px solid #ffffff30;
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .task-checkbox.checked {
+    background: #6c63ff;
+    border-color: #6c63ff;
+  }
+  .task-checkbox.checked::after {
+    content: '✓';
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .task-text {
+    font-size: 13.5px;
+    color: #c8c8d8;
+    line-height: 1.5;
+    flex: 1;
+    transition: all 0.2s;
+  }
+  .task-text.done {
+    text-decoration: line-through;
+    color: #555;
+  }
+  .task-priority {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 100px;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .p-high { background: #ef444418; color: #f87171; }
+  .p-med { background: #f59e0b18; color: #fbbf24; }
+  .p-low { background: #10b98118; color: #34d399; }
+
+  /* ── MILESTONE BANNER ── */
+  .milestone-banner {
+    background: linear-gradient(135deg, #1e1b3a, #2d1b69);
+    border: 1px solid #6c63ff33;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .milestone-icon { font-size: 28px; }
+  .milestone-title { font-size: 15px; font-weight: 700; color: #a78bfa; margin-bottom: 4px; }
+  .milestone-desc { font-size: 13px; color: #888; }
+
+  /* ── DECISION GATE ── */
+  .decision-gate {
+    background: linear-gradient(135deg, #1f0f0f, #2d1515);
+    border: 2px solid #ef444433;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .decision-gate .gate-icon { font-size: 48px; margin-bottom: 12px; }
+  .decision-gate .gate-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: #f87171;
+    margin-bottom: 8px;
+  }
+  .decision-gate .gate-desc { font-size: 14px; color: #888; max-width: 400px; margin: 0 auto; }
+  .gate-criteria {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .gate-pill {
+    background: #ffffff0a;
+    border: 1px solid #ffffff15;
+    border-radius: 100px;
+    padding: 8px 18px;
+    font-size: 13px;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ── Q4 TARGET ── */
+  .q4-target {
+    background: linear-gradient(135deg, #0d2818, #0f3d1f);
+    border: 2px solid #10b98133;
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    margin-top: 20px;
+  }
+  .q4-target .target-icon { font-size: 56px; margin-bottom: 12px; }
+  .q4-target .target-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #34d399;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+  .q4-target .target-desc { font-size: 14px; color: #888; }
+
+  /* ── PROGRESS SUMMARY ── */
+  .progress-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    background: #1a1a2e;
+    border: 1px solid #ffffff0d;
+    border-radius: 14px;
+    padding: 20px 24px;
+    text-align: center;
+  }
+  .stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: #a78bfa;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* ── EMPTY OWNER ── */
+  .owner-empty {
+    color: #444;
+    font-size: 13px;
+    font-style: italic;
+    padding: 8px 0;
+  }
+
+  /* ── FULL-WIDTH TASK ── */
+  .full-width-task {
+    background: #1a1a2e;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid #ffffff0d;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .full-width-task:hover { border-color: #6c63ff44; background: #1e1e35; }
+  .full-width-task .task-checkbox { flex-shrink: 0; }
+  .full-width-task .task-text { font-size: 15px; color: #e8e8f0; font-weight: 500; }
+  .all-owners-tag {
+    background: #6c63ff18;
+    color: #a78bfa;
+    border: 1px solid #6c63ff33;
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* ── OPEN NOTE ── */
+  .open-note {
+    background: #1a1a2e;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #888;
+    border-left: 3px solid #6c63ff;
+    font-style: italic;
+  }
+
+  /* ── SECTION DIVIDER ── */
+  .section-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #555;
+    padding: 24px 0 12px;
+    font-weight: 600;
+  }
+
+  /* ── TODAY MARKER ── */
+  .today-marker {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #6c63ff22;
+    color: #a78bfa;
+    border-radius: 100px;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-left: 10px;
+    border: 1px solid #6c63ff44;
+  }
+  .today-dot { width: 6px; height: 6px; background: #6c63ff; border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-top">
+    <div>
+      <div class="logo">Un<span>lockt</span></div>
+      <div style="font-size:13px;color:#666;margin-top:4px;">April → Q4 2026 · Road to First Paying Customer</div>
+    </div>
+    <div class="goal-badge">🎯 Goal: Paying Customer Q4 2026</div>
+  </div>
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span>Plan Progress</span>
+      <span id="progress-pct">0 / 0 tasks completed</span>
+    </div>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="owner-dot dot-c"></div> <strong>Chantal</strong> — Market Intelligence & Positioning</div>
+  <div class="legend-item"><div class="owner-dot dot-j"></div> <strong>Jan</strong> — Operations, Pitch & Product</div>
+  <div class="legend-item"><div class="owner-dot dot-b"></div> <strong>Britt</strong> — Commercial & Revenue</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- STATS -->
+  <div class="progress-summary">
+    <div class="stat-card">
+      <div class="stat-number" id="stat-done">0</div>
+      <div class="stat-label">Tasks Done</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" style="color:#06b6d4" id="stat-total">0</div>
+      <div class="stat-label">Total Tasks</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" style="color:#34d399">Q4</div>
+      <div class="stat-label">First Revenue</div>
+    </div>
+  </div>
+
+  <!-- ══════════════ APRIL ══════════════ -->
+  <div class="phase" id="phase-april">
+    <div class="phase-header" onclick="togglePhase('april')">
+      <div class="phase-header-left">
+        <div class="phase-month-tag">April <span class="today-marker"><span class="today-dot"></span>Now</span></div>
+        <div class="phase-subtitle">Foundation — Research, Structure & First Pitch</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="phase-status-chip chip-active">In Progress</div>
+        <div class="phase-chevron open" id="chevron-april">▼</div>
+      </div>
+    </div>
+    <div class="phase-body open" id="body-april">
+      <div class="task-grid">
+
+        <!-- CHANTAL -->
+        <div class="owner-column">
+          <div class="owner-column-header">
+            <div class="owner-avatar avatar-c">C</div>
+            <div>
+              <div class="owner-name">Chantal</div>
+              <div class="owner-role">Market Intelligence</div>
+            </div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Due diligence on the market</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Peer analysis (comparable companies)</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Competitor analysis (concurrenten)</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">FAFW framework analysis</div>
+            <div class="task-priority p-med">Med</div>
+          </div>
+          <div class="open-note">🔑 Key question: "What makes us relevant?"</div>
+        </div>
+
+        <!-- JAN -->
+        <div class="owner-column">
+          <div class="owner-column-header">
+            <div class="owner-avatar avatar-j">J</div>
+            <div>
+              <div class="owner-name">Jan</div>
+              <div class="owner-role">Operations & Pitch</div>
+            </div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Set up Google Drive + folder structure</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Define house style / brand identity (huisstijl)</div>
+            <div class="task-priority p-med">Med</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Pitchdeck v0.1 — Why we exist</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Pitchdeck v0.1 — How we work (werkwijze)</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Pitchdeck v0.1 — What it delivers for the client</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Pitchdeck v0.1 — Who we are</div>
+            <div class="task-priority p-med">Med</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Pitchdeck v0.1 — Use case: Bank in NL</div>
+            <div class="task-priority p-med">Med</div>
+          </div>
+          <div class="open-note">📝 Keynote build → align with Chantal on narrative</div>
+        </div>
+
+        <!-- BRITT -->
+        <div class="owner-column">
+          <div class="owner-column-header">
+            <div class="owner-avatar avatar-b">B</div>
+            <div>
+              <div class="owner-name">Britt</div>
+              <div class="owner-role">Commercial & Revenue</div>
+            </div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Build initial prospect list</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Map cash flows + revenue streams (geldstromen)</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Define pricing model — gut-check on pricing feel</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ MEI / MAY ══════════════ -->
+  <div class="phase" id="phase-may">
+    <div class="phase-header" onclick="togglePhase('may')">
+      <div class="phase-header-left">
+        <div class="phase-month-tag">May</div>
+        <div class="phase-subtitle">Traction — Prospects, Validation & Platform</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="phase-status-chip chip-upcoming">Upcoming</div>
+        <div class="phase-chevron" id="chevron-may">▼</div>
+      </div>
+    </div>
+    <div class="phase-body" id="body-may">
+      <div class="task-grid">
+
+        <!-- CHANTAL -->
+        <div class="owner-column">
+          <div class="owner-column-header">
+            <div class="owner-avatar avatar-c">C</div>
+            <div>
+              <div class="owner-name">Chantal</div>
+              <div class="owner-role">Market Intelligence</div>
+            </div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Build acquisition list + prospect dashboard</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Best practices overview — NA market</div>
+            <div class="task-priority p-med">Med</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Best practices overview — WEFT framework</div>
+            <div class="task-priority p-med">Med</div>
+          </div>
+        </div>
+
+        <!-- JAN -->
+        <div class="owner-column">
+          <div class="owner-column-header">
+            <div class="owner-avatar avatar-j">J</div>
+            <div>
+              <div class="owner-name">Jan</div>
+              <div class="owner-role">Operations & Pitch</div>
+            </div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Design & run 24-hour scan session with prospect</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Develop readiness scan methodology</div>
+            <div class="task-priority p-high">High</div>
+          </div>
+        </div>
+
+        <!-- BRITT -->
+        <div class="owner-column">
+          <div class="owner-column-header">
+            <div class="owner-avatar avatar-b">B</div>
+            <div>
+              <div class="owner-name">Britt</div>
+              <div class="owner-role">Commercial & Revenue</div>
+            </div>
+          </div>
+          <div class="task-item" onclick="toggleTask(this)">
+            <div class="task-checkbox"></div>
+            <div class="task-text">Build content platform / inbound content engine</div>
+            <div class="task-priority p-med">Med</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ JUNE ══════════════ -->
+  <div class="phase" id="phase-june">
+    <div class="phase-header" onclick="togglePhase('june')">
+      <div class="phase-header-left">
+        <div class="phase-month-tag">June</div>
+        <div class="phase-subtitle">Clarity — Map the Full Customer Journey</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="phase-status-chip chip-milestone">Milestone</div>
+        <div class="phase-chevron" id="chevron-june">▼</div>
+      </div>
+    </div>
+    <div class="phase-body" id="body-june">
+      <div class="full-width-task" onclick="toggleTask(this)">
+        <div class="task-checkbox"></div>
+        <div class="task-text">Customer journey fully mapped & visualised (inzichtelijk)</div>
+        <div class="all-owners-tag">All · C + J + B</div>
+      </div>
+      <div class="milestone-banner">
+        <div class="milestone-icon">🗺️</div>
+        <div>
+          <div class="milestone-title">Customer Journey Milestone</div>
+          <div class="milestone-desc">End-to-end view of how a prospect becomes a paying client — every touchpoint, friction point, and decision trigger mapped out. This is the commercial blueprint for Q3 and beyond.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ JULY / AUG ══════════════ -->
+  <div class="phase" id="phase-jul">
+    <div class="phase-header" onclick="togglePhase('jul')">
+      <div class="phase-header-left">
+        <div class="phase-month-tag">Jul / Aug</div>
+        <div class="phase-subtitle">Decision Gate — Go or No-Go</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="phase-status-chip chip-decision">Decision Gate</div>
+        <div class="phase-chevron" id="chevron-jul">▼</div>
+      </div>
+    </div>
+    <div class="phase-body" id="body-jul">
+      <div class="decision-gate">
+        <div class="gate-icon">⚡</div>
+        <div class="gate-title">GO / NO-GO Check-In</div>
+        <div class="gate-desc">Honest team alignment moment. Review all signals: market response, prospect engagement, pricing validation, and readiness scan results. Decide whether to accelerate or pivot before Q4 push.</div>
+        <div class="gate-criteria">
+          <div class="gate-pill">📊 Market research completed?</div>
+          <div class="gate-pill">🎯 Qualified prospects engaged?</div>
+          <div class="gate-pill">💰 Pricing model validated?</div>
+          <div class="gate-pill">🗺️ Customer journey mapped?</div>
+          <div class="gate-pill">📋 Readiness scan tested?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ SEPT ══════════════ -->
+  <div class="phase" id="phase-sept">
+    <div class="phase-header" onclick="togglePhase('sept')">
+      <div class="phase-header-left">
+        <div class="phase-month-tag">September</div>
+        <div class="phase-subtitle">Pre-close — Active Conversations & Deals</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="phase-status-chip chip-upcoming">To Plan</div>
+        <div class="phase-chevron" id="chevron-sept">▼</div>
+      </div>
+    </div>
+    <div class="phase-body" id="body-sept">
+      <div class="open-note" style="margin-top:16px;font-style:normal;color:#ccc;">
+        🚧 <strong>This phase is yours to fill in after the GO/NO-GO check-in.</strong><br><br>
+        Suggested focus areas: active deal pipeline, proposal refinement, stakeholder presentations, legal/contracting prep, final pricing negotiation.
+      </div>
+      <div class="task-item" onclick="toggleTask(this)" style="margin-top:16px;background:#1a1a2e;border-radius:8px;padding:12px;">
+        <div class="task-checkbox"></div>
+        <div class="task-text" style="color:#888;font-style:italic;">Add September tasks after GO/NO-GO review...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════ Q4 ══════════════ -->
+  <div class="phase" id="phase-q4">
+    <div class="phase-header" onclick="togglePhase('q4')">
+      <div class="phase-header-left">
+        <div class="phase-month-tag">Q4 2026</div>
+        <div class="phase-subtitle">The Target</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="phase-status-chip chip-target">🎯 Target</div>
+        <div class="phase-chevron" id="chevron-q4">▼</div>
+      </div>
+    </div>
+    <div class="phase-body" id="body-q4">
+      <div class="q4-target">
+        <div class="target-icon">💸</div>
+        <div class="target-title">First Paying Customer (Betalende Klant)</div>
+        <div class="target-desc">This is the north star. Every task before this moment is in service of landing a client who believes in Unlockt enough to pay for it. Everything else is preparation.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function togglePhase(id) {
+    const body = document.getElementById('body-' + id);
+    const chevron = document.getElementById('chevron-' + id);
+    body.classList.toggle('open');
+    chevron.classList.toggle('open');
+  }
+
+  function toggleTask(el) {
+    const checkbox = el.querySelector('.task-checkbox');
+    const text = el.querySelector('.task-text');
+    checkbox.classList.toggle('checked');
+    text.classList.toggle('done');
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const all = document.querySelectorAll('.task-checkbox');
+    const done = document.querySelectorAll('.task-checkbox.checked');
+    const total = all.length;
+    const completed = done.length;
+    const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-pct').textContent = completed + ' / ' + total + ' tasks completed (' + pct + '%)';
+    document.getElementById('stat-done').textContent = completed;
+    document.getElementById('stat-total').textContent = total;
+  }
+
+  // Open April by default (already open), init counts
+  document.addEventListener('DOMContentLoaded', function() {
+    updateProgress();
+  });
+  updateProgress();
+</script>
+</body>
+</html>

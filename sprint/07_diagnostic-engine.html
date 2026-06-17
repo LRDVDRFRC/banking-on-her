@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unlockt — Diagnostic Engine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --deep: #EAF6F1;
+  --glass: rgba(255,255,255,0.55);
+  --glass-border: rgba(255,255,255,0.85);
+  --sky: #6DC0C8;
+  --rose: #F5B896;
+  --amber: #F2D080;
+  --mint: #9FD4B0;
+  --ink: #0D3B2E;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--deep);
+  color: var(--ink);
+  overflow-x: hidden;
+  line-height: 1.6;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Ambient standalone colour flares — global wash */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 55vw 45vh at 10% 14%, rgba(109,192,200,0.55) 0%, rgba(109,192,200,0.14) 30%, transparent 58%),
+    radial-gradient(ellipse 50vw 42vh at 92% 16%, rgba(245,184,150,0.48) 0%, rgba(245,184,150,0.12) 30%, transparent 58%),
+    radial-gradient(ellipse 60vw 50vh at 88% 90%, rgba(242,208,128,0.42) 0%, rgba(242,208,128,0.11) 32%, transparent 60%),
+    radial-gradient(ellipse 55vw 45vh at 10% 92%, rgba(159,212,176,0.52) 0%, rgba(159,212,176,0.13) 30%, transparent 58%);
+  z-index: -2;
+  pointer-events: none;
+}
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(circle 170px at 14% 16%, rgba(255,255,255,0.72) 0%, rgba(255,255,255,0.28) 30%, transparent 65%),
+    radial-gradient(circle 140px at 90% 18%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%),
+    radial-gradient(circle 160px at 86% 88%, rgba(255,255,255,0.68) 0%, rgba(255,255,255,0.27) 30%, transparent 65%),
+    radial-gradient(circle 130px at 12% 90%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.24) 30%, transparent 65%);
+  z-index: -1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; font-weight: 600; line-height: 1.2; }
+
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 48px 40px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Glass panel — layered refraction */
+.glass, .glass-sm {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0.48) 42%, rgba(255,255,255,0.38) 72%, rgba(255,255,255,0.55) 100%);
+  backdrop-filter: blur(24px) saturate(1.25);
+  -webkit-backdrop-filter: blur(24px) saturate(1.25);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 24px;
+  overflow: hidden;
+}
+.glass {
+  padding: 40px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1), inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7), inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10), inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08), 0 4px 8px rgba(42,80,70,0.06),
+    0 12px 24px -8px rgba(42,80,70,0.14), 0 24px 48px -16px rgba(42,80,70,0.16),
+    0 32px 64px -24px rgba(109,192,200,0.2);
+}
+.glass-sm {
+  padding: 32px;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,1), inset 0 1px 1px rgba(255,255,255,0.9),
+    inset 1px 0 0 rgba(255,255,255,0.7), inset -1px 0 0 rgba(255,255,255,0.5),
+    inset 0 -2px 4px rgba(42,80,70,0.10), inset 0 -1px 0 rgba(255,255,255,0.35),
+    0 1px 2px rgba(42,80,70,0.08), 0 3px 6px rgba(42,80,70,0.06),
+    0 8px 18px -6px rgba(42,80,70,0.12), 0 18px 36px -12px rgba(42,80,70,0.14),
+    0 24px 48px -20px rgba(109,192,200,0.18);
+}
+.glass::before, .glass-sm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.glass > *, .glass-sm > * { position: relative; z-index: 1; }
+
+.spectrum-text {
+  background: linear-gradient(90deg, var(--sky), var(--mint));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Prism mark — beam enters a glass triangle, exits as the brand spectrum */
+.prism-mark { margin: 0; }
+.prism-mark svg { width: 280px; max-width: 100%; height: auto; display: block; }
+
+header.masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.masthead-text { max-width: 640px; }
+.logo-line {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: 0.15em;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.logo-line span { font-weight: 400; letter-spacing: 0.02em; opacity: 0.7; }
+
+.page-label {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(13,59,46,0.35);
+  margin-bottom: 12px;
+}
+
+.kicker {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+
+/* Readiness ring — circle whose border fills to the score (--p: 0–100, --c: colour) */
+.ring { position: relative; width: 110px; height: 110px; margin: 0 auto 14px; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 10; }
+.ring .track { stroke: rgba(13,59,46,0.08); }
+.ring .fill {
+  stroke: var(--c);
+  stroke-linecap: round;
+  stroke-dasharray: 326.7;
+  stroke-dashoffset: calc(326.7 * (1 - var(--p) / 100));
+  transition: stroke-dashoffset 1.2s ease 0.2s;
+}
+.ring-value {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 1.35rem;
+  color: var(--c);
+}
+.ring-lg { width: 160px; height: 160px; margin: 0; }
+.ring-lg .ring-value { font-size: 2rem; }
+.grade-dim {
+  font-size: 0.85rem;
+  text-align: center;
+  color: rgba(13,59,46,0.75);
+  line-height: 1.45;
+}
+.band-legend {
+  margin-top: 10px;
+  font-size: 0.78rem;
+  color: rgba(13,59,46,0.45);
+}
+
+/* ---------- Loader ---------- */
+.dropzone {
+  border: 2px dashed rgba(13,59,46,0.25);
+  border-radius: 18px;
+  padding: 36px 28px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  background: rgba(255,255,255,0.25);
+}
+.dropzone.dragover {
+  border-color: var(--sky);
+  background: rgba(109,192,200,0.12);
+}
+.dropzone p { font-size: 0.95rem; color: rgba(13,59,46,0.65); }
+.dropzone .dz-big {
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.dropzone input[type="file"] { display: none; }
+
+.loader-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 20px;
+  flex-wrap: wrap;
+}
+
+button.btn {
+  font-family: 'Sora', sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  background: linear-gradient(160deg, rgba(255,255,255,0.95), rgba(255,255,255,0.6));
+  border: 1px solid rgba(255,255,255,0.95);
+  border-radius: 999px;
+  padding: 10px 24px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(42,80,70,0.12), 0 8px 18px -8px rgba(42,80,70,0.2);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+button.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 10px rgba(42,80,70,0.16), 0 12px 24px -8px rgba(42,80,70,0.24); }
+button.btn:active { transform: translateY(0); }
+button.btn.primary { background: linear-gradient(160deg, var(--sky), #5BAFB8); color: #fff; border-color: rgba(255,255,255,0.6); }
+button.btn-link {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: rgba(13,59,46,0.5);
+  background: none; border: none; cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px;
+  padding: 4px;
+}
+button.btn-link:hover { color: var(--ink); }
+
+.errors { margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+.error-item {
+  font-size: 0.85rem;
+  color: #8a4a2b;
+  background: rgba(245,184,150,0.25);
+  border: 1px solid rgba(245,184,150,0.6);
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.95);
+  border-radius: 999px;
+  padding: 7px 8px 7px 16px;
+  font-size: 0.88rem;
+  box-shadow: 0 2px 6px rgba(42,80,70,0.1);
+}
+.chip .chip-name { font-family: 'Sora', sans-serif; font-weight: 600; }
+.chip .chip-date { font-size: 0.75rem; color: rgba(13,59,46,0.45); }
+.chip .chip-demo {
+  font-size: 0.65rem;
+  font-family: 'Sora', sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a6d3b;
+  background: rgba(242,208,128,0.35);
+  border-radius: 6px;
+  padding: 1px 7px;
+}
+.chip button.chip-x {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(13,59,46,0.08);
+  color: rgba(13,59,46,0.65);
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.chip button.chip-x:hover { background: var(--rose); color: #fff; }
+.empty-note { margin-top: 20px; font-size: 0.9rem; font-style: italic; color: rgba(13,59,46,0.45); }
+
+/* ---------- Results ---------- */
+.overall-panel {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.overall-text h2 { font-size: 1.9rem; margin-bottom: 8px; }
+.overall-text .verdict { font-size: 1.1rem; }
+.overall-text .verdict strong { font-family: 'Sora', sans-serif; }
+
+.div-row { margin-bottom: 22px; }
+.div-row:last-child { margin-bottom: 0; }
+.div-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+.div-label { font-family: 'Sora', sans-serif; font-weight: 600; font-size: 0.92rem; }
+.div-spread { font-size: 0.78rem; color: rgba(13,59,46,0.5); white-space: nowrap; }
+.div-spread strong { font-family: 'Sora', sans-serif; }
+.div-track {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(13,59,46,0.08);
+}
+.div-range {
+  position: absolute;
+  top: 0; bottom: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sky), var(--mint));
+  opacity: 0.55;
+}
+.div-row.disagree .div-range { background: linear-gradient(90deg, var(--rose), var(--amber)); opacity: 0.85; }
+.div-marker {
+  position: absolute;
+  top: 50%;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2.5px solid var(--ink);
+  transform: translate(-50%, -50%);
+  cursor: default;
+}
+.div-marker .mk-init {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Sora', sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: rgba(13,59,46,0.7);
+  white-space: nowrap;
+}
+.div-marker .mk-init.above { bottom: 14px; }
+.div-marker .mk-init.below { top: 14px; }
+.div-note {
+  margin-top: 24px;
+  font-size: 0.85rem;
+  color: #8a4a2b;
+  background: rgba(245,184,150,0.22);
+  border-left: 3px solid var(--rose);
+  border-radius: 0 10px 10px 0;
+  padding: 8px 14px;
+}
+.div-hint { font-size: 0.88rem; font-style: italic; color: rgba(13,59,46,0.5); }
+
+/* ---------- Table ---------- */
+.score-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+.score-table th, .score-table td { padding: 10px 14px; text-align: center; }
+.score-table th {
+  font-family: 'Sora', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(13,59,46,0.5);
+  border-bottom: 1px solid rgba(13,59,46,0.15);
+}
+.score-table th:first-child, .score-table td:first-child { text-align: left; }
+.score-table tbody tr { border-bottom: 1px solid rgba(13,59,46,0.07); }
+.score-table tbody td:first-child { font-weight: 500; }
+.score-table tfoot td {
+  font-family: 'Sora', sans-serif;
+  font-weight: 700;
+  border-top: 2px solid rgba(13,59,46,0.2);
+  padding-top: 12px;
+}
+.pct { font-family: 'Sora', sans-serif; font-weight: 600; }
+
+/* ---------- Copy block ---------- */
+.copy-panel { display: flex; flex-direction: column; gap: 16px; }
+.copy-code {
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  background: rgba(13,59,46,0.06);
+  border: 1px solid rgba(13,59,46,0.1);
+  border-radius: 12px;
+  padding: 14px 18px;
+  word-break: break-all;
+  color: rgba(13,59,46,0.85);
+}
+.copy-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.copy-feedback {
+  font-size: 0.85rem;
+  color: var(--ink);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.copy-feedback.show { opacity: 1; }
+
+section[hidden] { display: none; }
+
+footer.colophon {
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(13,59,46,0.4);
+  margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+  main { padding: 32px 20px 64px; }
+  .glass { padding: 28px; }
+  .glass-sm { padding: 24px; }
+  .grid-5 { grid-template-columns: repeat(2, 1fr); }
+  .overall-panel { gap: 24px; }
+  .score-table { font-size: 0.8rem; }
+  .score-table th, .score-table td { padding: 8px 8px; }
+  .prism-mark svg { width: 200px; }
+}
+@media (max-width: 560px) {
+  .grid-5 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<main>
+
+  <!-- ===================== MASTHEAD ===================== -->
+  <header class="masthead">
+    <div class="masthead-text">
+      <div class="logo-line">UNLOCKT <span>· Gender Capital Lab™</span></div>
+      <div class="page-label">Sprint tooling · Internal · Facilitator only</div>
+      <h1 style="font-size: 2.4rem; font-weight: 700; margin-bottom: 12px;">
+        Diagnostic <span class="spectrum-text">Engine</span>
+      </h1>
+      <p style="font-size: 1rem; color: rgba(13,59,46,0.65); line-height: 1.7;">
+        Drop the self-assessment exports from the client crew here. The engine merges them into
+        readiness rings for slide 3 of the proposition deck — and shows you where the room disagrees with itself.
+      </p>
+    </div>
+    <div class="prism-mark" aria-hidden="true">
+      <svg viewBox="0 0 420 150" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="pmFace" x1="0" y1="0" x2="0.6" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+            <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.45"/>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0.7"/>
+          </linearGradient>
+          <linearGradient id="pmSide" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0D3B2E" stop-opacity="0.34"/>
+            <stop offset="1" stop-color="#0D3B2E" stop-opacity="0.08"/>
+          </linearGradient>
+          <linearGradient id="pmRose" gradientUnits="userSpaceOnUse" x1="168" y1="0" x2="402" y2="0">
+            <stop offset="0" stop-color="#F5B896"/><stop offset="1" stop-color="#F5B896" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmAmber" gradientUnits="userSpaceOnUse" x1="176" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#F2D080"/><stop offset="1" stop-color="#F2D080" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmMint" gradientUnits="userSpaceOnUse" x1="184" y1="0" x2="406" y2="0">
+            <stop offset="0" stop-color="#9FD4B0"/><stop offset="1" stop-color="#9FD4B0" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="pmSky" gradientUnits="userSpaceOnUse" x1="191" y1="0" x2="400" y2="0">
+            <stop offset="0" stop-color="#6DC0C8"/><stop offset="1" stop-color="#6DC0C8" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="pmBlur" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4"/></filter>
+        </defs>
+        <!-- ground shadow -->
+        <ellipse cx="152" cy="132" rx="62" ry="7" fill="#0D3B2E" opacity="0.14" filter="url(#pmBlur)"/>
+        <!-- spectrum beams, emerging from behind the glass and fading out -->
+        <polygon fill="url(#pmRose)"  points="168,57 168,63 402,33 402,21"/>
+        <polygon fill="url(#pmAmber)" points="176,70 176,76 406,66 406,54"/>
+        <polygon fill="url(#pmMint)"  points="184,83 184,89 406,99 406,87"/>
+        <polygon fill="url(#pmSky)"   points="191,95 191,101 400,131 400,119"/>
+        <!-- extruded side face (depth) -->
+        <polygon fill="url(#pmSide)" points="150,16 166,7 220,103 204,114" stroke="rgba(255,255,255,0.5)" stroke-width="1" stroke-linejoin="round"/>
+        <!-- front glass face -->
+        <path d="M150,16 L204,114 L96,114 Z" fill="url(#pmFace)" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linejoin="round"/>
+        <!-- highlight streak -->
+        <line x1="143" y1="34" x2="116" y2="82" stroke="#ffffff" stroke-opacity="0.85" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+  </header>
+
+  <!-- ===================== LOADER ===================== -->
+  <section class="glass" id="loader">
+    <div class="kicker" style="color: var(--sky);">Step 1 · Load assessments</div>
+    <div class="dropzone" id="dropzone" role="button" tabindex="0" aria-label="Drop self-assessment JSON files here or click to browse">
+      <p class="dz-big">Drop self-assessment JSON files here</p>
+      <p>… or click to browse. Multiple files welcome — one per respondent.</p>
+      <input type="file" id="fileInput" multiple accept=".json,application/json">
+    </div>
+    <div class="loader-actions">
+      <button class="btn" id="demoBtn" type="button">Load demo data</button>
+      <button class="btn-link" id="clearBtn" type="button" hidden>Clear all</button>
+    </div>
+    <div class="errors" id="errors"></div>
+    <div class="chips" id="chips"></div>
+    <p class="empty-note" id="emptyNote">No respondents loaded yet. Expected format: exports from the self-assessment form (<code>unlockt-self-assessment</code>, version 1).</p>
+  </section>
+
+  <!-- ===================== RINGS ===================== -->
+  <section class="glass" id="resultsRings" hidden>
+    <div class="kicker" style="color: var(--rose);">Step 2 · Readiness, merged</div>
+    <div class="overall-panel" style="margin-bottom: 36px;">
+      <div class="ring ring-lg" id="overallRing">
+        <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>
+        <span class="ring-value"></span>
+      </div>
+      <div class="overall-text">
+        <h2>Overall readiness</h2>
+        <p class="verdict" id="overallVerdict"></p>
+        <p class="band-legend">0–34% blinde vlek &nbsp;·&nbsp; 35–59% latent &nbsp;·&nbsp; 60–79% in opbouw &nbsp;·&nbsp; 80–100% koploper</p>
+        <p class="band-legend" id="respondentCount" style="margin-top: 4px;"></p>
+      </div>
+    </div>
+    <div class="grid-5" id="dimRings"></div>
+  </section>
+
+  <!-- ===================== DIVERGENCE ===================== -->
+  <section class="glass" id="resultsDivergence" hidden>
+    <div class="kicker" style="color: var(--amber);">Step 3 · Where the room disagrees</div>
+    <h2 style="font-size: 1.5rem; margin-bottom: 8px;">Divergence per dimension</h2>
+    <p style="font-size: 0.92rem; color: rgba(13,59,46,0.6); margin-bottom: 32px;">
+      Min–max spread across respondents. A wide spread is not noise — it is the agenda.
+    </p>
+    <div id="divergenceRows"></div>
+  </section>
+
+  <!-- ===================== TABLE ===================== -->
+  <section class="glass" id="resultsTable" hidden>
+    <div class="kicker" style="color: var(--mint);">Step 4 · The full grid</div>
+    <h2 style="font-size: 1.5rem; margin-bottom: 24px;">Respondent × dimension</h2>
+    <div style="overflow-x: auto;">
+      <table class="score-table" id="scoreTable"></table>
+    </div>
+  </section>
+
+  <!-- ===================== EXPORT ===================== -->
+  <section class="glass" id="resultsExport" hidden>
+    <div class="kicker" style="color: var(--sky);">Step 5 · Feed the deck</div>
+    <div class="copy-panel">
+      <p style="font-size: 0.92rem; color: rgba(13,59,46,0.6);">
+        This block goes straight into the deck-filling script (<code>03_generate-sprint-deck.js</code>) to populate slide 3.
+      </p>
+      <div class="copy-code" id="copyPreview"></div>
+      <div class="copy-row">
+        <button class="btn primary" id="copyBtn" type="button">Copy scores block</button>
+        <span class="copy-feedback" id="copyFeedback">Copied to clipboard.</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="colophon">Unlockt · Diagnostic Engine · offline single-file tool · percentages are always rings, never grades</footer>
+
+</main>
+
+<script>
+'use strict';
+
+/* ========================================================
+   Schema & scoring model (mirrors 02_Self_Assessment.md)
+   ======================================================== */
+var DIMENSIONS = [
+  { key: 'mens_organisatie',        label: 'Mens & organisatie',        n: 6 },
+  { key: 'data',                    label: 'Data',                      n: 6 },
+  { key: 'marketing_communicatie',  label: 'Marketing & communicatie',  n: 6 },
+  { key: 'ecosystemen',             label: 'Ecosystemen',               n: 5 },
+  { key: 'proposities',             label: 'Proposities',               n: 6 }
+];
+var SPREAD_THRESHOLD = 25;
+
+/* Band: 0–34 blinde vlek (amber) · 35–59 latent (rose) · 60–79 in opbouw (sky) · 80–100 koploper (mint) */
+function bandOf(p) {
+  if (p < 35) return { name: 'blinde vlek', color: 'var(--amber)' };
+  if (p < 60) return { name: 'latent',      color: 'var(--rose)'  };
+  if (p < 80) return { name: 'in opbouw',   color: 'var(--sky)'   };
+  return { name: 'koploper', color: 'var(--mint)' };
+}
+
+/* Per respondent per dimension: pct = round(sum / (4 × nQuestions) × 100) */
+function dimensionPct(answers, n) {
+  var sum = 0;
+  for (var i = 0; i < answers.length; i++) sum += answers[i];
+  return Math.round(sum / (4 * n) * 100);
+}
+
+function respondentScores(r) {
+  var out = {};
+  DIMENSIONS.forEach(function (d) { out[d.key] = dimensionPct(r.answers[d.key], d.n); });
+  return out;
+}
+
+/* Merged dimension score = round(mean over respondents); overall = round(mean of 5 merged) */
+function mergedScores(list) {
+  var merged = {};
+  DIMENSIONS.forEach(function (d) {
+    var total = 0;
+    list.forEach(function (r) { total += r.scores[d.key]; });
+    merged[d.key] = Math.round(total / list.length);
+  });
+  var sum5 = 0;
+  DIMENSIONS.forEach(function (d) { sum5 += merged[d.key]; });
+  merged.overall = Math.round(sum5 / DIMENSIONS.length);
+  return merged;
+}
+
+/* ========================================================
+   Validation — exact schema of 05_self-assessment-form.html
+   ======================================================== */
+function validateAssessment(obj) {
+  var errors = [];
+  if (!obj || typeof obj !== 'object' || Array.isArray(obj)) {
+    return { ok: false, errors: ['not a JSON object'] };
+  }
+  if (obj.version !== 1) errors.push('expected "version": 1');
+  if (obj.tool !== 'unlockt-self-assessment') errors.push('expected "tool": "unlockt-self-assessment"');
+  if (typeof obj.respondent !== 'string' || !obj.respondent.trim()) errors.push('missing "respondent" name');
+  if (typeof obj.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(obj.date)) errors.push('missing or malformed "date" (YYYY-MM-DD)');
+  if (!obj.answers || typeof obj.answers !== 'object' || Array.isArray(obj.answers)) {
+    errors.push('missing "answers" object');
+  } else {
+    DIMENSIONS.forEach(function (d) {
+      var arr = obj.answers[d.key];
+      if (!Array.isArray(arr)) { errors.push('answers.' + d.key + ' missing'); return; }
+      if (arr.length !== d.n) { errors.push('answers.' + d.key + ' must have ' + d.n + ' values (got ' + arr.length + ')'); return; }
+      for (var i = 0; i < arr.length; i++) {
+        if (!Number.isInteger(arr[i]) || arr[i] < 0 || arr[i] > 4) {
+          errors.push('answers.' + d.key + '[' + i + '] must be an integer 0–4');
+          break;
+        }
+      }
+    });
+  }
+  return { ok: errors.length === 0, errors: errors };
+}
+
+/* ========================================================
+   Demo data — 3 plausible, deliberately diverging crew members
+   ======================================================== */
+var DEMO_RESPONDENTS = [
+  {
+    version: 1, tool: 'unlockt-self-assessment',
+    respondent: 'Maartje de Vries', date: '2026-06-08',
+    answers: {
+      mens_organisatie:       [2, 1, 2, 3, 2, 2],
+      data:                   [3, 3, 2, 2, 3, 3],
+      marketing_communicatie: [2, 1, 2, 2, 1, 1],
+      ecosystemen:            [1, 1, 2, 1, 0],
+      proposities:            [2, 2, 3, 2, 1, 2]
+    }
+  },
+  {
+    version: 1, tool: 'unlockt-self-assessment',
+    respondent: 'Tom Janssen', date: '2026-06-08',
+    answers: {
+      mens_organisatie:       [2, 1, 1, 2, 3, 1],
+      data:                   [4, 3, 3, 2, 2, 3],
+      marketing_communicatie: [3, 2, 3, 3, 2, 2],
+      ecosystemen:            [2, 1, 2, 2, 1],
+      proposities:            [1, 2, 2, 2, 1, 1]
+    }
+  },
+  {
+    version: 1, tool: 'unlockt-self-assessment',
+    respondent: 'Sophie Bakker', date: '2026-06-09',
+    answers: {
+      mens_organisatie:       [3, 2, 2, 3, 3, 2],
+      data:                   [2, 1, 1, 1, 2, 2],
+      marketing_communicatie: [1, 1, 2, 1, 0, 1],
+      ecosystemen:            [1, 0, 1, 1, 1],
+      proposities:            [2, 3, 2, 3, 2, 2]
+    }
+  }
+];
+
+/* ========================================================
+   State
+   ======================================================== */
+var respondents = []; // { name, date, answers, scores, demo }
+
+function addRespondent(raw, isDemo) {
+  var entry = {
+    name: raw.respondent.trim(),
+    date: raw.date,
+    answers: raw.answers,
+    scores: respondentScores(raw),
+    demo: !!isDemo
+  };
+  // Same name re-imported → replace (latest export wins), never double-count.
+  var idx = respondents.findIndex(function (r) { return r.name.toLowerCase() === entry.name.toLowerCase(); });
+  if (idx >= 0) respondents[idx] = entry; else respondents.push(entry);
+}
+
+function removeRespondent(name) {
+  respondents = respondents.filter(function (r) { return r.name !== name; });
+  renderAll();
+}
+
+function initialsOf(name) {
+  return name.trim().split(/\s+/).map(function (w) { return w.charAt(0); }).join('').slice(0, 3).toUpperCase();
+}
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+/* ========================================================
+   Rendering
+   ======================================================== */
+function setRing(ringEl, pct, color) {
+  ringEl.style.setProperty('--c', color);
+  ringEl.style.setProperty('--p', '0');
+  ringEl.querySelector('.ring-value').textContent = pct + '%';
+  // Two frames so the 0 → pct transition actually animates the sweep.
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      ringEl.style.setProperty('--p', String(pct));
+    });
+  });
+}
+
+function renderChips() {
+  var chips = document.getElementById('chips');
+  var emptyNote = document.getElementById('emptyNote');
+  var clearBtn = document.getElementById('clearBtn');
+  chips.innerHTML = '';
+  respondents.forEach(function (r) {
+    var chip = document.createElement('span');
+    chip.className = 'chip';
+    chip.innerHTML =
+      '<span class="chip-name">' + esc(r.name) + '</span>' +
+      '<span class="chip-date">' + esc(r.date) + '</span>' +
+      (r.demo ? '<span class="chip-demo">demo</span>' : '');
+    var x = document.createElement('button');
+    x.className = 'chip-x';
+    x.type = 'button';
+    x.setAttribute('aria-label', 'Remove ' + r.name);
+    x.textContent = '×';
+    x.addEventListener('click', function () { removeRespondent(r.name); });
+    chip.appendChild(x);
+    chips.appendChild(chip);
+  });
+  emptyNote.hidden = respondents.length > 0;
+  clearBtn.hidden = respondents.length === 0;
+}
+
+function renderRings(merged) {
+  var overallBand = bandOf(merged.overall);
+  setRing(document.getElementById('overallRing'), merged.overall, overallBand.color);
+  document.getElementById('overallVerdict').innerHTML =
+    '<strong style="color:' + overallBand.color + ';">' + merged.overall + '% — ' + overallBand.name + '.</strong> ' +
+    'Mean of the five merged dimension scores.';
+  document.getElementById('respondentCount').textContent =
+    'Merged across ' + respondents.length + ' respondent' + (respondents.length === 1 ? '' : 's') + '.';
+
+  var wrap = document.getElementById('dimRings');
+  wrap.innerHTML = '';
+  DIMENSIONS.forEach(function (d) {
+    var pct = merged[d.key];
+    var band = bandOf(pct);
+    var card = document.createElement('div');
+    card.className = 'glass-sm';
+    card.style.padding = '24px';
+    card.innerHTML =
+      '<div class="ring">' +
+        '<svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"/><circle class="fill" cx="60" cy="60" r="52"/></svg>' +
+        '<span class="ring-value"></span>' +
+      '</div>' +
+      '<p class="grade-dim">' + esc(d.label) + '</p>' +
+      '<p class="grade-dim" style="font-size:0.72rem; color:' + band.color + '; font-weight:600;">' + band.name + '</p>';
+    wrap.appendChild(card);
+    setRing(card.querySelector('.ring'), pct, band.color);
+  });
+}
+
+function renderDivergence() {
+  var wrap = document.getElementById('divergenceRows');
+  wrap.innerHTML = '';
+
+  if (respondents.length < 2) {
+    var hint = document.createElement('p');
+    hint.className = 'div-hint';
+    hint.textContent = 'Load at least two respondents to see where the room disagrees — divergence needs more than one voice.';
+    wrap.appendChild(hint);
+    return;
+  }
+
+  DIMENSIONS.forEach(function (d) {
+    var values = respondents.map(function (r) { return { name: r.name, pct: r.scores[d.key] }; });
+    var min = Math.min.apply(null, values.map(function (v) { return v.pct; }));
+    var max = Math.max.apply(null, values.map(function (v) { return v.pct; }));
+    var spread = max - min;
+    var disagree = spread >= SPREAD_THRESHOLD;
+
+    var row = document.createElement('div');
+    row.className = 'div-row' + (disagree ? ' disagree' : '');
+
+    var head = document.createElement('div');
+    head.className = 'div-head';
+    head.innerHTML =
+      '<span class="div-label">' + esc(d.label) + '</span>' +
+      '<span class="div-spread">min <strong>' + min + '%</strong> · max <strong>' + max + '%</strong> · spread <strong>' + spread + '</strong></span>';
+    row.appendChild(head);
+
+    var track = document.createElement('div');
+    track.className = 'div-track';
+    var range = document.createElement('div');
+    range.className = 'div-range';
+    range.style.left = min + '%';
+    range.style.width = Math.max(spread, 1.5) + '%';
+    track.appendChild(range);
+
+    values.forEach(function (v, i) {
+      var mk = document.createElement('span');
+      mk.className = 'div-marker';
+      mk.style.left = v.pct + '%';
+      mk.title = v.name + ' — ' + v.pct + '%';
+      var init = document.createElement('span');
+      init.className = 'mk-init ' + (i % 2 === 0 ? 'above' : 'below');
+      init.textContent = initialsOf(v.name);
+      mk.appendChild(init);
+      track.appendChild(mk);
+    });
+    row.appendChild(track);
+
+    if (disagree) {
+      var note = document.createElement('p');
+      note.className = 'div-note';
+      note.textContent = 'Spread ≥ ' + SPREAD_THRESHOLD + ' points: the room disagrees here — that’s where the conversation is.';
+      row.appendChild(note);
+    } else {
+      row.style.marginBottom = '34px';
+    }
+    wrap.appendChild(row);
+  });
+}
+
+function renderTable(merged) {
+  var table = document.getElementById('scoreTable');
+  var html = '<thead><tr><th>Respondent</th>';
+  DIMENSIONS.forEach(function (d) { html += '<th>' + esc(d.label) + '</th>'; });
+  html += '<th>Overall</th></tr></thead><tbody>';
+
+  respondents.forEach(function (r) {
+    html += '<tr><td>' + esc(r.name) + '</td>';
+    var sum = 0;
+    DIMENSIONS.forEach(function (d) {
+      var pct = r.scores[d.key];
+      sum += pct;
+      html += '<td><span class="pct" style="color:' + bandOf(pct).color + ';">' + pct + '%</span></td>';
+    });
+    var own = Math.round(sum / DIMENSIONS.length);
+    html += '<td><span class="pct" style="color:' + bandOf(own).color + ';">' + own + '%</span></td></tr>';
+  });
+
+  html += '</tbody><tfoot><tr><td>Merged (' + respondents.length + ')</td>';
+  DIMENSIONS.forEach(function (d) {
+    html += '<td><span class="pct" style="color:' + bandOf(merged[d.key]).color + ';">' + merged[d.key] + '%</span></td>';
+  });
+  html += '<td><span class="pct" style="color:' + bandOf(merged.overall).color + ';">' + merged.overall + '%</span></td></tr></tfoot>';
+  table.innerHTML = html;
+}
+
+/* Exact block format consumed by the deck-filling script — do not reformat. */
+function scoresBlock(merged) {
+  return '{"scores": {"mens_organisatie": ' + merged.mens_organisatie +
+         ', "data": ' + merged.data +
+         ', "marketing_communicatie": ' + merged.marketing_communicatie +
+         ', "ecosystemen": ' + merged.ecosystemen +
+         ', "proposities": ' + merged.proposities + '}}';
+}
+
+function renderExport(merged) {
+  document.getElementById('copyPreview').textContent = scoresBlock(merged);
+}
+
+function renderAll() {
+  renderChips();
+  var sections = ['resultsRings', 'resultsDivergence', 'resultsTable', 'resultsExport'];
+  if (respondents.length === 0) {
+    sections.forEach(function (id) { document.getElementById(id).hidden = true; });
+    return;
+  }
+  var merged = mergedScores(respondents);
+  sections.forEach(function (id) { document.getElementById(id).hidden = false; });
+  renderRings(merged);
+  renderDivergence();
+  renderTable(merged);
+  renderExport(merged);
+}
+
+/* ========================================================
+   File loading
+   ======================================================== */
+function showErrors(list) {
+  var box = document.getElementById('errors');
+  box.innerHTML = '';
+  list.forEach(function (msg) {
+    var div = document.createElement('div');
+    div.className = 'error-item';
+    div.textContent = msg;
+    box.appendChild(div);
+  });
+}
+
+function handleFiles(fileList) {
+  var files = Array.prototype.slice.call(fileList);
+  if (files.length === 0) return;
+  var errors = [];
+  var pending = files.length;
+
+  files.forEach(function (file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var parsed = JSON.parse(String(reader.result));
+        var v = validateAssessment(parsed);
+        if (v.ok) {
+          addRespondent(parsed, false);
+        } else {
+          errors.push(file.name + ': ' + v.errors.join('; '));
+        }
+      } catch (e) {
+        errors.push(file.name + ': not valid JSON');
+      }
+      if (--pending === 0) { showErrors(errors); renderAll(); }
+    };
+    reader.onerror = function () {
+      errors.push(file.name + ': could not read file');
+      if (--pending === 0) { showErrors(errors); renderAll(); }
+    };
+    reader.readAsText(file);
+  });
+}
+
+/* ========================================================
+   Wiring
+   ======================================================== */
+(function init() {
+  var dropzone = document.getElementById('dropzone');
+  var fileInput = document.getElementById('fileInput');
+
+  dropzone.addEventListener('click', function () { fileInput.click(); });
+  dropzone.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+  });
+  fileInput.addEventListener('change', function () {
+    handleFiles(fileInput.files);
+    fileInput.value = ''; // allow re-importing the same file
+  });
+
+  ['dragenter', 'dragover'].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      dropzone.classList.add('dragover');
+    });
+  });
+  ['dragleave', 'drop'].forEach(function (evt) {
+    dropzone.addEventListener(evt, function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      dropzone.classList.remove('dragover');
+    });
+  });
+  dropzone.addEventListener('drop', function (e) {
+    if (e.dataTransfer && e.dataTransfer.files) handleFiles(e.dataTransfer.files);
+  });
+  // Don't let a stray drop outside the zone navigate away from the tool.
+  window.addEventListener('dragover', function (e) { e.preventDefault(); });
+  window.addEventListener('drop', function (e) { e.preventDefault(); });
+
+  document.getElementById('demoBtn').addEventListener('click', function () {
+    showErrors([]);
+    DEMO_RESPONDENTS.forEach(function (r) { addRespondent(r, true); });
+    renderAll();
+  });
+
+  document.getElementById('clearBtn').addEventListener('click', function () {
+    respondents = [];
+    showErrors([]);
+    renderAll();
+  });
+
+  document.getElementById('copyBtn').addEventListener('click', function () {
+    var text = scoresBlock(mergedScores(respondents));
+    var feedback = document.getElementById('copyFeedback');
+    function done(ok) {
+      feedback.textContent = ok ? 'Copied to clipboard.' : 'Copy failed — select the block above and copy manually.';
+      feedback.classList.add('show');
+      setTimeout(function () { feedback.classList.remove('show'); }, 2400);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(legacyCopy(text)); });
+    } else {
+      done(legacyCopy(text));
+    }
+  });
+
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  renderAll();
+})();
+</script>
+</body>
+</html>

@@ -129,6 +129,8 @@ const MIGRATIONS = [
   // in lib/readout.ts.
   `ALTER TABLE sprints ADD COLUMN readout_json TEXT`,
   `ALTER TABLE sprints ADD COLUMN readout_at TEXT`,
+  // When auto-intel last ran for this sprint (brief + media + harvested reports).
+  `ALTER TABLE sprints ADD COLUMN intel_at TEXT`,
 ];
 
 /** Idempotent: creates the tables if missing and applies column migrations. */
