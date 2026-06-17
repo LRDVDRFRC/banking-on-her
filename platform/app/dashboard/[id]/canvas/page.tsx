@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import CanvasBoard, { type CanvasConcept } from "@/components/CanvasBoard";
+import SprintNav from "@/components/SprintNav";
 import { db, ensureSchema } from "@/lib/db";
 import { formatDutchDate } from "@/lib/dates";
 import { MECHANISMS, momentsFor } from "@/lib/moments";
@@ -74,11 +74,8 @@ export default async function CanvasPage({
         {client} · {sectorLabel(sector)} · {regionLabel(region)}
         {sprintDate ? ` · Sprint day: ${sprintDate}` : ""}
       </p>
-      <p className="muted small" style={{ marginBottom: 24 }}>
-        <Link href={`/dashboard/${id}`} className="muted">← Back to dashboard</Link>
-        {" · "}
-        <Link href={`/dashboard/${id}/findings`} className="muted">Findings →</Link>
-      </p>
+
+      <SprintNav sprintId={id} active="ideatie" />
 
       <p style={{ maxWidth: 760, lineHeight: 1.7, marginBottom: 28 }}>
         By 12:30 the room converges on <strong>3–5 testable concepts</strong>.

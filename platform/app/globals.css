@@ -508,3 +508,103 @@ code, .code {
   .results-grid { grid-template-columns: repeat(2, 1fr); }
   h1 { font-size: 1.9rem !important; }
 }
+
+/* ---------------------------------------------------------------- sprint phase nav */
+.sprintnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 0 0 32px;
+  padding: 7px;
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+.snav-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 13px;
+  border-radius: 10px;
+  font-family: "Sora", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: rgba(13, 59, 46, 0.62);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.snav-item:hover { background: rgba(13, 59, 46, 0.06); color: var(--ink); }
+.snav-item.active {
+  background: var(--ink);
+  color: #fff;
+  font-weight: 600;
+}
+.snav-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: rgba(13, 59, 46, 0.1);
+  color: rgba(13, 59, 46, 0.6);
+}
+.snav-item.active .snav-num { background: rgba(255, 255, 255, 0.25); color: #fff; }
+/* a phase that already holds data gets a mint ring on its number */
+.snav-item.done .snav-num {
+  background: var(--mint);
+  color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(159, 212, 176, 0.45);
+}
+.snav-item.active.done .snav-num { box-shadow: none; }
+@media (max-width: 720px) {
+  .sprintnav { gap: 4px; padding: 5px; }
+  .snav-item { padding: 6px 10px; font-size: 0.78rem; }
+}
+
+/* ---------------------------------------------------------------- journey cards (overview) */
+.journey { display: flex; flex-direction: column; gap: 10px; }
+.journey-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: var(--border-radius-lg, 14px);
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid var(--glass-border);
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+.journey-card:hover {
+  transform: translateX(3px);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 6px 18px -10px rgba(13, 59, 46, 0.25);
+}
+.journey-num {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  font-family: "Sora", sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  background: rgba(13, 59, 46, 0.08);
+  color: rgba(13, 59, 46, 0.55);
+}
+.journey-card.done .journey-num {
+  background: var(--mint);
+  color: var(--ink);
+}
+.journey-body { display: flex; flex-direction: column; gap: 2px; flex: 1 1 auto; }
+.journey-title { font-family: "Sora", sans-serif; font-weight: 600; font-size: 1.02rem; }
+.journey-status { font-size: 0.88rem; color: rgba(13, 59, 46, 0.6); }
+.journey-arrow { color: rgba(13, 59, 46, 0.35); font-size: 1.1rem; }
+.journey-card:hover .journey-arrow { color: var(--sky); }

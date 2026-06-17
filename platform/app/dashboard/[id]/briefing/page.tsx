@@ -6,6 +6,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Ring from "@/components/Ring";
+import SprintNav from "@/components/SprintNav";
 import { buildBriefing } from "@/lib/briefing";
 import { BAND_LEGEND } from "@/lib/scoring";
 
@@ -50,9 +51,10 @@ export default async function BriefingPage({
         {sprint.participantCount} registered · {sprint.assessmentCount}{" "}
         assessment{sprint.assessmentCount === 1 ? "" : "s"} in
       </p>
+      <SprintNav sprintId={id} active="deliverables" />
       <p className="muted small" style={{ marginBottom: 36 }}>
         Internal prep document — generated from the data, nothing else.{" "}
-        <Link href={`/dashboard/${sprint.id}`}>← Back to the dashboard</Link>
+        <Link href={`/dashboard/${id}/deliverables`}>← Back to deliverables</Link>
       </p>
 
       {/* ---------- The numbers ---------- */}

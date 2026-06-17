@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import SprintNav from "@/components/SprintNav";
 import BuildTrigger from "@/components/BuildTrigger";
 import PhoneFrame from "@/components/PhoneFrame";
 import { db, ensureSchema } from "@/lib/db";
@@ -67,10 +68,13 @@ export default async function ConceptBuildPage({
       {description ? (
         <p className="intro-note" style={{ marginBottom: 8 }}>{description}</p>
       ) : null}
+
+      <SprintNav sprintId={id} active="prototypes" />
+
       <p className="muted small no-print" style={{ marginBottom: 28 }}>
-        <Link href={`/dashboard/${id}/canvas`} className="muted">← Back to canvas</Link>
+        <Link href={`/dashboard/${id}/prototypes`} className="muted">← Back to prototypes</Link>
         {" · "}
-        <Link href={`/dashboard/${id}`} className="muted">Dashboard</Link>
+        <Link href={`/dashboard/${id}/canvas`} className="muted">Canvas</Link>
       </p>
 
       <BuildTrigger

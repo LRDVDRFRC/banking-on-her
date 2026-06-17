@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
 import Ring from "@/components/Ring";
+import SprintNav from "@/components/SprintNav";
 import ResearchTrigger from "@/components/ResearchTrigger";
 import PrereadTrigger from "@/components/PrereadTrigger";
 import type { PrereadDoc } from "@/lib/preread";
@@ -447,9 +448,8 @@ export default async function FindingsPage({
       <div className="page-label">Facilitator · Sprint findings</div>
       <h1 style={{ fontSize: "2.4rem", fontWeight: 700, marginBottom: 8 }}>{client}</h1>
       {meta}
+      <SprintNav sprintId={id} active="findings" />
       <p className="muted small no-print" style={{ marginBottom: 36 }}>
-        <Link href={`/dashboard/${id}`} className="muted">← Back to dashboard</Link>
-        {" · "}
         <Link href={`/dashboard/${id}/findings?preread=1`} className="muted">
           Pre-read version →
         </Link>

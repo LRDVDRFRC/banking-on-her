@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import SprintNav from "@/components/SprintNav";
 import ReadoutTrigger from "@/components/ReadoutTrigger";
 import type { ReadoutAverages, ReadoutDoc } from "@/lib/readout";
 import { db, ensureSchema } from "@/lib/db";
@@ -113,10 +114,9 @@ export default async function ReadoutPage({
       <p className="intro-note" style={{ marginBottom: 8 }}>
         {sectorLabel(sector)} · {regionLabel(region)} · what the panel said, ranked — and the pilot call.
       </p>
+      <SprintNav sprintId={id} active="readout" />
       <p className="muted small no-print" style={{ marginBottom: 28 }}>
-        <Link href={`/dashboard/${id}`} className="muted">← Back to dashboard</Link>
-        {" · "}
-        <Link href={`/dashboard/${id}/canvas`} className="muted">Ideation canvas</Link>
+        <Link href={`/dashboard/${id}/test`} className="muted">← Test panel</Link>
         {feedbackCount > 0 ? ` · ${feedbackCount} panel reactions captured` : ""}
         {" · print this page or save as PDF for the decision meeting"}
       </p>
