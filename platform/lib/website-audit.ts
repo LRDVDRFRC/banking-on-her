@@ -17,6 +17,8 @@ export interface AuditAxis {
 
 export interface WebsiteAudit {
   url: string;
+  /** The pages actually analysed (homepage + a couple of key sub-pages). */
+  pages: string[];
   text: AuditAxis;
   visuals: AuditAxis & { imagesAnalysed: number };
   overall: string;
@@ -82,6 +84,40 @@ function extractImageUrls(html: string, base: string): string[] {
   return out;
 }
 
+// Pick up to `max` key sub-pages from the homepage's internal links — the
+// pages most likely to carry the brand's gendered communication (products,
+// life-events, "about", customer-facing sections).
+const SUBPAGE_KEYWORDS = /(product|propositie|oplossing|pensioen|deelnemer|klant|particulier|zakelijk|hypothe|sparen|beleggen|verzeker|over-ons|over_ons|wie-zijn|waarom|service|levensgebeurtenis)/i;
+const SKIP_LINK = /(\.pdf|\.zip|\.jpg|\.png|mailto:|tel:|javascript:|#|\/(login|inloggen|cookie|privacy|disclaimer|voorwaarden|sitemap|contact|vacature|werken-bij))/i;
+
+function pickSubpages(html: string, base: string, max: number): string[] {
+  let origin: string;
+  try { origin = new URL(base).origin; } catch { return []; }
+  const homePath = (() => { try { return new URL(base).pathname.replace(/\/$/, ""); } catch { return ""; } })();
+  const scored: { url: string; score: number }[] = [];
+  const seen = new Set<string>();
+  for (const m of html.matchAll(/<a[^>]+href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)) {
+    const href = m[1];
+    const text = m[2].replace(/<[^>]+>/g, " ");
+    if (SKIP_LINK.test(href)) continue;
+    let abs: string;
+    try { abs = new URL(href, base).href; } catch { continue; }
+    if (new URL(abs).origin !== origin) continue; // same site only
+    const path = new URL(abs).pathname.replace(/\/$/, "");
+    if (!path || path === homePath) continue; // skip homepage itself
+    const key = origin + path;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const hay = `${path} ${text}`;
+    if (!SUBPAGE_KEYWORDS.test(hay)) continue;
+    // shallower paths first (closer to the main proposition)
+    const depth = path.split("/").filter(Boolean).length;
+    scored.push({ url: origin + path, score: 10 - depth });
+  }
+  scored.sort((a, b) => b.score - a.score);
+  return scored.slice(0, max).map((s) => s.url);
+}
+
 interface ImageBlock { mediaType: string; data: string; }
 
 async function fetchImages(urls: string[], max: number): Promise<ImageBlock[]> {
@@ -105,7 +141,7 @@ async function fetchImages(urls: string[], max: number): Promise<ImageBlock[]> {
   return out;
 }
 
-const SYSTEM = `You are a brand and communication analyst at Unlockt doing a gendered-communication audit of a financial institution's public homepage. Unlockt helps such institutions serve women clients better — the commercial case, not the moral case.
+const SYSTEM = `You are a brand and communication analyst at Unlockt doing a gendered-communication audit of a financial institution's public website (its homepage plus a couple of key sub-pages). Unlockt helps such institutions serve women clients better — the commercial case, not the moral case. Judge the site as a whole across the pages provided.
 
 Assess two things, separately for the TEXT (copy) and the VISUALS (the images shown):
 1. INCLUSIVITY (0–100): how well it represents and addresses a diverse audience — who the copy speaks to, plain/accessible language, life-events covered; for visuals: gender/age/cultural representation and the roles people are shown in.
@@ -127,6 +163,7 @@ function parseAudit(text: string, url: string, imagesAnalysed: number): WebsiteA
   const str = (v: unknown) => (typeof v === "string" ? v : "");
   return {
     url,
+    pages: [url],
     text: {
       lean: clamp(o.text_lean, -100, 100, 0),
       leanLabel: str(o.text_lean_label) || "gebalanceerd",
@@ -147,17 +184,36 @@ function parseAudit(text: string, url: string, imagesAnalysed: number): WebsiteA
 }
 
 export async function auditWebsite(client: string, website: string): Promise<WebsiteAudit | null> {
-  const html = await fetchHtml(website);
-  if (!html) return null;
-  const pageText = extractText(html);
-  const imageUrls = extractImageUrls(html, website);
-  const images = await fetchImages(imageUrls, 4);
+  const homeHtml = await fetchHtml(website);
+  if (!homeHtml) return null;
+
+  // Homepage + up to two key sub-pages (products / life-events / about).
+  const subUrls = pickSubpages(homeHtml, website, 2);
+  const pages: { url: string; html: string }[] = [{ url: website, html: homeHtml }];
+  for (const u of subUrls) {
+    const h = await fetchHtml(u);
+    if (h) pages.push({ url: u, html: h });
+  }
+
+  // Combine text (homepage fuller, sub-pages trimmed) and gather images across
+  // pages, capped so the vision call stays fast.
+  const textParts: string[] = [];
+  const imageUrls: string[] = [];
+  pages.forEach((p, i) => {
+    const cap = i === 0 ? 9000 : 5000;
+    textParts.push(`PAGE ${i + 1} — ${p.url}\n${extractText(p.html).slice(0, cap)}`);
+    for (const u of extractImageUrls(p.html, p.url)) {
+      if (!imageUrls.includes(u)) imageUrls.push(u);
+    }
+  });
+  const images = await fetchImages(imageUrls, 5);
+  const pageList = pages.map((p) => p.url);
 
   const anthropic = new Anthropic();
   const content: Anthropic.ContentBlockParam[] = [
     {
       type: "text",
-      text: `Client: ${client}\nWebsite: ${website}\n\nPAGE TEXT (homepage):\n${pageText}\n\n${images.length} homepage image(s) follow for the visual analysis.`,
+      text: `Client: ${client}\nWebsite: ${website}\nPages analysed: ${pageList.join(", ")}\n\nPAGE TEXT (homepage + key sub-pages):\n\n${textParts.join("\n\n---\n\n")}\n\n${images.length} site image(s) follow for the visual analysis.`,
     },
     ...images.map((img): Anthropic.ContentBlockParam => ({
       type: "image",
@@ -177,5 +233,7 @@ export async function auditWebsite(client: string, website: string): Promise<Web
     .filter((b): b is Anthropic.TextBlock => b.type === "text")
     .map((b) => b.text)
     .join("\n");
-  return parseAudit(text, website, images.length);
+  const audit = parseAudit(text, website, images.length);
+  if (audit) audit.pages = pageList;
+  return audit;
 }

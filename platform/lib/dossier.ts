@@ -9,6 +9,7 @@
 
 import { db, ensureSchema } from "@/lib/db";
 import { formatDutchDate } from "@/lib/dates";
+import type { WebsiteAudit, AuditAxis } from "@/lib/website-audit";
 import {
   regionLabel,
   relevantRegions,
@@ -208,6 +209,43 @@ ${body}
   </section>`;
 }
 
+function auditAxisHtml(title: string, a: AuditAxis & { imagesAnalysed?: number }): string {
+  const pos = (a.lean + 100) / 2; // -100..100 → 0..100
+  const evidence = a.evidence.length
+    ? `      <ul class="audit-evidence">${a.evidence
+        .slice(0, 3)
+        .map((e) => `<li>${esc(e)}</li>`)
+        .join("")}</ul>`
+    : "";
+  return `    <div class="glass-sm audit-axis">
+      <div class="kicker" style="color: var(--sky);">${esc(title)}</div>
+      <div class="stat-number" style="color: var(--ink); font-size: 2.4rem;">${a.inclusivity}%</div>
+      <p class="stat-body">Inclusiviteit &middot; toon: <strong>${esc(a.leanLabel)}</strong></p>
+      <div class="audit-bar"><span class="audit-marker" style="left: calc(${pos}% - 6px);"></span></div>
+      <div class="audit-scale"><span>vrouwelijk</span><span>mannelijk</span></div>
+      <p class="stat-body" style="margin-top: 12px;">${esc(a.summary)}</p>
+${evidence}
+    </div>`;
+}
+
+function auditHtml(client: string, audit: WebsiteAudit | null): string {
+  if (!audit) return "";
+  const pagesNote =
+    audit.pages && audit.pages.length > 1
+      ? `${audit.pages.length} pagina's`
+      : "de homepage";
+  return `  <section class="doc-section">
+    <div class="kicker" style="color: var(--rose);">De communicatie-spiegel</div>
+    <h2>Hoe ${esc(client)} nu communiceert</h2>
+    <p class="section-intro">Automatische analyse van ${pagesNote} &mdash; de tekst &eacute;n de beelden &mdash; op inclusiviteit en de vrouwelijk&#8596;mannelijk-toon.</p>
+    <div class="audit-grid">
+${auditAxisHtml("Tekst", audit.text)}
+${auditAxisHtml("Beeld", audit.visuals)}
+    </div>
+    ${audit.overall ? `<p class="audit-overall"><strong>Samengevat:</strong> ${esc(audit.overall)}</p>` : ""}
+  </section>`;
+}
+
 function closingHtml(
   client: string,
   sector: string,
@@ -310,7 +348,7 @@ export async function buildDossier(sprintId: string): Promise<string | null> {
   const c = db();
 
   const sprintRes = await c.execute({
-    sql: "SELECT id, client, sprint_date, token, sector, region FROM sprints WHERE id = ?",
+    sql: "SELECT id, client, sprint_date, token, sector, region, website_audit_json FROM sprints WHERE id = ?",
     args: [sprintId],
   });
   if (sprintRes.rows.length === 0) return null;
@@ -318,6 +356,10 @@ export async function buildDossier(sprintId: string): Promise<string | null> {
   const client = String(sprint.client);
   const sector = sprint.sector == null ? "pensioen" : String(sprint.sector);
   const region = sprint.region == null ? "nl" : String(sprint.region);
+  let audit: WebsiteAudit | null = null;
+  if (sprint.website_audit_json != null) {
+    try { audit = JSON.parse(String(sprint.website_audit_json)) as WebsiteAudit; } catch { audit = null; }
+  }
   const sprintDate = formatDutchDate(
     sprint.sprint_date == null ? null : String(sprint.sprint_date)
   );
@@ -454,6 +496,16 @@ a { color: var(--ink); }
 /* ---------- sections ---------- */
 .doc-section { margin-bottom: 56px; }
 .doc-section h2 { font-size: 1.7rem; margin-bottom: 24px; }
+.audit-grid { display: flex; gap: 20px; flex-wrap: wrap; }
+.audit-axis { flex: 1 1 300px; padding: 28px; }
+.audit-bar { position: relative; height: 8px; border-radius: 4px; margin: 10px 0 5px;
+  background: linear-gradient(90deg, var(--rose), #e7ecdf 50%, var(--sky)); }
+.audit-marker { position: absolute; top: -3px; width: 12px; height: 14px; border-radius: 3px;
+  background: var(--ink); box-shadow: 0 1px 3px rgba(13,59,46,0.35); }
+.audit-scale { display: flex; justify-content: space-between; font-size: 0.72rem; color: rgba(13,59,46,0.5); }
+.audit-evidence { margin: 6px 0 0 18px; }
+.audit-evidence li { font-size: 0.85rem; color: rgba(13,59,46,0.6); line-height: 1.5; margin-bottom: 4px; }
+.audit-overall { margin-top: 18px; line-height: 1.7; }
 
 /* ---------- stats wall ---------- */
 .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -598,6 +650,8 @@ a { color: var(--ink); }
 ${statsWallHtml(reports)}
 
 ${evidenceHtml(reports)}
+
+${auditHtml(client, audit)}
 
 ${closingHtml(client, sector, scores)}
 

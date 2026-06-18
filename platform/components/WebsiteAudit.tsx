@@ -67,7 +67,12 @@ export default function WebsiteAudit({ audit }: { audit: Audit }) {
         </p>
       )}
       <p className="muted small" style={{ marginTop: 8, marginBottom: 0 }}>
-        Automatische analyse van <a href={audit.url} target="_blank" rel="noopener noreferrer">{audit.url} ↗</a> — tekst &amp; beeld.
+        Automatische analyse van{" "}
+        <a href={audit.url} target="_blank" rel="noopener noreferrer">{audit.url} ↗</a>
+        {audit.pages && audit.pages.length > 1
+          ? ` — ${audit.pages.length} pagina's (homepage + ${audit.pages.length - 1} subpagina${audit.pages.length - 1 === 1 ? "" : "'s"})`
+          : " — homepage"}
+        , tekst &amp; beeld.
       </p>
     </>
   );
