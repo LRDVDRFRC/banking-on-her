@@ -34,12 +34,17 @@ export default function IntelCollector({
     setError(null);
     setResult(null);
     try {
-      const res = await fetch(`/dashboard/${sprintId}/intel`, { method: "POST" });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.error ?? `Verzamelen mislukt (${res.status}).`);
+      // intel (brief + media + reports) and the website audit run in parallel —
+      // separate routes so neither risks the function timeout.
+      const [intelRes] = await Promise.all([
+        fetch(`/dashboard/${sprintId}/intel`, { method: "POST" }),
+        fetch(`/dashboard/${sprintId}/audit`, { method: "POST" }).catch(() => null),
+      ]);
+      const data = await intelRes.json().catch(() => ({}));
+      if (!intelRes.ok) {
+        setError(data.error ?? `Verzamelen mislukt (${intelRes.status}).`);
       } else {
-        setResult(`Klaar — ${data.reportsAdded ?? 0} rapporten aan de bibliotheek toegevoegd.`);
+        setResult(`Klaar — ${data.reportsAdded ?? 0} rapporten toegevoegd; website geanalyseerd.`);
         router.refresh();
       }
     } catch {

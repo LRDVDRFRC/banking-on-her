@@ -131,6 +131,10 @@ const MIGRATIONS = [
   `ALTER TABLE sprints ADD COLUMN readout_at TEXT`,
   // When auto-intel last ran for this sprint (brief + media + harvested reports).
   `ALTER TABLE sprints ADD COLUMN intel_at TEXT`,
+  // Gendered-communication audit of the client website (text + visuals).
+  // JSON contract in lib/website-audit.ts.
+  `ALTER TABLE sprints ADD COLUMN website_audit_json TEXT`,
+  `ALTER TABLE sprints ADD COLUMN website_audit_at TEXT`,
 ];
 
 /** Idempotent: creates the tables if missing and applies column migrations. */

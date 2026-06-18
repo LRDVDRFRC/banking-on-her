@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import Ring from "@/components/Ring";
 import SprintNav from "@/components/SprintNav";
 import ResearchTrigger from "@/components/ResearchTrigger";
+import WebsiteAudit from "@/components/WebsiteAudit";
+import type { WebsiteAudit as WebsiteAuditType } from "@/lib/website-audit";
 import PrereadTrigger from "@/components/PrereadTrigger";
 import type { PrereadDoc } from "@/lib/preread";
 import { db, ensureSchema } from "@/lib/db";
@@ -219,7 +221,7 @@ export default async function FindingsPage({
 
   const sprintRes = await c.execute({
     sql: `SELECT id, client, sprint_date, sector, region, website, research_brief, research_brief_at,
-                 preread_json, preread_at
+                 preread_json, preread_at, website_audit_json
           FROM sprints WHERE id = ?`,
     args: [id],
   });
@@ -233,6 +235,10 @@ export default async function FindingsPage({
   );
   const brief = sprint.research_brief == null ? null : String(sprint.research_brief);
   const briefAt = sprint.research_brief_at == null ? null : String(sprint.research_brief_at);
+  let websiteAudit: WebsiteAuditType | null = null;
+  if (sprint.website_audit_json != null) {
+    try { websiteAudit = JSON.parse(String(sprint.website_audit_json)) as WebsiteAuditType; } catch { websiteAudit = null; }
+  }
   const aiEnabled = Boolean(process.env.ANTHROPIC_API_KEY);
 
   // ---- readiness: identical math to the dashboard (merge → overall → band)
@@ -628,6 +634,26 @@ export default async function FindingsPage({
             web for the client, their inclusive-finance track record and
             competitor best practices, and writes the full brief into this
             section (≈2–3 minutes).
+          </p>
+        )}
+      </section>
+
+      {/* ---------- 4b · Website audit ---------- */}
+      <section className="glass-sm" style={{ marginBottom: 36 }} aria-label="Website text and visuals">
+        <div className="kicker" style={{ color: "var(--rose)" }}>Website — tekst &amp; beeld</div>
+        <h2 style={{ fontSize: "1.3rem", marginBottom: 6 }}>
+          Hoe inclusief, vrouwelijk of mannelijk communiceert {client}?
+        </h2>
+        <p className="muted small" style={{ marginBottom: 18 }}>
+          Automatische analyse van de homepage — de tekst én de beelden — op
+          inclusiviteit en de vrouwelijk↔mannelijk-toon. Verzameld bij het aanmaken van de sprint.
+        </p>
+        {websiteAudit ? (
+          <WebsiteAudit audit={websiteAudit} />
+        ) : (
+          <p className="muted" style={{ marginBottom: 0 }}>
+            Nog geen website-analyse. Zet een website op de sprint en verzamel de
+            intel opnieuw via het <Link href={`/dashboard/${id}`}>overzicht</Link>.
           </p>
         )}
       </section>

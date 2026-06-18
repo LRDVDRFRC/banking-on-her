@@ -621,3 +621,26 @@ code, .code {
   animation: intel-spin 0.8s linear infinite;
 }
 @keyframes intel-spin { to { transform: rotate(360deg); } }
+
+/* website-audit lean spectrum bar */
+.lean-bar {
+  position: relative;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--rose), #e7ecdf 50%, var(--sky));
+}
+.lean-marker {
+  position: absolute;
+  top: -3px;
+  width: 12px; height: 14px;
+  border-radius: 3px;
+  background: var(--ink);
+  box-shadow: 0 1px 3px rgba(13,59,46,0.35);
+}
+.lean-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 5px;
+  font-size: 0.7rem;
+  color: rgba(13,59,46,0.5);
+}
